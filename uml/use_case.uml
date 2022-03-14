@@ -1,0 +1,55 @@
+@startuml
+' tema
+!theme plain
+
+' stili
+'skinparam dpi 150
+'scale 1500*1500
+skinparam style strictuml
+'skinparam actorStyle awesome
+
+' attori
+actor User as U
+actor Student as S 
+actor Moderator as M
+actor "Event Manager" as EM
+actor "System Admin" as SA
+actor "University DB" as DB
+
+' use cases
+' login
+(Login) as (LOG)
+' eventi
+(Visualizza eventi) as (EVENTS)
+(Crea evento) as (CREATE)
+(Modifica evento) as (MOD_EVENT)
+(Evento interno) as (IN_EVENT)
+(Evento esterno) as (EXT_EVENT)
+(Visualizza lista eventi) as (VIS_EVENT)
+' gestione eventi interni
+(Crea evento interno) as (CREATE_IN)
+(Modifica evento interno) as (MOD_IN)
+'gestione eventi esterni
+(Crea evento esterno) as (CREATE_EXT)
+(Modifica evento esterno) as (MOD_EXT)
+
+' relazioni
+' login
+S -down-|> U
+M -down-|> U
+EM -left-|> U
+U -- (LOG)
+DB <-left- (LOG)
+' eventi
+(CREATE) <|-up- (CREATE_EXT)
+(CREATE) <|-up- (CREATE_IN)
+(MOD_EVENT) <|- (MOD_IN)
+(MOD_EVENT) <|- (MOD_EXT)
+S -up-> (CREATE_EXT)
+M -up-> (CREATE_EXT)
+note "Ogni studente può modificare solo gli eventi che ha creato" as N
+N left of (CREATE)
+
+
+@enduml
+
