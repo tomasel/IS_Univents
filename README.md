@@ -1,2 +1,2 @@
 # IS_Univents
-A community web application for university students in Trento.
+Un'applicazione web per la comunità di studenti dell'Università degli Studi di Trento.
