@@ -9,19 +9,18 @@ skinparam style strictuml
 'skinparam actorStyle awesome
 
 ' attori
-actor User as U
 actor Student as S 
 actor Moderator as M
 actor "Event Manager" as EM
 actor "System Admin" as SA
 actor "University DB" as DB
 
-' use cases
+' USE CASES
 ' login
 (Login) as (LOG)
 ' eventi
 (Visualizza eventi) as (EVENTS)
-(Crea evento) as (CREATE)
+(Crea evento) as (CREATE_EVENT)
 (Modifica evento) as (MOD_EVENT)
 (Evento interno) as (IN_EVENT)
 (Evento esterno) as (EXT_EVENT)
@@ -33,23 +32,24 @@ actor "University DB" as DB
 (Crea evento esterno) as (CREATE_EXT)
 (Modifica evento esterno) as (MOD_EXT)
 
-' relazioni
+' RELAZIONI
 ' login
-S -down-|> U
-M -down-|> U
-EM -left-|> U
-U -- (LOG)
-DB <-left- (LOG)
+S -> (LOG)
+M -> (LOG)
+EM -> (LOG)
+(LOG) -> DB
 ' eventi
-(CREATE) <|-up- (CREATE_EXT)
-(CREATE) <|-up- (CREATE_IN)
+(CREATE_EVENT) <|-- (CREATE_EXT)
+(CREATE_EVENT) <|-- (CREATE_IN)
 (MOD_EVENT) <|- (MOD_IN)
 (MOD_EVENT) <|- (MOD_EXT)
-S -up-> (CREATE_EXT)
-M -up-> (CREATE_EXT)
-note "Ogni studente può modificare solo gli eventi che ha creato" as N
-N left of (CREATE)
-
+' creazione degli eventi
+S --> (CREATE_EXT)
+M --> (CREATE_EVENT)
+EM --> (CREATE_EVENT)
+' modifica degli eventi
+S --> (MOD_EXT) 
+note on link : Solo se ha creato quell'evento
 
 @enduml
 
