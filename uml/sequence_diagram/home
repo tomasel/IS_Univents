@@ -1,3 +1,19 @@
 @startuml
+!theme plain
+scale 1000 width
+hide footbox
+
+actor Studente as S
+participant Home as H
+participant Backend as B
+database "DB applicazione" as A
+
+S -> H : Visualizzazione
+
+par Aggiornamento informazioni home
+
+
+
+end
 
 @enduml
