@@ -1,0 +1,43 @@
+@startuml
+!theme plain
+scale 1000 width
+hide footbox
+
+actor Studente as S
+participant "Pagina di login" as L
+database Università as U
+
+S -> L : Visita
+
+activate L
+
+S -> L : Inserisce nome utente e password
+S -> L : Clicca sul tasto 'Login'
+
+L -> U : Inoltra hash di nome utente e password
+
+deactivate L
+
+U -> U : Verifica dati utente
+
+alt Credenziali corrette
+    U --> L : Login consentito
+
+    activate L
+
+    L -> L : Redirezione
+    L --> S : Accesso all'applicazione
+
+    deactivate L
+else Credenziali errate
+    U --> L : Login non consentito
+
+    activate L
+
+    L -> L : Redirezione
+    L --> S : Messaggio di richiesta negata all'utente
+
+    deactivate L
+end
+
+@enduml
