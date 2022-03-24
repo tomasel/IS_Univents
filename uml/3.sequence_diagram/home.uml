@@ -1,0 +1,87 @@
+@startuml
+!theme plain
+scale 1000 width
+hide footbox
+
+actor Studente as S
+participant Home as H
+participant Backend as B
+database "DB applicazione" as A
+
+S -> H : Visualizzazione
+
+par Aggiornamento informazioni home
+
+    activate H
+
+    H -> B : Richiede calendario
+
+    activate B
+
+    B -> A : Richiede calendario
+    A --> B : Ritorna calendario
+    B --> H : Ritorna calendario
+    H --> S : Visualizza calendario
+
+else
+
+    H -> B : Richiede lista preferiti
+    B -> A : Richiede lista preferiti
+    A --> B : Ritorna lista preferiti
+    B --> H : Ritorna lista preferiti
+    H --> S : Visualizza lista preferiti
+
+else
+
+    H -> B : Richiede lista preferiti oggi
+    B -> A : Richiede lista preferiti oggi
+    A --> B : Ritorna lista preferiti oggi
+    B --> H : Ritorna lista preferiti oggi
+    H --> S : Visualizza lista preferiti oggi
+    
+    deactivate H
+    deactivate B
+
+end
+
+alt Clicca su comunità studenti
+
+S -> H : Sezione 'comunità studenti'
+
+activate H
+
+H -> B : Richiesta spostamento di pagina
+
+activate B
+
+B -> B : Redirezione
+B --> H : Cambia pagina
+
+deactivate B
+
+H --> S : Mostra nuova pagina
+
+deactivate H
+
+else Clicca su università
+
+S -> H : Sezione 'università'
+
+activate H
+
+H -> B : Richiesta spostamento di pagina
+
+activate B
+
+B -> B : Redirezione
+B --> H : Cambia pagina
+
+deactivate B
+
+H --> S : Mostra nuova pagina
+
+deactivate H
+
+end
+
+@enduml
