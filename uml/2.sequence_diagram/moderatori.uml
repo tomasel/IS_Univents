@@ -1,0 +1,69 @@
+@startuml
+!theme plain
+scale 1000 width
+hide footbox
+
+actor Moderatore as M
+participant Frontend as F
+participant Backend as B
+database "DB applicazione" as DB
+
+M -> F : Lista segnalazioni
+F -> B : Lista segnalazioni
+
+activate B
+
+B -> DB : Chiede lista segnalazioni
+DB --> B : Ritorna
+B --> F : Ritorna
+
+deactivate B
+
+F --> M : Ritorna
+
+M -> F : Seleziona una segnalazione
+F -> B : Seleziona una segnalazione
+
+activate B
+
+B -> DB : Chiedi la segnalazione scelta
+DB --> B : Resituisce info segnalazione
+B --> F : Ritorna
+
+deactivate B
+
+F --> M : Ritorna
+
+alt Segnalazione approvata
+
+    M -> F : Approva segnalazione
+    F -> B : Approva segnalazione
+
+    activate B
+
+    B -> DB : Elimina evento
+    DB --> B : Ritorna status operazione
+    B --> F : Ritorna
+
+    deactivate B
+
+    F --> M : Ritorna
+
+else Segnalazione rifiutata
+
+    M -> F : Rifiuta segnalazione
+    F -> B : Rifiuta segnalazione
+
+    activate B
+
+    B -> DB : Reinserisci evento
+    DB --> B : Ritorna status operazione
+    B --> F : Ritorna
+
+    deactivate B
+
+    F --> M : Ritorna
+
+end
+
+@enduml
