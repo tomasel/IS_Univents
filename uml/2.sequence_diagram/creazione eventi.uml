@@ -5,4 +5,62 @@ hide footbox
 
 title Creazione eventi
 
+actor Utente as U
+participant "Pagina creazione eventi" as PE
+participant "Backend" as B
+database Database as DB
+
+U -> PE : Visita la pagina di creazione
+
+activate PE
+
+U -> PE : Inserisci nome evento
+U -> PE : Inserisci dati evento
+U -> PE : Inserisci luogo evento
+U -> PE : Inserisci descrizione evento
+
+opt Imposta evento come ricorsivo
+    U -> PE : Imposta come evento ricorsivo
+    U -> PE : Seleziona intervallo di ripetizione
+end
+
+PE -> B : Invia informazioni evento
+
+activate B
+
+B -> B : Controllo contenuto informazioni
+
+alt Trovato contenuto non conforme
+    B --> PE : Evento rifiutato
+
+    deactivate B
+
+    PE --> U : Evento rifiutato (messaggio)
+else Contenuto conforme
+
+    B -> DB : Invia informazioni evento
+
+    activate B    
+    activate DB
+
+    DB -> DB : Salva evento
+    DB --> B : Evento salvato
+
+    deactivate DB
+
+    B --> PE : Codice evento salvato
+    
+    deactivate B
+    activate PE
+
+    PE --> U : Evento creato con successo (messaggio)
+
+    deactivate PE
+
+    PE -> U : Mostra evento
+
+    deactivate PE
+
+end
+
 @enduml
