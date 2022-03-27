@@ -34,6 +34,32 @@ PE --> U : Mostra informazioni evento
 
 deactivate PE
 
+' Imposta evento preferito
+    U -> PE : Imposta evento come preferito
+
+    activate PE
+
+    PE -> B : Imposta evento come preferito
+
+    activate B
+
+    B -> DB : Aggiorna database:\nimposta evento preferito
+
+    activate DB
+
+    DB -> DB : Aggiorna database
+    DB -> B : Database aggiornato
+
+    deactivate DB
+
+    B -> PE : Codice operazione completata
+
+    deactivate B
+
+    PE -> U : Evento aggiunto ai preferiti
+
+    deactivate PE
+
 opt Filtra eventi
     U -> PE : Inserisci data
     U -> PE : Inserisci nome
@@ -66,32 +92,6 @@ opt Filtra eventi
 
         deactivate PE
     end
-
-else Imposta evento preferito
-    U -> PE : Imposta evento come preferito
-
-    activate PE
-
-    PE -> B : Imposta evento come preferito
-
-    activate B
-
-    B -> DB : Aggiorna database:\nimposta evento preferito
-
-    activate DB
-
-    DB -> DB : Aggiorna database
-    DB -> B : Database aggiornato
-
-    deactivate DB
-
-    B -> PE : Codice operazione completata
-
-    deactivate B
-
-    PE -> U : Evento aggiunto ai preferiti
-
-    deactivate PE
 
 else Commenta evento
     U -> PE : Seleziona evento
