@@ -1,0 +1,147 @@
+@startuml
+!theme plain
+scale 2000 width
+hide footbox
+
+title Università
+
+actor Utente as U
+participant "Università (frontend)" as UNI
+participant Backend as B
+database "Database Università" as DB
+
+U -> UNI : Accedi ad interfaccia
+
+activate UNI
+
+UNI -> B : Chiedi lista edifici
+
+activate B
+
+B -> DB : Chiedi lista edifici
+
+activate DB
+
+DB --> B : Ritorna lista edifici 
+
+deactivate DB
+
+B --> UNI : Ritorna lista edifici
+
+deactivate B
+
+UNI -> UNI : Posiziona un edificio per riquadro
+UNI --> U : Visualizza lista edifici
+
+deactivate UNI
+
+' seleziona edificio
+U -> UNI : Seleziona edificio
+
+activate UNI
+
+UNI -> B : Richiedi eventi dell'edificio selezionato
+
+activate B 
+
+B -> DB : Richiedi eventi dell'edificio selezionato
+
+activate DB
+
+DB --> B : Ritorna lista eventi
+
+deactivate DB
+
+B --> UNI : Ritorna lista eventi
+
+deactivate B
+
+UNI -> UNI : Posiziona un evento per riquadro
+UNI -> U : Visualizza eventi
+
+deactivate UNI
+
+' seleziona evento
+U -> UNI : Seleziona evento
+
+activate UNI
+
+UNI -> B : Chiede info evento selezionato
+
+activate B
+
+B -> DB : Chiede info evento selezionato
+
+activate DB
+
+DB --> B : Ritorna info evento
+
+deactivate DB
+
+B --> UNI : Ritorna info evento
+
+deactivate B
+
+UNI --> U : Visualizza info evento
+
+deactivate UNI
+
+' preferiti
+    U -> UNI : Aggiungi ai preferiti
+
+    activate UNI
+
+    UNI -> B : Aggiungi ai preferiti
+    B -> DB : Aggiungi ai preferiti
+
+    activate DB
+
+    DB -> DB : Aggiorna database
+    DB --> B : Aggiunto ai preferiti
+
+    deactivate DB
+
+    B --> UNI : Aggiunto ai preferiti
+
+    deactivate B
+
+    UNI --> U : Aggiunto ai preferiti (messaggio)
+
+    deactivate UNI
+
+opt Commenta
+    U -> UNI : Commenta
+
+    activate UNI
+
+    UNI -> B : Commenta
+
+    activate B
+
+    B -> B : Controllo contenuto commento
+
+    alt Contenuto non conforme
+        B --> UNI : Contenuto non conforme
+        UNI --> U : Mostra messaggio di errore\nContenuto non conforme
+    else Contenuto conforme
+        B -> DB : Aggiorna database:\nagginugi commento
+
+        activate DB 
+
+        DB -> DB : Salva commento
+        DB --> B : Codice commento salvato\ncon successo
+
+        deactivate DB
+
+        B --> UNI : Operazione completata
+
+        deactivate B
+
+        UNI --> U : Commento pubblicato (messaggio)
+        UNI --> U : Mostra commento
+
+        deactivate UNI
+    end
+end
+
+@enduml
