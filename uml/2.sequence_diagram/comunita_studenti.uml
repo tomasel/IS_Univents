@@ -1,0 +1,136 @@
+@startuml
+!theme plain
+scale 2000 width
+hide footbox
+
+title "Comunità studenti"
+
+actor Utente as U
+participant "Pagina visualizzazione\neventi esterni" as PE
+participant Backend as B
+database Database as DB
+
+U -> PE : Clicca su un evento
+
+activate PE
+
+PE -> B : Richiesta informazioni evento
+
+activate B
+
+B -> DB : Richiesta informazioni evento
+
+activate DB
+
+DB --> B : Ritorna informazioni evento
+
+deactivate DB
+
+B --> PE : Ritorna informazioni evento
+
+deactivate B
+
+PE --> U : Mostra informazioni evento
+
+deactivate PE
+
+opt Filtra eventi
+    U -> PE : Inserisci data
+    U -> PE : Inserisci nome
+
+    activate PE
+
+    PE -> B : Invia parametri\ndi filtro
+
+    activate B
+
+    B -> DB : Database query
+
+    activate DB
+
+    alt Evento/i trovato/i
+        DB -> B : Ritorna lista eventi
+        B -> PE : Ritorna eventi
+        PE -> U : Mostra eventi
+
+    else Evento/i non trovato/i
+        DB -> B : Ritorna lista vuota
+
+        deactivate DB
+
+        B -> PE : Codice di errore:\nNessun evento
+
+        deactivate B
+
+        PE -> U : Mostra errore:\nNessun evento trovato
+
+        deactivate PE
+    end
+
+else Imposta evento preferito
+    U -> PE : Imposta evento come preferito
+
+    activate PE
+
+    PE -> B : Imposta evento come preferito
+
+    activate B
+
+    B -> DB : Aggiorna database:\nimposta evento preferito
+
+    activate DB
+
+    DB -> DB : Aggiorna database
+    DB -> B : Database aggiornato
+
+    deactivate DB
+
+    B -> PE : Codice operazione completata
+
+    deactivate B
+
+    PE -> U : Evento aggiunto ai preferiti
+
+    deactivate PE
+
+else Commenta evento
+    U -> PE : Seleziona evento
+
+    activate PE
+
+    U -> PE : Clicca su sezione commenti
+    U -> PE : Scrivi commento
+    U -> PE : Pubblica commento
+    PE -> B : Pubblica commento
+
+    activate B
+
+    B -> B : Controllo contenuto messaggio
+
+    alt "Contenuto del messaggio\nnon conforme"
+        B --> PE : Commento rifiutato
+
+        PE --> U : Mostra messaggio di errore\nCommento non appropriato
+    else "Contenuto del messaggio conforme"
+        B -> DB : Aggiorna database:\naggiungi commento
+
+        activate DB
+
+        DB -> DB : Salva commento
+        DB --> B : Codice commento salvato\ncon successo
+        
+        deactivate DB
+
+        B --> PE : Operazione completata
+
+        deactivate B
+
+        PE --> U : Commento pubblicato (messaggio)
+        PE --> U : Mostra commento
+
+        deactivate PE
+
+    end
+end
+
+@enduml

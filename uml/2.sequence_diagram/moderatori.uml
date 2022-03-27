@@ -3,6 +3,8 @@
 scale 1000 width
 hide footbox
 
+title Moderatori
+
 actor Moderatore as M
 participant Frontend as F
 participant Backend as B

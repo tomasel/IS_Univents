@@ -1,3 +1,8 @@
 @startuml
+!theme plain
+scale 2000 width
+hide footbox
+
+title Creazione eventi
 
 @enduml
