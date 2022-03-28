@@ -93,14 +93,14 @@ deactivate UNI
     activate UNI
 
     UNI -> B : Aggiungi ai preferiti
-    B -> DB : Aggiungi ai preferiti
+    B -> DBA : Aggiungi ai preferiti
 
-    activate DB
+    activate DBA
 
-    DB -> DB : Aggiorna database
-    DB --> B : Aggiunto ai preferiti
+    DBA -> DBA : Aggiorna database
+    DBA --> B : Aggiunto ai preferiti
 
-    deactivate DB
+    deactivate DBA
 
     B --> UNI : Aggiunto ai preferiti
 
