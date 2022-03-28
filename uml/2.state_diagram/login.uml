@@ -2,17 +2,13 @@
 !theme plain
 scale 1000 width
 
-[*] -left-> Login
-Login ---> Autenticazione : click su login\n/ redirezione alla pagina di autenticazione
 
+[*] --> Login
 state Autenticazione <<choice>>
+Login --> Autenticazione : click su login\n/ redirezione alla pagina di autenticazione
+
 Autenticazione --> Accesso : credenziali corrette\n/ consenti l'accesso
-Autenticazione -right-> Login : credenziali errate,\nrichiesta di login rifiutata\n/ segnala errore
-
+Autenticazione --> Login : credenziali errate,\nrichiesta di login rifiutata\n/ segnala errore
 Accesso --> [*]
-
-Login : Visualizza la pagina di login
-Autenticazione : Attende l'esito dell'autenticazione dal sito dell'università
-Accesso : Consenti l'accesso all'applicazione
 
 @enduml
