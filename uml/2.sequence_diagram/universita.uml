@@ -9,6 +9,7 @@ actor Utente as U
 participant "Università (frontend)" as UNI
 participant Backend as B
 database "Database Università" as DB
+database "Database" as DBA
 
 U -> UNI : Accedi ad interfaccia
 
@@ -124,14 +125,14 @@ opt Commenta
         B --> UNI : Contenuto non conforme
         UNI --> U : Mostra messaggio di errore\nContenuto non conforme
     else Contenuto conforme
-        B -> DB : Aggiorna database:\nagginugi commento
+        B -> DBA : Aggiorna database:\naggiungi commento
 
-        activate DB 
+        activate DBA 
 
-        DB -> DB : Salva commento
-        DB --> B : Codice commento salvato\ncon successo
+        DBA -> DBA : Salva commento
+        DBA --> B : Codice commento salvato\ncon successo
 
-        deactivate DB
+        deactivate DBA
 
         B --> UNI : Operazione completata
 
