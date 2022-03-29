@@ -1,6 +1,6 @@
 @startuml
 !theme plain
-scale 1000 width
+scale 2000 width
 hide footbox
 
 title "Gestione home"
@@ -47,47 +47,64 @@ else
 
 end
 
-alt Clicca su comunità studenti
+opt Clicca su comunità studenti
 
-S -> H : Sezione 'comunità studenti'
+    S -> H : Sezione 'comunità studenti'
 
-activate H #CFE6FF
+    activate H #CFE6FF
+    
+    H -> B : Richiesta spostamento di pagina
 
+    activate B #CFE6FF
 
-H -> B : Richiesta spostamento di pagina
+    B -> B : Redirezione
+    B --> H : Cambia pagina
 
-activate B #CFE6FF
+    deactivate B
 
+    H --> S : Mostra nuova pagina
 
-B -> B : Redirezione
-B --> H : Cambia pagina
-
-deactivate B
-
-H --> S : Mostra nuova pagina
-
-deactivate H
+    deactivate H
 
 else Clicca su università
 
-S -> H : Sezione 'università'
+    S -> H : Sezione 'università'
 
-activate H #CFE6FF
+    activate H #CFE6FF
 
+    H -> B : Richiesta spostamento di pagina
 
-H -> B : Richiesta spostamento di pagina
+    activate B #CFE6FF
 
-activate B #CFE6FF
+    B -> B : Redirezione
+    B --> H : Cambia pagina
 
+    deactivate B
 
-B -> B : Redirezione
-B --> H : Cambia pagina
+    H --> S : Mostra nuova pagina
 
-deactivate B
+    deactivate H
 
-H --> S : Mostra nuova pagina
+else Clicca su un evento
 
-deactivate H
+    S -> H : Clicca su evento
+
+    activate H #CFE6FF
+
+    H -> B : Seleziona evento
+
+    activate B #CFE6FF
+
+    B -> A : Chiedi info evento
+    A --> B : Ritorna info evento
+    B -> B : Redireziona pagina
+    B --> H : Cambia pagina
+
+    deactivate B
+
+    H --> S : Visualizza evento
+
+    deactivate H
 
 end
 
