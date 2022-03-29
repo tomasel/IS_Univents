@@ -12,7 +12,8 @@ database Database as DB
 
 U -> PE : Visita la pagina di creazione
 
-activate PE
+activate PE #CFE6FF
+
 
 U -> PE : Inserisci nome evento
 U -> PE : Inserisci dati evento
@@ -26,7 +27,9 @@ end
 
 PE -> B : Invia informazioni evento
 
-activate B
+deactivate PE
+activate B #CFE6FF
+
 
 B -> B : Controllo contenuto informazioni
 
@@ -34,14 +37,19 @@ alt Trovato contenuto non conforme
     B --> PE : Evento rifiutato
 
     deactivate B
+    activate PE #CFE6FF
 
     PE --> U : Evento rifiutato (messaggio)
+
+    deactivate PE
 else Contenuto conforme
 
     B -> DB : Invia informazioni evento
 
-    activate B    
-    activate DB
+    activate B #CFE6FF
+    
+    activate DB #CFE6FF
+
 
     DB -> DB : Salva evento
     DB --> B : Evento salvato
@@ -51,7 +59,8 @@ else Contenuto conforme
     B --> PE : Codice evento salvato
     
     deactivate B
-    activate PE
+    activate PE #CFE6FF
+
 
     PE --> U : Evento creato con successo (messaggio)
 

@@ -11,35 +11,40 @@ database Università as U
 
 S -> L : Visita
 
-activate L
+activate L #CFE6FF
 
 S -> L : Inserisce nome utente e password
 S -> L : Clicca sul tasto 'Login'
 
 L -> U : Inoltra hash di nome utente e password
 
-deactivate L
+deactivate L 
+
 
 U -> U : Verifica dati utente
 
 alt Credenziali corrette
     U --> L : Login consentito
 
-    activate L
+    activate L #CFE6FF
+
 
     L -> L : Redirezione
     L --> S : Accesso all'applicazione
 
-    deactivate L
+    deactivate L 
+
 else Credenziali errate
     U --> L : Login non consentito
 
-    activate L
+    activate L #CFE6FF
+
 
     L -> L : Redirezione
     L --> S : Messaggio di richiesta negata all'utente
 
-    deactivate L
+    deactivate L 
+
 end
 
 @enduml

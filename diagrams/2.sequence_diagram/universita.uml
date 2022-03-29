@@ -13,15 +13,18 @@ database "Database" as DBA
 
 U -> UNI : Accedi ad interfaccia
 
-activate UNI
+activate UNI #CFE6FF
+
 
 UNI -> B : Chiedi lista edifici
 
-activate B
+activate B #CFE6FF
+
 
 B -> DB : Chiedi lista edifici
 
-activate DB
+activate DB #CFE6FF
+
 
 DB --> B : Ritorna lista edifici 
 
@@ -39,15 +42,18 @@ deactivate UNI
 ' seleziona edificio
 U -> UNI : Seleziona edificio
 
-activate UNI
+activate UNI #CFE6FF
+
 
 UNI -> B : Richiedi eventi dell'edificio selezionato
 
-activate B 
+activate B  #CFE6FF
+
 
 B -> DB : Richiedi eventi dell'edificio selezionato
 
-activate DB
+activate DB #CFE6FF
+
 
 DB --> B : Ritorna lista eventi
 
@@ -65,15 +71,18 @@ deactivate UNI
 ' seleziona evento
 U -> UNI : Seleziona evento
 
-activate UNI
+activate UNI #CFE6FF
+
 
 UNI -> B : Chiede info evento selezionato
 
-activate B
+activate B #CFE6FF
+
 
 B -> DB : Chiede info evento selezionato
 
-activate DB
+activate DB #CFE6FF
+
 
 DB --> B : Ritorna info evento
 
@@ -90,12 +99,14 @@ deactivate UNI
 ' preferiti
     U -> UNI : Aggiungi ai preferiti
 
-    activate UNI
+    activate UNI #CFE6FF
+
 
     UNI -> B : Aggiungi ai preferiti
     B -> DBA : Aggiungi ai preferiti
 
-    activate DBA
+    activate DBA #CFE6FF
+
 
     DBA -> DBA : Aggiorna database
     DBA --> B : Aggiunto ai preferiti
@@ -113,11 +124,13 @@ deactivate UNI
 opt Commenta
     U -> UNI : Commenta
 
-    activate UNI
+    activate UNI #CFE6FF
+
 
     UNI -> B : Commenta
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> B : Controllo contenuto commento
 
@@ -127,7 +140,8 @@ opt Commenta
     else Contenuto conforme
         B -> DBA : Aggiorna database:\naggiungi commento
 
-        activate DBA 
+        activate DBA  #CFE6FF
+
 
         DBA -> DBA : Salva commento
         DBA --> B : Codice commento salvato\ncon successo

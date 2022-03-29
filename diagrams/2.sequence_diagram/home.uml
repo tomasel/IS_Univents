@@ -14,11 +14,12 @@ S -> H : Visualizzazione
 
 par Aggiornamento informazioni home
 
-    activate H
+    activate H #CFE6FF
 
     H -> B : Richiede calendario
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> A : Richiede calendario
     A --> B : Ritorna calendario
@@ -50,11 +51,13 @@ alt Clicca su comunità studenti
 
 S -> H : Sezione 'comunità studenti'
 
-activate H
+activate H #CFE6FF
+
 
 H -> B : Richiesta spostamento di pagina
 
-activate B
+activate B #CFE6FF
+
 
 B -> B : Redirezione
 B --> H : Cambia pagina
@@ -69,11 +72,13 @@ else Clicca su università
 
 S -> H : Sezione 'università'
 
-activate H
+activate H #CFE6FF
+
 
 H -> B : Richiesta spostamento di pagina
 
-activate B
+activate B #CFE6FF
+
 
 B -> B : Redirezione
 B --> H : Cambia pagina

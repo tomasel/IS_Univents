@@ -1,6 +1,6 @@
 @startuml
 !theme plain
-scale 1000 width
+scale 2000 width
 hide footbox
 
 title Moderatori
@@ -13,7 +13,8 @@ database "DB applicazione" as DB
 M -> F : Lista segnalazioni
 F -> B : Lista segnalazioni
 
-activate B
+activate B #CFE6FF
+
 
 B -> DB : Chiede lista segnalazioni
 DB --> B : Ritorna
@@ -26,7 +27,8 @@ F --> M : Ritorna
 M -> F : Seleziona una segnalazione
 F -> B : Seleziona una segnalazione
 
-activate B
+activate B #CFE6FF
+
 
 B -> DB : Chiedi la segnalazione scelta
 DB --> B : Resituisce info segnalazione
@@ -41,7 +43,8 @@ alt Segnalazione approvata
     M -> F : Approva segnalazione
     F -> B : Approva segnalazione
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> DB : Elimina evento
     DB --> B : Ritorna status operazione
@@ -56,7 +59,8 @@ else Segnalazione rifiutata
     M -> F : Rifiuta segnalazione
     F -> B : Rifiuta segnalazione
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> DB : Reinserisci evento
     DB --> B : Ritorna status operazione

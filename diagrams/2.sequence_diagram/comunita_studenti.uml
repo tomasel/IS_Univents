@@ -12,15 +12,18 @@ database Database as DB
 
 U -> PE : Clicca su un evento
 
-activate PE
+activate PE #CFE6FF
+
 
 PE -> B : Richiesta informazioni evento
 
-activate B
+activate B #CFE6FF
+
 
 B -> DB : Richiesta informazioni evento
 
-activate DB
+activate DB #CFE6FF
+
 
 DB --> B : Ritorna informazioni evento
 
@@ -37,15 +40,18 @@ deactivate PE
 ' Imposta evento preferito
     U -> PE : Imposta evento come preferito
 
-    activate PE
+    activate PE #CFE6FF
+
 
     PE -> B : Imposta evento come preferito
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> DB : Aggiorna database:\nimposta evento preferito
 
-    activate DB
+    activate DB #CFE6FF
+
 
     DB -> DB : Aggiorna database
     DB -> B : Database aggiornato
@@ -64,15 +70,18 @@ opt Filtra eventi
     U -> PE : Inserisci data
     U -> PE : Inserisci nome
 
-    activate PE
+    activate PE #CFE6FF
+
 
     PE -> B : Invia parametri\ndi filtro
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> DB : Database query
 
-    activate DB
+    activate DB #CFE6FF
+
 
     alt Evento/i trovato/i
         DB -> B : Ritorna lista eventi
@@ -96,14 +105,16 @@ opt Filtra eventi
 else Commenta evento
     U -> PE : Seleziona evento
 
-    activate PE
+    activate PE #CFE6FF
+
 
     U -> PE : Clicca su sezione commenti
     U -> PE : Scrivi commento
     U -> PE : Pubblica commento
     PE -> B : Pubblica commento
 
-    activate B
+    activate B #CFE6FF
+
 
     B -> B : Controllo contenuto messaggio
 
@@ -114,7 +125,8 @@ else Commenta evento
     else "Contenuto del messaggio conforme"
         B -> DB : Aggiorna database:\naggiungi commento
 
-        activate DB
+        activate DB #CFE6FF
+
 
         DB -> DB : Salva commento
         DB --> B : Codice commento salvato\ncon successo
