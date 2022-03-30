@@ -36,11 +36,11 @@ else
 
 else
 
-    H -> B : Richiede lista preferiti oggi
-    B -> A : Richiede lista preferiti oggi
-    A --> B : Ritorna lista preferiti oggi
-    B --> H : Ritorna lista preferiti oggi
-    H --> S : Visualizza lista preferiti oggi
+    H -> B : Richiede lista eventi oggi
+    B -> A : Richiede lista eventi oggi
+    A --> B : Ritorna lista eventi oggi
+    B --> H : Ritorna lista eventi oggi
+    H --> S : Visualizza lista eventi oggi
     
     deactivate H
     deactivate B
