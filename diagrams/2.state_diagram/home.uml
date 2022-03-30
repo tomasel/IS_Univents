@@ -2,14 +2,18 @@
 !theme plain
 scale 1000 width
 
-state "Home" as H
-state "Università" as IE
-state "Comunità studenti" as EE
+state "Home" as H #CFE6FF
+state "Università" as IE #CFE6FF
+state "Comunità studenti" as EE #CFE6FF
 
-[*] --> H
-H --> IE : click su 'Università'\n/ carica eventi interni
-H --> EE : click su 'Comunità studenti'\n/ carica eventi esterni
-EE --> [*]
+[*] -right-> H
+H -up-> IE : click su 'Università'\n/ carica eventi interni
+IE --> H
+H -down-> EE : click su 'Comunità studenti'\n/ carica eventi esterni
+EE --> H
+IE --> EE
+EE --> IE
+EE -right-> [*]
 IE --> [*]
 
 H : entry / visualizzazione eventi preferiti

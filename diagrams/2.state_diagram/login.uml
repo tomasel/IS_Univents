@@ -5,10 +5,13 @@ scale 1000 width
 
 [*] --> Login
 state Autenticazione <<choice>>
-Login --> Autenticazione : click su login\n/ redirezione alla pagina di autenticazione
+Login -down-> Autenticazione : click su login\n/ redirezione alla pagina di autenticazione
 
 Autenticazione --> Accesso : credenziali corrette\n/ consenti l'accesso
 Autenticazione --> Login : credenziali errate,\nrichiesta di login rifiutata\n/ segnala errore
 Accesso --> [*]
+
+Login : exit / reindirizza a login università
+
 
 @enduml
