@@ -23,7 +23,7 @@ dd {
   margin: 15px;
 }
 
-input {
+input[type = submit] {
 background: #B10B25;
 color: white;
 border-style: outset;
@@ -34,11 +34,11 @@ font: bold15px arial,sans-serif;
 text-shadow: none;
 }
 
-input:hover {
+input[type = submit]:hover {
 background: #90091E;
 color: black
 border: 1px solid #ccc;
 /*border-radius: 20px;
-#box-shadow: 5px 5px 5px #eee;*/
+box-shadow: 5px 5px 5px #eee;*/
 text-shadow: none;
 }
