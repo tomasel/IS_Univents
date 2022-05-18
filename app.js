@@ -58,6 +58,9 @@ app.get('/universita/edificio', universita.list_event);
 //Impostazioni
 app.get('/impostazioni', impostazioni.view);
 
+// Autenticazione
+//app.use('/api/v1/authentications', authentication);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
