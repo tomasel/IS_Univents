@@ -12,4 +12,10 @@ exports.create_event = function(req, res){
     title: 'Crea Evento '
   });
 };
+// funzione visualizza_evento
+exports.visualizza_evento = function(req, res){
+  res.render('comunita_studenti/visualizza_evento', {
+    title: 'Visualizza Evento '
+  });
+};
 
