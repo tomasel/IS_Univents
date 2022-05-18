@@ -50,6 +50,7 @@ app.get('/home', home.view);
 //Comunità Studenti
 app.get('/comunita_studenti', comunita_studenti.list_event);
 app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
+app.get('/comunita_studenti/visualizza_evento',comunita_studenti.visualizza_evento);
 
 //Università
 app.get('/universita', universita.list_building);
