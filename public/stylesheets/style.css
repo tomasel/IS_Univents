@@ -38,7 +38,7 @@ input:hover {
 background: #90091E;
 color: black
 border: 1px solid #ccc;
-#border-radius: 20px;
-#box-shadow: 5px 5px 5px #eee;
+/*border-radius: 20px;
+#box-shadow: 5px 5px 5px #eee;*/
 text-shadow: none;
 }
