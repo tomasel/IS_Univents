@@ -9,7 +9,7 @@ var multer = require('multer');
 var upload = multer();
 const mongoose = require('mongoose');
 const fs = require('fs');
-var password = fs.readFile('./password.txt');
+var password = fs.readFileSync('./password.txt,'utf8');
 
 const authentication = require('./public/javascripts/authentication');
 const evento = require('./public/script/evento');
