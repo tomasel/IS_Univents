@@ -4,44 +4,92 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override');
+var cors = require('cors');
+var multer = require('multer');
+var upload = multer();
+const mongoose = require('mongoose');
+const fs = require('fs');
+var password = fs.readFile('./password.txt');
+
+const authentication = require('./public/javascripts/authentication');
+const evento = require('./public/script/evento');
+const utente = require('./public/script/utente');
 
 
+/**
+  *Connection DB
+*/
+mongoose.connect('mongodb+srv://univents_database:${password}@univents.y54y3.mongodb.net/?retryWrites=true&w=majority')
+.then ( () => {
+  console.log("Connected to Database")
+}); 
+
+//instance
 var app = express();
-
-var site = require('./routes/site');
-var comunita_studenti = require('./routes/comunita_studenti');
-var home = require('./routes/home');
-var impostazioni = require('./routes/impostazioni');
-var login = require('./routes/login');
-var universita = require('./routes/universita');
-
 module.exports = app;
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+const PORT = process.env.PORT || 3000;
+const  NODE_ENV = process.env.NODE_ENV || 'development';
+app.set('port', PORT);
+app.set('env', NODE_ENV);
 
-/* istanbul ignore next */
-if (!module.parent) {
-  app.use(logger('dev'));
-}
+app.use(cors());
+app.use(log('tiny'));
 
+var site = require('./routes/site');
+var comunita_studenti = require('./routes/comunita_studenti');
+var home = require('./routes/home');
+var universita = require('./routes/universita');
+
+//setup
 app.use(logger('dev'));
 app.use(express.json());
+app.use(express.text());
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(upload.array()); 
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//Pagine di visualizzazione
+//Routes
+require('./routes/routes')(app);
+
+// catch 404
+app.use((req, res, next) => {
+  // log.error(`Error 404 on ${req.url}.`);
+  res.status(404).send({ status: 404, error: 'Not found' });
+});
+
+// catch errors
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const msg = err.error || err.message;
+  // log.error(`Error ${status} (${msg}) on ${req.method} ${req.url} with payload ${req.body}.`);
+  res.status(status).send({ status, error: msg });
+});
+
+//for check on console
+app.listen(PORT, () => {
+  console.log(
+      `Express Server started on Port ${app.get(
+          'port'
+      )} | Environment : ${app.get('env')}`
+  );
+});
+
+
+//Start
 // General
 app.get('/', site.index);
 
 //login
-app.get('/login', login.login);
+//app.get('/login', login.login);
+app.use('/api/v1/authentication', authentication);
 
 //home
 app.get('/home', home.view);
@@ -49,38 +97,17 @@ app.get('/home', home.view);
 
 //Comunità Studenti
 app.get('/comunita_studenti', comunita_studenti.list_event);
-app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
-app.get('/comunita_studenti/visualizza_evento',comunita_studenti.visualizza_evento);
+//app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
+app.use('/api/v1/evento', evento);
 
 //Università
 app.get('/universita', universita.list_building);
 app.get('/universita/edificio', universita.list_event);
 
 //Impostazioni
-app.get('/impostazioni', impostazioni.view);
+//app.get('/impostazioni', impostazioni.view);
+app.use('/api/v1/utente', utente);
 
-// Autenticazione
-//app.use('/api/v1/authentications', authentication);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 
-/* istanbul ignore next */
-if (!module.parent) {
-  app.listen(3000);
-  console.log('Express started on port 3000');
-}
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
