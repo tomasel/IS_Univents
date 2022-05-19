@@ -50,6 +50,7 @@ app.get('/home', home.view);
 //Comunità Studenti
 app.get('/comunita_studenti', comunita_studenti.list_event);
 app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
+app.get('/comunita_studenti/visualizza_evento',comunita_studenti.visualizza_evento);
 
 //Università
 app.get('/universita', universita.list_building);
@@ -57,6 +58,9 @@ app.get('/universita/edificio', universita.list_event);
 
 //Impostazioni
 app.get('/impostazioni', impostazioni.view);
+
+// Autenticazione
+//app.use('/api/v1/authentications', authentication);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
