@@ -4,6 +4,33 @@
 
 <div id="crea_evento">
 
+  <!--action="/comunita_studenti/crea_evento" vuol dire che quando premo il bottono fa partire la chamata POST /home, e contemporaneamente si sposta in /home-->
+  <form method="post" action="/comunita_studenti/crea_evento">
+
+    <label for="nome_evento">Nome dell'evento:<br></label>
+    <input name="nome_evento" type="text" value=""><br><br>
+
+    <label for="luogo_evento">Luogo dell'evento:<br></label>
+    <input name="luogo_evento" type="text" ><br><br>
+
+    <label for="data_ora">Data e ora dell'evento:<br></label>
+    <input type="datetime-local" name="data_ora" max="2030-12-31T23:59"><br><br>
+    <!-- set minimum date to today's -->
+    <script>
+      document.getElementById("data_ora_evento").setAttribute("min",new Date().toJSON().slice(0,16));
+    </script>
+
+
+    <label for="descrizione_evento">descrizione dell'evento:<br></label>
+    <input name="descrizione_evento" type="textarea" size="80" rows="10"><br><br>
+
+
+    <input name="submit" type="submit" value="Invia">
+
+  </form>
+
+
+  <br><br>
   <li>
     <a href="/comunita_studenti">comunita_studenti</a>
   </li>
@@ -13,9 +40,8 @@
   <li>
     <a href="/universita">Università</a>
   </li>
-  <li>
-    <a href="/impostazioni">Impostazioni</a>
-  </li>
+  <script type="module" src="comunita_studenti.js"></script>
+
 </div>
 
 <%- include('../footer') -%>
