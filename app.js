@@ -108,6 +108,9 @@ app.get('/universita/edificio', universita.list_event);
 //app.get('/impostazioni', impostazioni.view);
 app.use('/api/v1/utente', utente);
 
+//crea evento
+app.post('/comunita_studenti/crea_evento', comunita_studenti.crea);
+
 
 
 
