@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Utente = require('../models/utente');
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
 
 router.post('', async function(req, res) {
     let utente = await Utente.findOne({
