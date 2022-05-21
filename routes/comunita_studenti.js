@@ -20,6 +20,14 @@ class Evento{ //TODO: OTTENERE ID CREATORE; DA DOVE?
 
 }
 
+//funzione di render
+exports.list_event = function(req, res){
+  res.status(200).render('comunita_studenti', {
+    title: 'Eventi '
+  });
+};
+
+
 
 // funzione create_event
 exports.create_event = function(req, res){
@@ -100,11 +108,4 @@ exports.crea = function(req, res){
     });
   }
 
-};
-
-
-exports.list_event = function(req, res){
-  res.status(200).render('comunita_studenti', {
-    title: 'Eventi '
-  });
 };
