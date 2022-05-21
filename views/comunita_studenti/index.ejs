@@ -1,18 +1,52 @@
 <%- include('../header') -%>
 
 <h1>comunita_studenti</h1>
+<style>
+.div{
+  height: 50px;
+  width: 500px;
+  background-color: #f0d6d6;
+  border: 5px solid red;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
+}
+.puppet{
+  height: 0px;
+  width: 500px;
+  top: 70px;
+  left: 40%; 
+  position: absolute;
+}
+
+</style>
+
+<template>
+  <div class="div"></div>
+</template>
+
+<div class="puppet" id="puppet"></div>
 
 <div id="comunita_studenti">
+  
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var i,item,clone2;
+        for(i=0;i<10;i++){
+          console.log(i);
+          item = document.getElementsByTagName("template")[0].content.querySelector("div");
+          clone2 = document.importNode(item,true);
+          clone2.textContent+="Evento "+i; //TODO: CONNECT TO DB API AND RETRIEVE EVENTS
+          document.getElementById("puppet").appendChild(clone2);
+        }
+      }, false);
+
+  </script>
 
   <form method="get" action="/comunita_studenti/crea_evento">
     <p>
-      <input type="submit" value="Crea evento">
-    </p>
-  </form>
-
-  <form method="get" action="/comunita_studenti/visualizza_evento">
-    <p>
-      <input type="submit" value="Visualizza evento">
+      <input type="submit" value="crea_evento">
     </p>
   </form>
 
@@ -22,9 +56,11 @@
   <li>
     <a href="/universita">Università</a>
   </li>
-  <li>
-    <a href="/impostazioni">Impostazioni</a>
-  </li>
+
+  <p>
+    <label id="puppet" x="75%" y="0"></label>
+  </p>
+
 </div>
 
 <%- include('../footer') -%>
