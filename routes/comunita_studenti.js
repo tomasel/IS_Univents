@@ -22,14 +22,6 @@ class Evento{ //TODO: OTTENERE ID CREATORE; DA DOVE?
 
 }
 
-exports.list_event = function(req, res){
-  res.status(200).render('comunita_studenti', {
-    title: 'Comunita Studenti '
-  });
-  //res.render('users', { title: 'Usersii', users: users });
-};
-
-
 
 // funzione create_event
 exports.create_event = function(req, res){
@@ -37,6 +29,7 @@ exports.create_event = function(req, res){
     title: 'Crea Evento '
   });
 };
+
 
 //funzione di controllo dei campi
 check=function(req){
@@ -58,7 +51,7 @@ check=function(req){
           req.body.descrizione_evento.search(element,"/i")!=-1
       ) pulito=false; //OTTIMIZZAZIONE: SI FERMA APPENA TROVA LA PRIMA PAROLA
     })
-    
+    console.log(pulito);
     if (!pulito) return 2; //2:rifiutata per parole illegali
     return 3; //3: accettata
      
@@ -70,7 +63,6 @@ exports.crea = function(req, res){
 
   //controllo sui campi
   var risultato=check(req);
-  // console.log(risultato+"ndsajk");
 
   //1:evento rifiutato per campi lasciato vuoti
   if(risultato==1)
@@ -110,7 +102,11 @@ exports.crea = function(req, res){
     });
   }
 
-  // res.status(200).render('comunita_studenti/crea_evento', {
-  //   title: 'Crea evento '
-  // })
+};
+
+
+exports.list_event = function(req, res){
+  res.status(200).render('comunita_studenti', {
+    title: 'Eventi '
+  });
 };
