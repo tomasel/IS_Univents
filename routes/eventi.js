@@ -7,13 +7,17 @@ const app = express();
 app.get('/', async (req, res) => {
   
   try{
+    console.log("prima");
     let event = await Event.find();
-    event = event.map( (Event) => {
+    console.log("dopo");
+    res.status(200).json(event);
+/*    event = event.map( (Event) => {
+      //console.log(event);
         return {
           _id: Event._id,
           title: Event.title
         };
-    });
+    });*/
   }catch (err) {
     return res.status(500).send({
       error: err || 'Something went wrong.'
