@@ -1,5 +1,3 @@
-// funzione list_event
-
 const { type } = require("express/lib/response");
 const app = require("../app");
 const fs = require("fs");
