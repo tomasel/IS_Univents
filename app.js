@@ -86,7 +86,7 @@ app.use('/api/v1/eventi', eventiRouter);
 
 //Università
 app.get('/universita', universita.list_building);
-app.get('/universita/edificio', universita.list_event);
+//app.get('/universita/edificio', universita.list_event);
 
 //Impostazioni
 app.get('/impostazioni', impostazioni.view);
