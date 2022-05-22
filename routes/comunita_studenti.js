@@ -5,28 +5,12 @@ const { throws } = require("assert");
 const { exit } = require("process");
 
 
-class Evento{ //TODO: OTTENERE ID CREATORE; DA DOVE?
-  constructor(nome,data,orario,luogo,info,creatore,tipo){
-    this.nome=nome;
-    this.data=data;
-    this.orario=orario;
-    this.luogo=luogo;
-    this.info=info
-    this.creatore=creatore;
-    this.tipo=tipo;
-    //this.commenti sarà una lista di commenti
-    // this.preferito=false; ?? COME GESTIAMO I PREFERITI
-  }
-
-}
-
 //funzione di render
 exports.list_event = function(req, res){
   res.status(200).render('comunita_studenti', {
     title: 'Eventi '
   });
 };
-
 
 
 // funzione create_event
@@ -62,8 +46,8 @@ check=function(req){
     console.log(pulito);
     if (!pulito) return 2; //2:rifiutata per parole illegali
     return 3; //3: accettata
-     
 }
+
 
 //funzione che crea evento
 exports.crea = function(req, res){
@@ -96,29 +80,27 @@ exports.crea = function(req, res){
     console.log(dt.slice(0,10));
     console.log(dt.slice(11,16));
     console.log(req.body.descrizione_evento);
-    var ev = new Evento(req.body.nome_evento,
-                        dt.slice(0,10),//data
-                        dt.slice(11,16),//ora
-                        req.body.luogo_evento,
-                        req.body.descrizione_evento,
-                        creatore,                    //TODO
-                        "Evento interno");
+  
     
     //send to API
     fetch("http://localhost:3000/api/v1/eventi",{
       method: "POST",
-      headers:{
+      headers:{          
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-      mode:"cors",
-      body: JSON.stringify({
-        title: title,
-        place: place,
-        date_event: date_event,
-        info: info,
-        id_creator: id_creator
+      body:JSON.stringify({
+        title: req.body.nome_evento,
+        place: req.body.luogo_evento,
+        date_event: dt.slice(0,16),
+        info: req.body.descrizione_evento,
+        id_creator: creatore
       })
     })
     .then(res=>res.json())
+    .then(json => {
+      console.log('parsed json', json) // access json.body here
+    })
     .catch(err=>console.log(err));
     
     res.status(200).render('comunita_studenti/creazione_accettata',{
