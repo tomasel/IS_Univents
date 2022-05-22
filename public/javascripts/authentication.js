@@ -4,7 +4,7 @@ const Utente = require('../models/utente');
 //const jwt = require('jsonwebtoken');
 
 router.post('', async function(req, res) {
-    let utente = await Utente.findOne({
+    let user = await Utente.findOne({
         email: req.body.email
     }).exec();
 
@@ -21,7 +21,7 @@ router.post('', async function(req, res) {
             message: 'Authentication successfull.',
             email: user.email,
             id: user._id,
-            self: "api/v1/authentication" + user._id
+            self: "api/v1/authentication/" + user._id
         });
 });
 
