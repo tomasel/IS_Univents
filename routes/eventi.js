@@ -7,9 +7,8 @@ const app = express();
 app.get('/', async (req, res) => {
   
   try{
-    console.log("prima");
     let event = await Event.find();
-    console.log("dopo");
+    
     res.status(200).json(event);
 /*    event = event.map( (Event) => {
       //console.log(event);
@@ -57,8 +56,13 @@ app.post('/',async (req, res) => {
 
 /*DELETE un evento by id*/
 app.delete('/:id',async (req, res) => {
-  //f utente is == id_creator
-  if(1);
+  //if utente is == id_creator
+  //const eventId = req.query.eventId
+  const userId = req.query.userId
+  let test = await Event.findById(req.params.id);
+  if(!userId == test.id_creator ){
+    return res.status(400).send("wrong user");
+  };
 
   try{
     let event = await Event.findByIdAndDelete(req.params.id);

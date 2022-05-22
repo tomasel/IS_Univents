@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const EventSchema = new mongoose.Schema({ 
 	  title:  String,
     info:   String,
+    id_creator: String,
     comments: [{ body: String, date: Date, id_creator: String, reported: Boolean }],
     date: { type : Date, default: Date.now },
     date_event: { day: Number, month: Number, year : Number, hour: Number, minutes: Number},
