@@ -13,7 +13,7 @@ function login()
     var email = document.getElementById("loginEmail").value;
     var password = document.getElementById("loginPassword").value;
 
-    fetch('../api/v1/authentications', {
+    fetch('../api/v1/authentication', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email: email, password: password } ),
