@@ -107,7 +107,7 @@ exports.crea = function(req, res){
       method: "POST",
       headers:{
       },
-      mod:"cors",
+      mode:"cors",
       body: JSON.stringify({
         title: title,
         place: place,
