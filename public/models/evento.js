@@ -8,7 +8,7 @@ const EventSchema = new mongoose.Schema({
     comments: [{ body: String, date: Date, id_creator: String, reported: Boolean }],
     date: { type : Date, default: Date.now },
     date_event: { day: Number, month: Number, year : Number, hour: Number, minutes: Number},
-    place: { city: String, street : String, number: Number},
+    place: { address:String},
     hidden: Boolean,
     reported: Boolean,
     meta: {
