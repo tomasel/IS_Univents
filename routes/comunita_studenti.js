@@ -52,10 +52,12 @@ check=function(req){
 
     //per ogni parola controllo che non sia contenuta in nessun campo
     parole.forEach(element=>{
-      if( req.body.nome_evento.search(element,"/i")!=-1 ||
-          req.body.luogo_evento.search(element,"/i")!=-1 ||
-          req.body.descrizione_evento.search(element,"/i")!=-1
-      ) pulito=false; //OTTIMIZZAZIONE: SI FERMA APPENA TROVA LA PRIMA PAROLA
+      if(element!=""){
+        if( req.body.nome_evento.search(element,"/i")!=-1 ||
+            req.body.luogo_evento.search(element,"/i")!=-1 ||
+            req.body.descrizione_evento.search(element,"/i")!=-1
+        ) pulito=false; //OTTIMIZZAZIONE: SI FERMA APPENA TROVA LA PRIMA PAROLA
+      }
     })
     console.log(pulito);
     if (!pulito) return 2; //2:rifiutata per parole illegali
