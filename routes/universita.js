@@ -7,10 +7,10 @@ exports.list_building = function(req, res){
 };
 
 //funzione list_event
-
-exports.list_event = function(req, res){
-  res.render('universita/edificio', {
-    title: 'Edificio '
-  });
-  //res.render('users', { title: 'Usersii', users: users });
-};
+//non necessaria
+// exports.list_event = function(req, res){
+//   res.render('universita/edificio', {
+//     title: 'Edificio '
+//   });
+//   //res.render('users', { title: 'Usersii', users: users });
+// };
