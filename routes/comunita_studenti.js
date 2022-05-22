@@ -103,6 +103,22 @@ exports.crea = function(req, res){
                         "Evento interno");
     
     //send to API
+    fetch("http://localhost:3000/api/v1/eventi",{
+      method: "POST",
+      headers:{
+      },
+      mod:"cors",
+      body: JSON.stringify({
+        title: title,
+        place: place,
+        date_event: date_event,
+        info: info,
+        id_creator: id_creator
+      })
+    })
+    .then(res=>res.json())
+    .catch(err=>console.log(err));
+    
     res.status(200).render('comunita_studenti/creazione_accettata',{
       title: 'Successo '
     });
