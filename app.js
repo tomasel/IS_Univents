@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 
 const authentication = require('./public/javascripts/authentication');
 const eventiRouter = require('./routes/eventi');
+const utentiRouter = require('./routes/utenti');
 
 //Connection DB
 const fs = require('fs');
@@ -76,6 +77,7 @@ app.get('/', site.index);
 //login
 app.get('/login', login.login);
 app.use('/api/v1/authentication', authentication);
+app.use('/api/v1/check_login', utentiRouter);
 
 //home
 app.get('/home', home.view);
