@@ -14,6 +14,12 @@ exports.list_event = function(req, res){
   });
 };
 
+exports.get_event = function(req, res){
+  res.status(200).render('comunita_studenti/visualizza_evento', {
+    title: 'Evento specifico '
+  });
+};
+
 
 // funzione create_event
 exports.create_event = function(req, res){
@@ -96,7 +102,10 @@ exports.crea = function(req, res){
         place: req.body.luogo_evento,
         date_event: dt.slice(0,16),
         info: req.body.descrizione_evento,
-        id_creator: creatore
+        id_creator: creatore,
+        hidden: 0,
+        reported: 0,
+        meta:{favs : '0'}
       })
     })
     .then(res=>res.json())
