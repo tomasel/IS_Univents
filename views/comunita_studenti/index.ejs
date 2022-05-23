@@ -31,15 +31,36 @@
 <div id="comunita_studenti">
   
   <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var i,item,clone2;
-        for(i=0;i<10;i++){
-          console.log(i);
-          item = document.getElementsByTagName("template")[0].content.querySelector("div");
-          clone2 = document.importNode(item,true);
-          clone2.textContent+="Evento "+i; //TODO: CONNECT TO DB API AND RETRIEVE EVENTS
-          document.getElementById("puppet").appendChild(clone2);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      fetch('http://localhost:3000/api/v1/eventi',{
+        method:"GET",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         }
+      })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((data) => {
+          var i,item,clone;
+          for(i=0;i<data.length;i++){
+            // alert(i);
+            item = document.getElementsByTagName("template")[0].content.querySelector("div");
+            // alert(item);
+            clone = document.importNode(item,true);
+            // alert(clone);
+            clone.setAttribute('style', 'white-space: pre;');
+            clone.textContent=data[i].title+"\r\n";
+            clone.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+", "+data[i].place;
+            // alert(clone.textContent);
+            document.getElementById("puppet").appendChild(clone);
+          }
+      })
+
       }, false);
 
   </script>
