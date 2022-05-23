@@ -54,7 +54,8 @@
             clone = document.importNode(item,true);
             var body=clone.querySelector("div");
 
-            body.textContent=data[i].title+"\r\n";
+            body.setAttribute('style', 'white-space: pre;');
+            body.textContent=data[i].title+"\n";
             body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+", "+data[i].place;
 
             body.setAttribute("name",data[i].title);
