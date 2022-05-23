@@ -13,12 +13,12 @@
 </p>
 <p>
     <p id="error" for="button"></p>
-    <input type="button" value="Login" onclick="checkLogin(this);">
+    <input type="button" value="Login" onclick="checkEmpty(this);" onclick="checkLogin(this);">
 </p>
 
 <script>
 // controlla se i campi sono vuoti
-function checkLogin (button) {
+function checkEmpty (button) {
     var user = document.getElementById("username").value;
     var pass = document.getElementById("password").value;
     if (user === "" || pass === "") {

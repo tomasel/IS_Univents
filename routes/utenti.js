@@ -4,7 +4,7 @@ const app = express();
 
 
 /*GET utente by ID*/
-app.get('/',async (req, res) => {
+app.post('/',async (req, res) => {
     const userId = req.query.userId;
     const userPsw = req.query.userPsw
   
