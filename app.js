@@ -36,6 +36,8 @@ app.set('env', NODE_ENV);
 app.use(cors());
 //app.use(log('tiny'));
 
+app.disable("etag");
+
 var site = require('./routes/site');
 var comunita_studenti = require('./routes/comunita_studenti');
 var home = require('./routes/home');
