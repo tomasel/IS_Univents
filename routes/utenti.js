@@ -9,9 +9,9 @@ app.post('/',async (req, res) => {
     const userPsw = req.query.userPsw
   
   try{
-    let utente = await Utente.findByIdOne(UserId);
+    let utente = await Utente.findByIdOne(userId);
     if(!utente.password == userPsw){return "password errata"}
-    res.status(200).json(event);
+    res.status(200).json(Utente);
   }catch (err) {
     return res.status(500).send({
       error: err || 'Something went wrong.'
