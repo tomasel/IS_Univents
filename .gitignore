@@ -1,0 +1,4 @@
+.DS_Store
+password.txt
+views/comunita_studenti/parole_vietate.txt
+node_modules/

@@ -1,0 +1,161 @@
+<%- include('../header') -%>
+
+<h1 style="top:5%; position:fixed">Comunita studenti</h1>
+<style>
+.div2{
+  height: 50px;
+  width: 500px;
+  background-color: #f0d6d6;
+  border: 5px solid red;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
+}
+.puppet{
+  height: 0px;
+  width: 500px;
+  top: 70px;
+  left: 40%; 
+  position: absolute;
+}
+
+</style>
+
+<template>
+  <div class="div2" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>
+</template>
+
+
+
+
+<div class="puppet" id="puppet"></div>
+
+<div id="comunita_studenti">
+  
+  <script>
+    // const ids=[];
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('http://localhost:3000/api/v1/eventi',{
+        method:"GET",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((data) => {
+          var i,item,clone;
+          for(i=0;i<data.length;i++){
+            item = document.getElementsByTagName("template")[0].content;
+            clone = document.importNode(item,true);
+            var body=clone.querySelector("div");
+
+            body.setAttribute('style', 'white-space: pre;');
+            body.textContent=data[i].title+"\n";
+            body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+", "+data[i].place;
+
+            body.setAttribute("name",data[i].title);
+            body.setAttribute("place",data[i].place);
+            body.setAttribute("date",data[i].date_event.slice(0,10));
+            body.setAttribute("time",data[i].date_event.slice(11,16));
+            body.setAttribute("info",data[i].info);
+
+            
+            document.getElementById("puppet").appendChild(clone);
+          }
+
+      })
+      }, false);
+
+      function set_info_box(evento){
+
+        a=document.getElementById("info_nome");
+        b=document.getElementById("info_dove");
+        c=document.getElementById("info_quando");
+        d=document.getElementById("info_info");
+
+        a.textContent="NOME\r\n";
+        a.textContent+=evento.getAttribute("name");
+
+        b.textContent="DOVE\r\n";
+        b.textContent+=evento.getAttribute("place");
+
+        c.textContent="QUANDO\r\n";
+        c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
+
+        d.textContent="INFO\r\n";
+        d.textContent+=evento.getAttribute("info");
+      }
+
+  </script>
+
+  <form method="get" action="/comunita_studenti/crea_evento">
+    <p>
+      <input type="submit" value="crea evento" style="top:13%; position:fixed">
+    </p>
+  </form>
+
+  
+    <p>
+    <label id="puppet" x="75%" y="0"></label>
+  </p>
+
+
+    <table id="evento" border="0" width="30%" align="left"
+    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="top: 21%; position:fixed">
+      <tr>
+        <td>
+          <table border="0" cellpadding="15"  
+            <tr>
+              <td width="60%">
+
+                <font id="info_nome" face="Helvetica" size="4"
+                color="black">
+                NOME<br><br>
+                </font>
+
+                <hr color="#b10b25">
+
+                <font id="info_dove" face="Helvetica" size="4"
+                color="black">
+                DOVE<br><br>
+                </font>
+
+                <hr color="#b10b25">
+
+                <font id="info_quando" face="Helvetica" size="4"
+                color="black">
+                QUANDO<br><br>
+                </font>
+
+                <hr color="#b10b25">
+
+                <font id="info_info" face="Helvetica" size="4"
+                color="black">
+                INFO<br><br>
+                </font>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  <!-- </div> -->
+  
+  <ul style="bottom: 100px; right: 100px; position:fixed">
+    <li>
+      <a href="/home">Home</a>
+    </li>
+    <li>
+      <a href="/universita">Università</a>
+    </li>
+  </ul>
+</div>
+
+
+<%- include('../footer') -%>

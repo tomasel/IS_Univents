@@ -1,0 +1,55 @@
+<%- include('../header') -%>
+
+<h1>Login</h1>
+
+<form method="get" action="/home">
+<p>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username">
+</p>
+<p>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password">
+</p>
+<p>
+    <p id="error" for="button"></p>
+    <input type="button" value="Login" onclick="checkLogin(this);">
+</p>
+
+<script>
+
+console.log("here!");
+</script>
+
+<script>
+// controlla se i campi sono vuoti
+// controlla se l'utente esiste sul database, se esiste controlla se la password è corretta
+function checkLogin (button) {
+    var user = document.getElementById("username").value;
+    var pass = document.getElementById("password").value;
+    if (user === "" || pass === "") {
+        alert("Fill both username and password!");
+    } else {
+        // controllo utente
+        // TODO alla fine redirect utente a window.location = "../home";
+        fetch("http://localhost:3000/api/v1/check_login",{
+              method: "POST",
+              headers:{          
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body:JSON.stringify({
+                userId: user,
+                userPsw: pass
+              })
+            })
+        .then(res=>res.json())
+        .then(json => {
+            console.log('parsed json', json) // access json.body here
+        })
+        .catch(err=>console.log(err));
+    }
+}
+</form>
+
+<%- include('../footer') -%>
