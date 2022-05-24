@@ -1,6 +1,15 @@
 <%- include('../header') -%>
 
 <h1>Create Events</h1>
+<style>
+  .hr{
+    background-color: #b10b25;
+    border: none;
+    margin-bottom: 2em;
+    margin-bottom: 2em;
+    z-index: 1;
+  }
+</style>
 
 <div id="crea_evento">
   
@@ -8,13 +17,13 @@
   <form method="post" action="/comunita_studenti/crea_evento">
 
     <label for="nome_evento">Nome dell'evento:<br></label>
-    <input name="nome_evento" type="text" value=""><br><br>
+    <input name="nome_evento" type="text" value="" oninput="update_nome(this.value)"><br><br>
 
     <label for="luogo_evento">Luogo dell'evento:<br></label>
-    <input name="luogo_evento" type="text" ><br><br>
+    <input name="luogo_evento" type="text" oninput="update_dove(this.value)"><br><br>
 
     <label for="data_ora">Data e ora dell'evento:<br></label>
-    <input type="datetime-local" name="data_ora" id="data_ora_evento" max="2030-12-31T23:59"><br><br>
+    <input type="datetime-local" name="data_ora" id="data_ora_evento" max="2030-12-31T23:59" oninput="update_quando(this.value)"><br><br>
     <!-- set minimum date to today's -->
     <script>
       var today=new Date();
@@ -23,11 +32,52 @@
 
 
     <label for="descrizione_evento">descrizione dell'evento:<br></label>
-    <input name="descrizione_evento" type="textarea" size="80" rows="10"><br><br>
+    <input name="descrizione_evento" type="textarea" size="80" rows="10" oninput="update_info(this.value)"><br><br>
 
     <input name="submit" type="submit" value="Invia">
 
   </form>
+
+  <table id="evento" border="0" width="30%" align="left"
+    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="right: 25%; top:25%; position:fixed; z-index: -1;">
+      <tr>
+        <td>
+          <table border="0" cellpadding="15"  
+            <tr>
+              <td width="60%">
+
+                <font id="info_nome" face="Helvetica" size="4"
+                color="black">
+                NOME:<br>
+                </font>
+
+                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+                <font id="info_dove" face="Helvetica" size="4"
+                color="black">
+                DOVE:<br>
+                </font>
+
+                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+                <font id="info_quando" face="Helvetica" size="4"
+                color="black">
+                QUANDO:<br>
+                </font>
+
+                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+                <font id="info_info" face="Helvetica" size="4"
+                color="black">
+                INFO:<br>
+                </font>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
 
   <br><br>
   <li>
@@ -40,6 +90,41 @@
     <a href="/universita">Università</a>
   </li>
 
+  <script>
+    function update_nome(value){
+      document.getElementById("info_nome").textContent="NOME:\r\n"+value;
+    }
+
+    function update_dove(value){
+      document.getElementById("info_dove").textContent="DOVE:\r\n"+value;
+    }
+
+    function update_quando(value){
+      var time=document.getElementById("info_quando");
+      time.textContent="DOVE:\r\n"+value.slice(0,10)+" alle "+value.slice(11,16);
+    }
+
+    function update_info(value){
+      document.getElementById("info_info").textContent="INFO:\r\n"+value;
+    }
+    function goto_home(){
+      location.assign('http://localhost:3000/home');
+    }
+
+    function goto_universita(){
+      location.assign('http://localhost:3000/universita');
+    }
+
+    function goto_comunita_studenti(){
+      location.assign('http://localhost:3000/comunita_studenti');
+    }
+  </script>
+
+  <ul style="bottom: 100px; right: 100px; position:fixed">
+    <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 100px; ">Home</button><br><br>
+    <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 100px;">Università</button><br><br>
+    <button onclick="goto_comunita_studenti()" style="width:12%; align-content: center; position:fixed; right: 100px;">Comunità studenti</button>
+  </ul>
 </div>
 
 <%- include('../footer') -%>
