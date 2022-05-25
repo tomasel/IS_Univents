@@ -1,6 +1,30 @@
 <%- include('../header') -%>
 
-<h1 style="position: fixed">Università</h1>
+<table id="header" border="0" width="100%"
+		cellpadding="0" cellspacing="0" bgcolor="#b10b25" style="position:fixed; z-index: 1; top:0; left:0;">
+		<tr>
+			<td>
+				<table border="0" cellpadding="15" cellspacing="0" width="100%" align="left">
+					<tr>	
+						<td>
+              <img src="/images/sigillo_universita/ti_200x200.png" width="100" height="100"  alt="univents_logo">
+							<font face="Helvetica Neue" size="6" position="center" color="white">
+                	<b>Univents</b> <br>
+                  <b>Università</b>
+							</font>
+						</td>	
+            <td>
+							<a href="/impostazioni" style="text-decoration:none; float:right;">
+								<font face="Helvetica neue" size="5" color=white >
+									Impostazioni
+								</font>
+							</a>
+						</td>					
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 
 <style>
   .dropbtn {
@@ -14,7 +38,7 @@
   .dropdown {
     position: fixed;
     display: inline-block;
-    top:16%;
+    top:30%;
   }
   
   .dropdown-content {
@@ -83,7 +107,7 @@
 </div>
 
 <table id="evento" border="0" width="30%" align="left"
-    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="top: 25%; position:fixed; z-index: -1;">
+    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="top: 38%; position:fixed; z-index: -1;">
       <tr>
         <td>
           <table border="0" cellpadding="15"  
@@ -92,28 +116,28 @@
 
                 <font id="info_nome" face="Helvetica" size="4"
                 color="black">
-                NOME<br><br>
+                NOME:
                 </font>
 
-                <hr color="#b10b25">
-
+                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+                
                 <font id="info_dove" face="Helvetica" size="4"
                 color="black">
-                DOVE<br><br>
+                DOVE:
                 </font>
 
-                <hr color="#b10b25">
+                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
 
                 <font id="info_quando" face="Helvetica" size="4"
                 color="black">
-                QUANDO<br><br>
+                QUANDO:
                 </font>
 
-                <hr color="#b10b25">
-
+                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+                
                 <font id="info_info" face="Helvetica" size="4"
                 color="black">
-                INFO<br><br>
+                INFO:
                 </font>
 
               </td>
