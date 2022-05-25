@@ -1,6 +1,30 @@
 <%- include('../header') -%>
 
-<h1>Create Events</h1>
+<table id="header" border="0" width="100%"
+		cellpadding="0" cellspacing="0" bgcolor="#b10b25" style="position:fixed; z-index: 1; top:0; left:0;">
+		<tr>
+			<td>
+				<table border="0" cellpadding="15" cellspacing="0" width="100%" align="left">
+					<tr>	
+						<td>
+              <img src="/images/sigillo_universita/ti_200x200.png" width="100" height="100"  alt="univents_logo">
+							<font face="Helvetica Neue" size="6" position="center" color="white">
+                	<b>Univents</b> <br>
+                  <b>Creazione evento</b>
+							</font>
+						</td>	
+            <td>
+							<a href="/impostazioni" style="text-decoration:none; float:right;">
+								<font face="Helvetica neue" size="5" color=white >
+									Impostazioni
+								</font>
+							</a>
+						</td>					
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 <style>
   .hr{
     background-color: #b10b25;
@@ -11,7 +35,7 @@
   }
 </style>
 
-<div id="crea_evento">
+<div id="crea_evento"  style="top:30%; position:fixed;">
   
   <!--action="/comunita_studenti/crea_evento" vuol dire che quando premo il bottono fa partire la chamata POST /home, e contemporaneamente si sposta in /home-->
   <form method="post" action="/comunita_studenti/crea_evento">
@@ -39,7 +63,7 @@
   </form>
 
   <table id="evento" border="0" width="30%" align="left"
-    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="right: 25%; top:25%; position:fixed; z-index: -1;">
+    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="right: 25%; top:30%; position:fixed; z-index: -1;">
       <tr>
         <td>
           <table border="0" cellpadding="15"  
