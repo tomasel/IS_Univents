@@ -12,6 +12,7 @@
   padding: 20px;
   text-align: center;
   margin: 10px;
+  z-index: -1;
 }
 .puppet{
   height: 0px;
@@ -20,22 +21,34 @@
   left: 40%; 
   position: absolute;
 }
-
+.empty-star{
+  float:right;
+  margin-left: 9px;
+  display: inline-block;
+  color: #F0F0F0;
+  text-shadow: 0 0 1px #666666;
+  font-size: 30px;
+}
+.highlight,
+.selected{
+  color: #F4B30A;
+  text-shadow: 0 0 1px #F48F0A;
+}
 </style>
 
+
 <template>
-  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>
+  <ul>
+    <li id="fav" class="empty-star" onclick="highlight(this)">★</li>
+  </ul>
+  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>    
 </template>
-
-
-
-
+ 
 <div class="puppet" id="puppet"></div>
 
 <div id="comunita_studenti">
   
   <script>
-    // const ids=[];
     document.addEventListener('DOMContentLoaded', function() {
       fetch('http://localhost:3000/api/v1/eventi',{
         method:"GET",
@@ -79,16 +92,16 @@
         c=document.getElementById("info_quando");
         d=document.getElementById("info_info");
 
-        a.textContent="NOME:\r\n";
+        a.textContent="NOME\n";
         a.textContent+=evento.getAttribute("name");
 
-        b.textContent="DOVE:\r\n";
+        b.textContent="DOVE\n";
         b.textContent+=evento.getAttribute("place");
 
-        c.textContent="QUANDO:\r\n";
+        c.textContent="QUANDO\n";
         c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
 
-        d.textContent="INFO:\r\n";
+        d.textContent="INFO\n";
         d.textContent+=evento.getAttribute("info");
       }
 
@@ -100,11 +113,16 @@
         location.assign('http://localhost:3000/universita');
       }
 
+      function highlight(value){
+        value.classList.toggle("selected");
+        //TODO:CONNECT TO DB AND SET FAVOURITE
+      }
+
   </script>
 
   <form method="get" action="/comunita_studenti/crea_evento">
     <p>
-      <input type="submit" value="crea evento" style=" position:fixed">
+      <input type="submit" value="crea evento" style=" position:fixed; top:17%;">
     </p>
   </form>
 
@@ -154,13 +172,12 @@
         </td>
       </tr>
     </table>
-  <!-- </div> -->
+
   
   <ul style="bottom: 100px; right: 100px; position:fixed">
     <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 100px; ">Home</button><br><br>
     <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 100px;">Università</button>
   </ul>
 </div>
-
 
 <%- include('../footer') -%>
