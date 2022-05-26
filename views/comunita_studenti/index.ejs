@@ -39,6 +39,7 @@
   margin: 10px;
   z-index: -1;
   position:relative;
+  box-shadow: -4px 5px 7px #666666;
 }
 .puppet{
   height: 0px;
@@ -67,6 +68,15 @@
   height: 50%;
   background-color: red;
   position:absolute;
+}
+.button{
+  background-color: #B10B25;
+  border:none;
+  color: #FFFF;
+  width: 140px;
+  height: 40px;
+  border-radius: 15px;
+  box-shadow: -2px 2px 5px #666666;
 }
 </style>
 
@@ -158,9 +168,18 @@
 
   <form method="get" action="/comunita_studenti/crea_evento">
     <p>
-      <input type="submit" value="crea evento" style=" position:fixed; top:30%;">
+      <input class="button" type="submit" value="crea evento" style=" position:fixed; top:30%; height: 40px;background-color: #B10B25;
+      border:none;
+      color: #FFFF;
+      width: 140px;
+      height: 40px;
+      border-radius: 15px;
+      box-shadow: -2px 2px 5px #666666;">
     </p>
   </form>
+
+  <button class="button" style="position: fixed; top:30%; left:25%;">Filtra eventi</button>
+
 
   
     <p>
@@ -169,7 +188,11 @@
 
 
     <table id="evento" border="0" width="30%" align="left"
+<<<<<<< Updated upstream
     cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%">
+=======
+      cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%">
+>>>>>>> Stashed changes
       <tr>
         <td>
           <table border="0" cellpadding="15"  
