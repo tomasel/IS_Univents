@@ -78,6 +78,20 @@
   border-radius: 15px;
   box-shadow: -2px 2px 5px #666666;
 }
+.button:hover{background-color: #a30000;}
+.filtro{
+  text-align: center;
+  border: 1px solid #dddddd; 
+}
+.filtro_selezione{
+  text-align: center;
+  border: 1px solid #dddddd; 
+}
+.filtro_selezione:hover{
+  background-color: darkgray;
+  color: white
+}
+
 </style>
 
 <!-- <div class="div"></div> -->
@@ -94,6 +108,95 @@
 
 <div id="comunita_studenti">
   
+
+  <form method="get" action="/comunita_studenti/crea_evento">
+    <p>
+      <button class="button" type="submit" style=" position:fixed; top:30%;">Crea evento</button>
+    </p>
+  </form>
+
+  <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
+  top:30%; right:2%; border: 1px solid #dddddd; width:18% ">
+    <tr>
+      <th colspan="5">Filtra eventi per:</th>
+    </tr>
+    <tr>
+      <td class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
+      <td class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
+    </tr>
+    <tr id="filtro_nome" style="width:100%; display:none;">
+      <td colspan="2">
+          <p style="text-align:center;">Inserisci il nome dell'evento</p>
+          <input type="text" id="input_nome" name="input_nome" style="width:100%;">
+      </td>
+    </tr>
+    <tr id="filtro_data" style="width:100%; display:none;">
+      <td colspan="2">
+        <p style="text-align:center;">Inserisci la data dell'evento</p>
+        <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
+      </td>
+    </tr>
+  </table>
+
+  <button class="button" id="filtra_per_nome" style="display:none; position:fixed; bottom:40%; right:6%; width:10%;">filtra per nome</button>
+  <button class="button" id="filtra_per_data" style="display:none; position:fixed; bottom:40%; right:6%; width:10%;">filtra per data</button>
+
+
+  <!-- <button class="button" style="position: fixed; top:30%; left:25%;" onclick="filtra()">Filtra eventi</button> -->
+
+  <p>
+    <label id="puppet" x="75%" y="0"></label>
+  </p>
+
+
+  <table id="evento" border="0" width="30%" align="left"
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%">
+  <tr>
+      <td>
+        <table border="0" cellpadding="15"  
+        <tr>
+            <td width="60%">
+
+              <font id="info_nome" face="Helvetica" size="4"
+              color="black">
+              NOME:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_dove" face="Helvetica" size="4"
+              color="black">
+              DOVE:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_quando" face="Helvetica" size="4"
+              color="black">
+              QUANDO:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_info" face="Helvetica" size="4"
+              color="black">
+              INFO:
+              </font>
+
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  
+  <ul style="bottom: 100px; right: 100px; position:fixed">
+    <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 100px; ">Home</button><br><br>
+    <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 100px;">Università</button>
+  </ul>
+</div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       fetch('http://localhost:3000/api/v1/eventi',{
@@ -131,112 +234,55 @@
       })
       }, false);
 
-      function set_info_box(evento){
+    function set_info_box(evento){
 
-        a=document.getElementById("info_nome");
-        b=document.getElementById("info_dove");
-        c=document.getElementById("info_quando");
-        d=document.getElementById("info_info");
+      a=document.getElementById("info_nome");
+      b=document.getElementById("info_dove");
+      c=document.getElementById("info_quando");
+      d=document.getElementById("info_info");
 
-        a.textContent="NOME\n";
-        a.textContent+=evento.getAttribute("name");
+      a.textContent="NOME\n";
+      a.textContent+=evento.getAttribute("name");
 
-        b.textContent="DOVE\n";
-        b.textContent+=evento.getAttribute("place");
+      b.textContent="DOVE\n";
+      b.textContent+=evento.getAttribute("place");
 
-        c.textContent="QUANDO\n";
-        c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
+      c.textContent="QUANDO\n";
+      c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
 
-        d.textContent="INFO\n";
-        d.textContent+=evento.getAttribute("info");
-      }
+      d.textContent="INFO\n";
+      d.textContent+=evento.getAttribute("info");
+    }
 
-      function goto_home(){
-        location.assign('http://localhost:3000/home');
-      }
+    function goto_home(){
+      location.assign('http://localhost:3000/home');
+    }
 
-      function goto_universita(){
-        location.assign('http://localhost:3000/universita');
-      }
+    function goto_universita(){
+      location.assign('http://localhost:3000/universita');
+    }
 
-      function highlight(value){
-        value.classList.toggle("selected");
-        //TODO:CONNECT TO DB AND SET FAVOURITE
-      }
+    function highlight(value){
+      value.classList.toggle("selected");
+      //TODO:CONNECT TO DB AND SET FAVOURITE
+    }
 
+    function filtra(){
+
+    }
+
+    function show_filtro_data(){
+      document.getElementById("filtro_nome").style.display="none";
+      document.getElementById("filtra_per_nome").style.display="none"
+      document.getElementById("filtro_data").style.display="table-row";
+      document.getElementById("filtra_per_data").style.display="block";
+
+    }
+    function show_filtro_nome(){
+      document.getElementById("filtro_data").style.display="none";
+      document.getElementById("filtra_per_data").style.display="none";
+      document.getElementById("filtro_nome").style.display="table-row";
+      document.getElementById("filtra_per_nome").style.display="block";
+    }
   </script>
-
-  <form method="get" action="/comunita_studenti/crea_evento">
-    <p>
-      <input class="button" type="submit" value="crea evento" style=" position:fixed; top:30%; height: 40px;background-color: #B10B25;
-      border:none;
-      color: #FFFF;
-      width: 140px;
-      height: 40px;
-      border-radius: 15px;
-      box-shadow: -2px 2px 5px #666666;">
-    </p>
-  </form>
-
-  <button class="button" style="position: fixed; top:30%; left:25%;">Filtra eventi</button>
-
-
-  
-    <p>
-    <label id="puppet" x="75%" y="0"></label>
-  </p>
-
-
-    <table id="evento" border="0" width="30%" align="left"
-<<<<<<< Updated upstream
-    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%">
-=======
-      cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%">
->>>>>>> Stashed changes
-      <tr>
-        <td>
-          <table border="0" cellpadding="15"  
-            <tr>
-              <td width="60%">
-
-                <font id="info_nome" face="Helvetica" size="4"
-                color="black">
-                NOME:
-                </font>
-
-                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
-
-                <font id="info_dove" face="Helvetica" size="4"
-                color="black">
-                DOVE:
-                </font>
-
-                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
-
-                <font id="info_quando" face="Helvetica" size="4"
-                color="black">
-                QUANDO:
-                </font>
-
-                <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
-
-                <font id="info_info" face="Helvetica" size="4"
-                color="black">
-                INFO:
-                </font>
-
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-  
-  <ul style="bottom: 100px; right: 100px; position:fixed">
-    <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 100px; ">Home</button><br><br>
-    <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 100px;">Università</button>
-  </ul>
-</div>
-
 <%- include('../footer') -%>
