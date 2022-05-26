@@ -26,64 +26,6 @@
 		</tr>
 	</table>
 
-<style>
-  .dropbtn {
-    background-color: #f75454;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-  }
-  
-  .dropdown {
-    position: fixed;
-    display: inline-block;
-    top:30%;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: fixed;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 4px 15px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  .dropdown:hover .dropbtn {background-color: #a30000;}
-
-  .eventbox{
-      height: 50px;
-      width: 500px;
-      background-color: #f0d6d6;
-      border: 5px solid red;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      margin: 10px;
-      box-shadow: -4px 5px 7px #666666;
-    }
-  .puppet{
-      height: 0px;
-      width: 500px;
-      top: 150px;
-      left: 40%; 
-      position: relative;
-    }
-
-</style>
-
 <template>
   <div class="eventbox"></div>
 </template>
@@ -148,6 +90,39 @@
       </tr>
     </table>
 
+    <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
+    top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
+      <tr>
+        <th colspan="5">Filtra eventi per:</th>
+      </tr>
+      <tr>
+        <td class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
+        <td class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
+      </tr>
+      <tr id="filtro_nome" style="width:100%; display:none;">
+        <td colspan="2">
+            <p style="text-align:center;">Inserisci il nome dell'evento</p>
+            <input type="text" id="input_nome" name="input_nome" style="width:100%;">
+        </td>
+      </tr>
+      <tr id="filtro_data" style="width:100%; display:none;">
+        <td colspan="2">
+          <p style="text-align:center;">Inserisci la data dell'evento</p>
+          <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
+        </td>
+      </tr>
+    </table>
+    <button class="button" id="filtra_per_nome" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
+    <button class="button" id="filtra_per_data" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>    
+
+
+    
+<ul style="bottom: 100px; right: 100px; position:fixed">
+  <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Home</button><br><br>
+  <button onclick="goto_comunita_studenti()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Comunita studenti</button>
+</ul>
+
+
 <script>
 
   function ottieni(edificio){
@@ -175,11 +150,21 @@
   function goto_comunita_studenti(){
     location.assign('http://localhost:3000/comunita_studenti');
   }
+  function show_filtro_data(){
+    document.getElementById("filtro_nome").style.display="none";
+    document.getElementById("filtra_per_nome").style.display="none"
+    document.getElementById("filtro_data").style.display="table-row";
+    document.getElementById("filtra_per_data").style.display="block";
+
+  }
+  function show_filtro_nome(){
+    document.getElementById("filtro_data").style.display="none";
+    document.getElementById("filtra_per_data").style.display="none";
+    document.getElementById("filtro_nome").style.display="table-row";
+    document.getElementById("filtra_per_nome").style.display="block";
+  }
+
 </script>
 
-<ul style="bottom: 100px; right: 100px; position:fixed">
-  <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 100px; ">Home</button><br><br>
-  <button onclick="goto_comunita_studenti()" style="width:12%; align-content: center; position:fixed; right: 100px;">Comunita studenti</button>
-</ul>
 
 <%- include('../footer') -%>
