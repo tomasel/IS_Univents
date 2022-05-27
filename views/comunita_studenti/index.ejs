@@ -58,7 +58,7 @@
 
 
   <table id="evento" border="0" width="30%" align="left"
-  cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%">
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%;">
   <tr>
       <td>
         <table border="0" cellpadding="15"  
@@ -175,16 +175,16 @@
     c=document.getElementById("info_quando");
     d=document.getElementById("info_info");
 
-    a.textContent="NOME\n";
+    a.textContent="NOME:\n";
     a.textContent+=evento.getAttribute("name");
 
-    b.textContent="DOVE\n";
+    b.textContent="DOVE:\n";
     b.textContent+=evento.getAttribute("place");
 
-    c.textContent="QUANDO\n";
+    c.textContent="QUANDO:\n";
     c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
 
-    d.textContent="INFO\n";
+    d.textContent="INFO:\n";
     d.textContent+=evento.getAttribute("info");
   }
 
