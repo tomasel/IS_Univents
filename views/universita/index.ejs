@@ -1,95 +1,31 @@
 <%- include('../header') -%>
 
-<table id="header" border="0" width="100%"
-		cellpadding="0" cellspacing="0" bgcolor="#b10b25" style="position:fixed; z-index: 1; top:0; left:0;">
-		<tr>
-			<td>
-				<table border="0" cellpadding="15" cellspacing="0" width="100%" align="left">
-					<tr>	
-						<td>
-              <img src="/images/sigillo_universita/ti_200x200.png" width="100" height="100"  alt="univents_logo">
-							<font face="Helvetica Neue" size="6" position="center" color="white">
-                	<b>Univents</b> <br>
-                  <b>Università</b>
-							</font>
-						</td>	
-            <td>
-							<a href="/impostazioni" style="text-decoration:none; float:right;">
-								<font face="Helvetica neue" size="5" color=white >
-									Impostazioni
-								</font>
-							</a>
-						</td>					
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
+  <div style="position:fixed; background-color: #B10B25; width:100%; height: 200px; top:0px; left:0px; z-index: 1;">
+    <img src="/images/sigillo_universita/ti_200x200.png" width="140" height="140"  alt="univents_logo" 
+    style="position:fixed; top:10px; left:20px;">
+    <font face="Helvetica Neue" color="white" style="font-size:40px; position:fixed; top: 150px; left:15px;">
+      <b>Univents</b>
+    </font>
+    <div style="width:100%; height:200px; text-align: center; display:table;">
+      <font face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
+        Università
+      </font>
+    </div>
 
-<style>
-  .dropbtn {
-    background-color: #f75454;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-  }
-  
-  .dropdown {
-    position: fixed;
-    display: inline-block;
-    top:30%;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: fixed;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 4px 15px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  .dropdown:hover .dropbtn {background-color: #a30000;}
+    <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
+      <font face="Helvetica neue" size="5" color=white >
+        Impostazioni
+      </font>
+    </a>
+  </div>
 
-  .div{
-      height: 50px;
-      width: 500px;
-      background-color: #f0d6d6;
-      border: 5px solid red;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      margin: 10px;
-    }
-  .puppet{
-      height: 0px;
-      width: 500px;
-      top: 150px;
-      left: 40%; 
-      position: relative;
-    }
+  <template>
+    <ul>
+      <li id="fav" class="empty-star" onclick="highlight(this)">★</li>
+    </ul>
+    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>    
+  </template>
 
-</style>
-
-<template>
-  <div class="eventbox"></div>
-</template>
-
-<template>
-  <div class="infobox" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>
-</template>
 
 <div class="puppet" id="puppet"></div>
 
@@ -153,8 +89,8 @@
         <th colspan="5">Filtra eventi per:</th>
       </tr>
       <tr>
-        <td class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
-        <td class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
+        <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
+        <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
       </tr>
       <tr id="filtro_nome" style="width:100%; display:none;">
         <td colspan="2">
@@ -193,10 +129,11 @@
     }
     for(i=0;i<10;i++){
       console.log(i);
-      item = document.getElementsByTagName("template")[0].content.querySelector("div");
-      clone2 = document.importNode(item,true);
-      clone2.textContent+="Evento "+edificio+" "+i; //TODO: CONNECT TO DB API AND RETRIEVE EVENTS
-      document.getElementById("puppet").appendChild(clone2);
+      item = document.getElementsByTagName("template")[0].content;
+      clone = document.importNode(item,true);
+      var body=clone.querySelector("div");
+      body.textContent+="Evento "+edificio+" "+i; //TODO: CONNECT TO DB API AND RETRIEVE EVENTS
+      document.getElementById("puppet").appendChild(clone);
     }
   }
   
@@ -207,18 +144,28 @@
   function goto_comunita_studenti(){
     location.assign('http://localhost:3000/comunita_studenti');
   }
+  function show_filtro_nome(){
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="darkgray";
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
+    document.getElementById("filtro_data").style.display="none";
+    document.getElementById("filtra_per_data").style.display="none";
+    document.getElementById("filtro_nome").style.display="table-row";
+    document.getElementById("filtra_per_nome").style.display="block";
+  }
+
   function show_filtro_data(){
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="darkgray";
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
     document.getElementById("filtro_nome").style.display="none";
     document.getElementById("filtra_per_nome").style.display="none"
     document.getElementById("filtro_data").style.display="table-row";
     document.getElementById("filtra_per_data").style.display="block";
 
   }
-  function show_filtro_nome(){
-    document.getElementById("filtro_data").style.display="none";
-    document.getElementById("filtra_per_data").style.display="none";
-    document.getElementById("filtro_nome").style.display="table-row";
-    document.getElementById("filtra_per_nome").style.display="block";
+
+  function highlight(value){
+    value.classList.toggle("selected");
+    //TODO:CONNECT TO DB AND SET FAVOURITE
   }
 
 </script>
