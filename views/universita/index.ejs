@@ -98,9 +98,9 @@
             <input type="text" id="input_nome" name="input_nome" style="width:100%;">
         </td>
       </tr>
-      <tr id="filtro_data" style="width:100%; display:none;">
+      <tr id="filtro_data" style="width:100%; display:none;text-align:left;">
         <td colspan="2">
-          <p style="text-align:center;">Inserisci la data dell'evento</p>
+          <p>Inserisci la data dell'evento</p>
           <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
         </td>
       </tr>
@@ -145,7 +145,7 @@
     location.assign('http://localhost:3000/comunita_studenti');
   }
   function show_filtro_nome(){
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="darkgray";
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
     document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
     document.getElementById("filtro_data").style.display="none";
     document.getElementById("filtra_per_data").style.display="none";
@@ -154,7 +154,7 @@
   }
 
   function show_filtro_data(){
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="darkgray";
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
     document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
     document.getElementById("filtro_nome").style.display="none";
     document.getElementById("filtra_per_nome").style.display="none"
