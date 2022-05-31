@@ -28,6 +28,12 @@ exports.create_event = function(req, res){
   });
 };
 
+//commenti
+exports.commenta = function(req, res){
+  res.status(200).render('comunita_studenti/commenti', {
+    title: 'Commenti'
+  });
+};
 
 //funzione di controllo dei campi
 check=function(req){
@@ -120,3 +126,5 @@ exports.crea = function(req, res){
   }
 
 };
+
+

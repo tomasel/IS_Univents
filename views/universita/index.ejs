@@ -16,9 +16,42 @@
  </a>
 </div>
 
+<div class="left_menu">
+  <br><br><br><br><br><br><br><br><br>
+  <td>
+    <a href="/home" style="text-decoration: none;">
+      <font face="Helvetica" size="5" color=black>
+        Home<br>
+      </font>
+    </a>
+  </td>
+  
+  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
+  
+  <td>
+    <a href="/comunita_studenti" style="text-decoration:none">
+      <font face="Helvetica" size="5" color=black>
+        Comunità Studenti<br>
+      </font>
+    </a>
+  </td>
+  
+  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
+  
+  <td>
+    <a href="/universita" style="text-decoration:none">
+      <font face="Helvetica" size="5" color=black>
+        Università
+      </font>
+    </a>
+  </td>
+
+</div>
+
   <template>
     <ul>
-      <li id="fav" class="empty-star" onclick="highlight(this)">★</li>
+      <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
+      <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
     </ul>
     <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>    
   </template>
@@ -39,8 +72,8 @@
   </div>
 </div>
 
-<table id="evento" border="0" width="30%" align="left"
-    cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="top: 38%; position:fixed; z-index: -1;">
+<table id="evento" class="infobox" border="0" align="left"
+    cellpadding="0" cellspacing="0" bgcolor="#cccccc" >
       <tr>
         <td>
           <table border="0" cellpadding="15"  

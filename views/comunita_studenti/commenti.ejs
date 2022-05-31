@@ -18,41 +18,6 @@
  </a>
 </div>
 
-
-<div class="left_menu">
-  <br><br><br><br><br><br><br><br><br>
-  <td>
-    <a href="/home" style="text-decoration: none;">
-      <font face="Helvetica" size="5" color=black>
-        Home<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/comunita_studenti" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Comunità Studenti<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/universita" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Università
-      </font>
-    </a>
-  </td>
-
-</div>
-
-
-
 <template>
   <ul>
     <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
@@ -66,21 +31,11 @@
 
 
 <div id="comunita_studenti">
-  
-  <form method="get" action="/comunita_studenti/crea_evento">
-    <p>
-      <button class="button" type="submit" style=" position:fixed; left:18%; top:25%;">Crea evento</button>
-    </p>
-  </form>
 
 
-  <p>
-    <label id="puppet" x="75%" y="0"></label>
-  </p>
 
-
-  <table id="evento" border="0" align="left"
-  cellpadding="0" cellspacing="0" bgcolor="#cccccc"  class="infobox">
+  <table id="evento" border="0" width="30%" align="left"
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%;">
   <tr>
       <td>
         <table border="0" cellpadding="15"  
@@ -120,8 +75,8 @@
     </tr>
   </table>
 
-
-  <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
+<!-- diventera la zona per aggiungere commenti -->
+  <!-- <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
   top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
     <tr>
       <th colspan="5">Filtra eventi per:</th>
@@ -142,22 +97,23 @@
         <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
       </td>
     </tr>
-  </table>
+  </table> -->
 
 
   <button class="button" id="filtra_per_nome" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
   <button class="button" id="filtra_per_data" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
 
 
-  <!-- <ul style="bottom: 100px; right: 100px; position:fixed">
+  <ul style="bottom: 100px; right: 100px; position:fixed">
     <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Home</button><br><br>
     <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 5%;">Università</button>
-  </ul> -->
+  </ul>
 
 
 </div>
 
 <script>
+    //sarà da cambiare per otteneere i commenti
   document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:3000/api/v1/eventi',{
       method:"GET",
@@ -195,66 +151,34 @@
     })
     }, false);
 
-  function set_info_box(evento){
+//   function set_info_box(evento){
 
-    a=document.getElementById("info_nome");
-    b=document.getElementById("info_dove");
-    c=document.getElementById("info_quando");
-    d=document.getElementById("info_info");
+//     a=document.getElementById("info_nome");
+//     b=document.getElementById("info_dove");
+//     c=document.getElementById("info_quando");
+//     d=document.getElementById("info_info");
 
-    a.textContent="NOME:\n";
-    a.textContent+=evento.getAttribute("name");
+//     a.textContent="NOME:\n";
+//     a.textContent+=evento.getAttribute("name");
 
-    b.textContent="DOVE:\n";
-    b.textContent+=evento.getAttribute("place");
+//     b.textContent="DOVE:\n";
+//     b.textContent+=evento.getAttribute("place");
 
-    c.textContent="QUANDO:\n";
-    c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
+//     c.textContent="QUANDO:\n";
+//     c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
 
-    d.textContent="INFO:\n";
-    d.textContent+=evento.getAttribute("info");
+//     d.textContent="INFO:\n";
+//     d.textContent+=evento.getAttribute("info");
+//   }
+
+  function goto_home(){
+    location.assign('http://localhost:3000/home');
   }
 
-  // function goto_home(){
-  //   location.assign('http://localhost:3000/home');
-  // }
-
-  // function goto_universita(){
-  //   location.assign('http://localhost:3000/universita');
-  // }
-
-  function highlight(value){
-    value.classList.toggle("selected");
-    //TODO:CONNECT TO DB AND SET FAVOURITE
+  function goto_universita(){
+    location.assign('http://localhost:3000/universita');
   }
 
-  function filtra(){
-    //TODO: CONNECT TO API
-  }
-
-  function show_filtro_nome(){
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
-    document.getElementById("filtro_data").style.display="none";
-    document.getElementById("filtra_per_data").style.display="none";
-    document.getElementById("filtro_nome").style.display="table-row";
-    document.getElementById("filtra_per_nome").style.display="block";
-  }
-
-  function show_filtro_data(){
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
-    document.getElementById("filtro_nome").style.display="none";
-    document.getElementById("filtra_per_nome").style.display="none"
-    document.getElementById("filtro_data").style.display="table-row";
-    document.getElementById("filtra_per_data").style.display="block";
-  }
-
-  function commenti(event){
-    localStorage.setItem("event_id",event.getAttribute("id"));
-    location.assign("http://localhost:3000/commenta_evento");
-  }
-  
 
 </script>
 <%- include('../footer') -%>
