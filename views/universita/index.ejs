@@ -122,13 +122,13 @@
         <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
         <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
       </tr>
-      <tr id="filtro_nome" style="width:100%; display:none;">
+      <tr id="filtro_nome_row" style="width:100%; display:none;">
         <td colspan="2">
             <p style="text-align:center;">Inserisci il nome dell'evento</p>
             <input type="text" id="input_nome" name="input_nome" style="width:100%;">
         </td>
       </tr>
-      <tr id="filtro_data" style="width:100%; display:none;text-align:left;">
+      <tr id="filtro_data_row" style="width:100%; display:none;text-align:left;">
         <td colspan="2">
           <p>Inserisci la data dell'evento</p>
           <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
@@ -177,18 +177,18 @@
   function show_filtro_nome(){
     document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
     document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
-    document.getElementById("filtro_data").style.display="none";
+    document.getElementById("filtro_data_row").style.display="none";
     document.getElementById("filtra_per_data").style.display="none";
-    document.getElementById("filtro_nome").style.display="table-row";
+    document.getElementById("filtro_nome_row").style.display="table-row";
     document.getElementById("filtra_per_nome").style.display="block";
   }
 
   function show_filtro_data(){
     document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
     document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
-    document.getElementById("filtro_nome").style.display="none";
+    document.getElementById("filtro_nome_row").style.display="none";
     document.getElementById("filtra_per_nome").style.display="none"
-    document.getElementById("filtro_data").style.display="table-row";
+    document.getElementById("filtro_data_row").style.display="table-row";
     document.getElementById("filtra_per_data").style.display="block";
 
   }
