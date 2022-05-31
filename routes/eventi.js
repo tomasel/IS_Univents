@@ -36,7 +36,6 @@ app.get('/:id',async (req, res) => {
       error: err || 'Something went wrong.'
     });
   } 
-
 });
 
 /*POST crea evento*/
@@ -79,6 +78,40 @@ app.delete('/:id',async (req, res) => {
 
 });
 
+/*PUT  event list with filter title*/
+app.put('/:filter_title', async (req, res) => {
+  
+  try{
+    //let full_filter = "/"+req.params.filter+"/i";
+    //console.log(full_filter);
+    let event = await Event.find({ "title" : req.params.filter_title });
+    //console.log(event);
+    res.status(200).json(event);
+  }catch (err) {
+    return res.status(500).send({
+      error: err || 'Something went wrong.'
+    });
+  } 
+
+});
+
+/*PUT  event list with filter data*/
+app.put('/data/:filter_date', async (req, res) => {
+  
+  try{
+    let startingDate = req.params.filter_date;
+    let endDate = startingDate;
+    endDate = endDate + 'T23:59:59';
+    let event = await Event.find({ date_event : {$gte: startingDate, $lte: endDate} });
+    console.log(event);
+    res.status(200).json(event);
+  }catch (err) {
+    return res.status(500).send({
+      error: err || 'Something went wrong.'
+    });
+  } 
+
+});
 
 module.exports = app;
 
