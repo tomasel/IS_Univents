@@ -1,41 +1,15 @@
 <%- include('../header') -%>
+<%- include('../background') -%>
+<%- include('../common_functions.ejs') -%>
 
-
-
-<div style="position:fixed; background-color: #B10B25; width:100%; height: 20%; top:0px; left:0px; z-index: 1;">
-  <img src="/images/univents_logo/univents_vents_logo.png" width="150" height="150"  alt="univents_logo"
-  style="position:absolute; left:2.5%">
- <div style="width:100%; height:200px; text-align: center; display:table;">
-   <font face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
-      Comunità Studenti
-   </font>
- </div>
-
- <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
-   <font face="Helvetica neue" size="5" color=white >
-     Impostazioni
-   </font>
- </a>
-</div>
-
-<template>
-  <ul>
-    <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
-    <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
-  </ul>
-  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id=""></div>    
-</template>
- 
 
 <div class="puppet" id="puppet"></div>
 
 
 <div id="comunita_studenti">
 
-
-
-  <table id="evento" border="0" width="30%" align="left"
-  cellpadding="0" cellspacing="0" bgcolor="#cccccc" style="position:fixed; top:38%;">
+  <table id="evento" border="0" align="left"
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc"  class="infobox">
   <tr>
       <td>
         <table border="0" cellpadding="15"  
@@ -75,109 +49,44 @@
     </tr>
   </table>
 
-<!-- diventera la zona per aggiungere commenti -->
-  <!-- <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
-  top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
-    <tr>
-      <th colspan="5">Filtra eventi per:</th>
-    </tr>
-    <tr>
-      <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
-      <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
-    </tr>
-    <tr id="filtro_nome" style="width:100%; display:none;">
-      <td colspan="2">
-          <p style="text-align:center;">Inserisci il nome dell'evento</p>
-          <input type="text" id="input_nome" name="input_nome" style="width:100%;">
-      </td>
-    </tr>
-    <tr id="filtro_data" style="width:100%; display:none;text-align:left;">
-      <td colspan="2">
-        <p>Inserisci la data dell'evento</p>
-        <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
-      </td>
-    </tr>
-  </table> -->
-
-
-  <button class="button" id="filtra_per_nome" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
-  <button class="button" id="filtra_per_data" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
-
-
-  <ul style="bottom: 100px; right: 100px; position:fixed">
-    <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Home</button><br><br>
-    <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 5%;">Università</button>
-  </ul>
-
 
 </div>
 
 <script>
+  document.getElementById("page_name").textContent="Sezione Commenti";
+
     //sarà da cambiare per otteneere i commenti
   document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:3000/api/v1/eventi',{
-      method:"GET",
-      cache:'no-cache',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) =>{
-        return res.json()
-      } )
-      .then((data) => {
-        var i,item,clone;
-        for(i=0;i<data.length;i++){
-          item = document.getElementsByTagName("template")[0].content;
-          clone = document.importNode(item,true);
-          var body=clone.querySelector("div");
+    var i,item,clone;
+    for(i=0;i<10;i++){
+      item = document.getElementsByTagName("template")[1].content;
+        clone = document.importNode(item,true);
+        var body=clone.querySelector("div");
 
-          body.setAttribute('style', 'white-space: pre;');
-          body.textContent=data[i].title+"\n";
-          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+", "+data[i].place;
+        body.setAttribute('style', 'white-space: break-spaces;');
+        body.textContent="creatore"+i+"\n";
+        body.textContent+="hey ciao cono il commento ndddddddd dddddddd dddddddddddd dddddddddddddd dddddddddddd dd ddddddddddddddumero "+i;
+        
+        document.getElementById("puppet").appendChild(clone);
+    }
 
-          body.setAttribute("name",data[i].title);
-          body.setAttribute("place",data[i].place);
-          body.setAttribute("date",data[i].date_event.slice(0,10));
-          body.setAttribute("time",data[i].date_event.slice(11,16));
-          body.setAttribute("info",data[i].info);
-          body.setAttribute("id",data[i]._id);
+    // fetch('http://localhost:3000/api/v1/eventi',{
+    //   method:"GET",
+    //   cache:'no-cache',
+    //   headers:{
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    //   .then((res) =>{
+    //     return res.json()
+    //   } )
+    //   .then((data) => {
+    //     //SET INFOBOX E CONTENITORI COMMENTI
+    // })
 
-          
-          document.getElementById("puppet").appendChild(clone);
-        }
 
-    })
     }, false);
-
-//   function set_info_box(evento){
-
-//     a=document.getElementById("info_nome");
-//     b=document.getElementById("info_dove");
-//     c=document.getElementById("info_quando");
-//     d=document.getElementById("info_info");
-
-//     a.textContent="NOME:\n";
-//     a.textContent+=evento.getAttribute("name");
-
-//     b.textContent="DOVE:\n";
-//     b.textContent+=evento.getAttribute("place");
-
-//     c.textContent="QUANDO:\n";
-//     c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
-
-//     d.textContent="INFO:\n";
-//     d.textContent+=evento.getAttribute("info");
-//   }
-
-  function goto_home(){
-    location.assign('http://localhost:3000/home');
-  }
-
-  function goto_universita(){
-    location.assign('http://localhost:3000/universita');
-  }
 
 
 </script>

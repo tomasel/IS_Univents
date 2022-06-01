@@ -1,52 +1,7 @@
 <%- include('../header') -%>
+<%- include('../background') -%>
+<%- include('../common_functions.ejs') -%>
 
-<div style="position:fixed; background-color: #B10B25; width:100%; height: 20%; top:0px; left:0px; z-index: 1;">
-  <img src="/images/univents_logo/univents_vents_logo.png" width="150" height="150"  alt="univents_logo"
-  style="position:absolute; left:2.5%">
- <div style="width:100%; height:200px; text-align: center; display:table;">
-   <font face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
-     Università
-   </font>
- </div>
-
- <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
-   <font face="Helvetica neue" size="5" color=white >
-     Impostazioni
-   </font>
- </a>
-</div>
-
-<div class="left_menu">
-  <br><br><br><br><br><br><br><br><br>
-  <td>
-    <a href="/home" style="text-decoration: none;">
-      <font face="Helvetica" size="5" color=black>
-        Home<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/comunita_studenti" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Comunità Studenti<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/universita" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Università
-      </font>
-    </a>
-  </td>
-
-</div>
 
   <template>
     <ul>
@@ -139,17 +94,13 @@
     <button class="button" id="filtra_per_data" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>    
 
 
-    
-<ul style="bottom: 100px; right: 100px; position:fixed">
-  <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Home</button><br><br>
-  <button onclick="goto_comunita_studenti()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Comunita studenti</button>
-</ul>
-
 
 <script>
+  document.getElementById("page_name").textContent="Università";
+
 
   function ottieni(edificio){
-    var i,item,clone2;
+    var i,item,clone;
     //elimina eventi gia sul diplay
     var e=document.getElementById("puppet");
     var child = e.lastElementChild; 
@@ -165,37 +116,6 @@
       body.textContent+="Evento "+edificio+" "+i; //TODO: CONNECT TO DB API AND RETRIEVE EVENTS
       document.getElementById("puppet").appendChild(clone);
     }
-  }
-  
-  function goto_home(){
-        location.assign('http://localhost:3000/home');
-      }
-
-  function goto_comunita_studenti(){
-    location.assign('http://localhost:3000/comunita_studenti');
-  }
-  function show_filtro_nome(){
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
-    document.getElementById("filtro_data_row").style.display="none";
-    document.getElementById("filtra_per_data").style.display="none";
-    document.getElementById("filtro_nome_row").style.display="table-row";
-    document.getElementById("filtra_per_nome").style.display="block";
-  }
-
-  function show_filtro_data(){
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
-    document.getElementById("filtro_nome_row").style.display="none";
-    document.getElementById("filtra_per_nome").style.display="none"
-    document.getElementById("filtro_data_row").style.display="table-row";
-    document.getElementById("filtra_per_data").style.display="block";
-
-  }
-
-  function highlight(value){
-    value.classList.toggle("selected");
-    //TODO:CONNECT TO DB AND SET FAVOURITE
   }
 
 </script>

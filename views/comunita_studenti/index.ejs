@@ -1,66 +1,6 @@
 <%- include('../header') -%>
-
-
-
-<div style="position:fixed; background-color: #B10B25; width:100%; height: 20%; top:0px; left:0px; z-index: 1;">
-  <img src="/images/univents_logo/univents_vents_logo.png" width="150" height="150"  alt="univents_logo"
-  style="position:absolute; left:2.5%">
- <div style="width:100%; height:200px; text-align: center; display:table;">
-   <font face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
-      Comunità Studenti
-   </font>
- </div>
-
- <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
-   <font face="Helvetica neue" size="5" color=white >
-     Impostazioni
-   </font>
- </a>
-</div>
-
-
-<div class="left_menu">
-  <br><br><br><br><br><br><br><br><br>
-  <td>
-    <a href="/home" style="text-decoration: none;">
-      <font face="Helvetica" size="5" color=black>
-        Home<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/comunita_studenti" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Comunità Studenti<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/universita" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Università
-      </font>
-    </a>
-  </td>
-
-</div>
-
-
-
-<template>
-  <ul>
-    <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
-    <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
-  </ul>
-  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id=""></div>    
-</template>
- 
+<%- include('../background.ejs') -%>
+<%- include('../common_functions.ejs') -%>
 
 <div class="puppet" id="puppet"></div>
 
@@ -149,15 +89,11 @@
   <button class="button" id="filtra_per_data" onclick="filtra_data()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
 
 
-  <!-- <ul style="bottom: 100px; right: 100px; position:fixed">
-    <button onclick="goto_home()" style="width:12%; align-content: center; position:fixed; right: 5%; ">Home</button><br><br>
-    <button onclick="goto_universita()" style="width:12%; align-content: center; position:fixed; right: 5%;">Università</button>
-  </ul> -->
-
-
 </div>
 
 <script>
+  document.getElementById("page_name").textContent="Comunità Studenti";
+
   document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:3000/api/v1/eventi',{
       method:"GET",
@@ -177,9 +113,9 @@
           clone = document.importNode(item,true);
           var body=clone.querySelector("div");
 
-          body.setAttribute('style', 'white-space: pre;');
+          body.setAttribute('style', 'white-space: break-spaces;');
           body.textContent=data[i].title+"\n";
-          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+", "+data[i].place;
+          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
 
           body.setAttribute("name",data[i].title);
           body.setAttribute("place",data[i].place);
@@ -195,64 +131,8 @@
     })
     }, false);
 
-  function set_info_box(evento){
-
-    a=document.getElementById("info_nome");
-    b=document.getElementById("info_dove");
-    c=document.getElementById("info_quando");
-    d=document.getElementById("info_info");
-
-    a.textContent="NOME:\n";
-    a.textContent+=evento.getAttribute("name");
-
-    b.textContent="DOVE:\n";
-    b.textContent+=evento.getAttribute("place");
-
-    c.textContent="QUANDO:\n";
-    c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
-
-    d.textContent="INFO:\n";
-    d.textContent+=evento.getAttribute("info");
-  }
-
-  // function goto_home(){
-  //   location.assign('http://localhost:3000/home');
-  // }
-
-  // function goto_universita(){
-  //   location.assign('http://localhost:3000/universita');
-  // }
-
-  function highlight(value){
-    value.classList.toggle("selected");
-    //TODO:CONNECT TO DB AND SET FAVOURITE
-  }
-
   function filtra(){
     //TODO: CONNECT TO API
-  }
-
-  function show_filtro_nome(){
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
-    document.getElementById("filtro_data_row").style.display="none";
-    document.getElementById("filtra_per_data").style.display="none";
-    document.getElementById("filtro_nome_row").style.display="table-row";
-    document.getElementById("filtra_per_nome").style.display="block";
-  }
-
-  function show_filtro_data(){
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
-    document.getElementById("filtro_nome_row").style.display="none";
-    document.getElementById("filtra_per_nome").style.display="none"
-    document.getElementById("filtro_data_row").style.display="table-row";
-    document.getElementById("filtra_per_data").style.display="block";
-  }
-
-  function commenti(event){
-    localStorage.setItem("event_id",event.getAttribute("id"));
-    location.assign("http://localhost:3000/commenta_evento");
   }
 
   //TODO: CONTROLLO CHE FUNZIONI
@@ -284,9 +164,9 @@
           clone = document.importNode(item,true);
           var body=clone.querySelector("div");
 
-          body.setAttribute('style', 'white-space: pre;');
+          body.setAttribute('style', 'white-space: break-spaces;');
           body.textContent=data[i].title+"\n";
-          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+", "+data[i].place;
+          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
 
           body.setAttribute("name",data[i].title);
           body.setAttribute("place",data[i].place);
@@ -306,4 +186,4 @@
   }
 
 </script>
-<%- include('../footer') -%>
+<%- include('../footer') -%> -->

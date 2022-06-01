@@ -1,56 +1,142 @@
 <%- include('../header') -%>
+<%- include('../background') -%>
+<%- include('../common_functions.ejs') -%>
 
-<header style="margin-top: 0px;">
-  <div style="position:fixed; background-color: #B10B25; width:100%; height: 20%; top:0px; left:0px; z-index: 1;">
-     <img src="/images/univents_logo/univents_vents_logo.png" width="150" height="150"  alt="univents_logo"
-     style="position:absolute; left:2.5%">
-    <div style="width:100%; height:200px; text-align: center; display:table;">
-      <font face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
-        Home
-      </font>
-    </div>
 
-    <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
-      <font face="Helvetica neue" size="5" color=white >
-        Impostazioni
-      </font>
-    </a>
-  </div>
-</header>
 
-<div style="background-color: #dddddd; width:15%; height:80%; position:absolute; top:20%; left:0px; text-align: center; vertical-align: middle;">
-  <br><br><br><br><br><br><br><br><br>
-  <td>
-    <a href="/home" style="text-decoration: none;">
-      <font face="Helvetica" size="5" color=black>
-        Home<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/comunita_studenti" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Comunità Studenti<br>
-      </font>
-    </a>
-  </td>
-  
-  <hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
-  
-  <td>
-    <a href="/universita" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Università
-      </font>
-    </a>
-  </td>
+<template>
+  <ul>
+    <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
+    <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
+  </ul>
+  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id=""></div>    
+</template>
+ 
+
+<div class="puppet" id="puppet"></div>
+
+
+<div id="Home">
+
+
+  <p>
+    <label id="puppet" x="75%" y="0"></label>
+  </p>
+
+
+  <table id="evento" border="0" align="left"
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc"  class="infobox">
+  <tr>
+      <td>
+        <table border="0" cellpadding="15"  
+        <tr>
+            <td width="60%">
+
+              <font id="info_nome" face="Helvetica" size="4"
+              color="black">
+              NOME:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_dove" face="Helvetica" size="4"
+              color="black">
+              DOVE:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_quando" face="Helvetica" size="4"
+              color="black">
+              QUANDO:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_info" face="Helvetica" size="4"
+              color="black">
+              INFO:
+              </font>
+
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+
+  <!-- <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
+  top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
+    <tr>
+      <th colspan="5">Filtra eventi per:</th>
+    </tr>
+    <tr>
+      <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
+      <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
+    </tr>
+    <tr id="filtro_nome_row" style="width:100%; display:none;">
+      <td colspan="2">
+          <p style="text-align:center;">Inserisci il nome dell'evento</p>
+          <input type="text" id="filtro_nome" name="input_nome" style="width:100%;">
+      </td>
+    </tr>
+    <tr id="filtro_data_row" style="width:100%; display:none;text-align:left;">
+      <td colspan="2">
+        <p>Inserisci la data dell'evento</p>
+        <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
+      </td>
+    </tr>
+  </table> -->
+
+
+  <button class="button" id="filtra_per_nome" onclick="filtra_nome()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
+  <button class="button" id="filtra_per_data" onclick="filtra_data()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
+
+
 
 </div>
 
+<script>
+  document.getElementById("page_name").textContent="Home";
 
+  document.addEventListener('DOMContentLoaded', function() {
+    fetch('http://localhost:3000/api/v1/eventi',{
+      method:"GET",
+      cache:'no-cache',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) =>{
+        return res.json()
+      } )
+      .then((data) => {
+        var i,item,clone;
+        for(i=0;i<data.length;i++){
+          item = document.getElementsByTagName("template")[0].content;
+          clone = document.importNode(item,true);
+          var body=clone.querySelector("div");
 
+          body.setAttribute('style', 'white-space:break-spaces;');
+          body.textContent=data[i].title+"\n";
+          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
 
+          body.setAttribute("name",data[i].title);
+          body.setAttribute("place",data[i].place);
+          body.setAttribute("date",data[i].date_event.slice(0,10));
+          body.setAttribute("time",data[i].date_event.slice(11,16));
+          body.setAttribute("info",data[i].info);
+          body.setAttribute("id",data[i]._id);
+
+          
+          document.getElementById("puppet").appendChild(clone);
+        }
+
+    })
+    }, false);
+  
+
+</script>
 <%- include('../footer') -%>
