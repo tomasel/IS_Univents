@@ -54,6 +54,8 @@
 
 <script>
   document.getElementById("page_name").textContent="Sezione Commenti";
+  const id = localStorage.getItem('event_id');
+  //TODO: USARE API PER OTTENERE INFORMAZIONI SULL'EVENTO
 
     //sarà da cambiare per otteneere i commenti
   document.addEventListener('DOMContentLoaded', function() {
@@ -65,26 +67,10 @@
 
         body.setAttribute('style', 'white-space: break-spaces;');
         body.textContent="creatore"+i+"\n";
-        body.textContent+="hey ciao cono il commento ndddddddd dddddddd dddddddddddd dddddddddddddd dddddddddddd dd ddddddddddddddumero "+i;
+        body.textContent+="hey ciao cono il commento ndddddddd dddddddd ddddddddd ddd ddddd ddddddd dd ddd ddumero "+i;
         
         document.getElementById("puppet").appendChild(clone);
     }
-
-    // fetch('http://localhost:3000/api/v1/eventi',{
-    //   method:"GET",
-    //   cache:'no-cache',
-    //   headers:{
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then((res) =>{
-    //     return res.json()
-    //   } )
-    //   .then((data) => {
-    //     //SET INFOBOX E CONTENITORI COMMENTI
-    // })
-
 
     }, false);
 

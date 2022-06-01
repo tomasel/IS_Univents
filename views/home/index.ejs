@@ -66,33 +66,10 @@
   </table>
 
 
-  <!-- <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
-  top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
-    <tr>
-      <th colspan="5">Filtra eventi per:</th>
-    </tr>
-    <tr>
-      <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
-      <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
-    </tr>
-    <tr id="filtro_nome_row" style="width:100%; display:none;">
-      <td colspan="2">
-          <p style="text-align:center;">Inserisci il nome dell'evento</p>
-          <input type="text" id="filtro_nome" name="input_nome" style="width:100%;">
-      </td>
-    </tr>
-    <tr id="filtro_data_row" style="width:100%; display:none;text-align:left;">
-      <td colspan="2">
-        <p>Inserisci la data dell'evento</p>
-        <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
-      </td>
-    </tr>
-  </table> -->
-
-
-  <button class="button" id="filtra_per_nome" onclick="filtra_nome()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
-  <button class="button" id="filtra_per_data" onclick="filtra_data()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
-
+  <button class="button" id="filtra_per_nome" onclick="filtra_nome()"
+  style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
+  <button class="button" id="filtra_per_data" onclick="filtra_data()"
+  style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
 
 
 </div>
@@ -100,6 +77,8 @@
 <script>
   document.getElementById("page_name").textContent="Home";
 
+  //TODO: USARE API PER OTTENERE EVENTI PREFERITI E FARLI VEDERE NELLA HOME 
+  //Al momento mi prendo tutti gli eventi
   document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:3000/api/v1/eventi',{
       method:"GET",

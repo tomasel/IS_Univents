@@ -1,7 +1,8 @@
 <script>
 
+//TODO: 
 function commenti(event){
-    localStorage.setItem("event_id",event.getAttribute("id"));
+    localStorage.setItem("event_id",event.getAttribute("event_id"));
     location.assign("http://localhost:3000/commenta_evento");
 }
 
@@ -23,9 +24,9 @@ function show_filtro_data(){
     document.getElementById("filtra_per_data").style.display="block";
 }
 
+//TODO: SET EVENT AS FAVOURITE
 function highlight(value){
     value.classList.toggle("selected");
-    //TODO:CONNECT TO DB AND SET FAVOURITE
 }
 
 function set_info_box(evento){
