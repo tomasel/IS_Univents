@@ -2,22 +2,7 @@
 <%- include('../background') -%>
 
 
-<div style="position:fixed; background-color: #B10B25; width:100%; height: 20%; top:0px; left:0px; z-index: 1;">
-  <img src="/images/univents_logo/univents_vents_logo.png" width="150" height="150"  alt="univents_logo"
-  style="position:absolute; left:2.5%">
- <div style="width:100%; height:200px; text-align: center; display:table;">
-   <font face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
-      Creazione Evento
-   </font>
- </div>
-
- <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
-   <font face="Helvetica neue" size="5" color=white >
-     Impostazioni
-   </font>
- </a>
-</div>
-<style>
+<!-- <style>
   .hr{
     background-color: #b10b25;
     border: none;
@@ -25,7 +10,7 @@
     margin-bottom: 2em;
     z-index: 1;
   }
-</style>
+</style> -->
 
 <div id="crea_evento"  style="top:30%; left:25%; position:fixed;">
   
@@ -100,6 +85,9 @@
   <br><br>
 
   <script>
+
+    document.getElementById("page_name").textContent="Crea Evento";
+
     function update_nome(value){
       document.getElementById("info_nome").textContent="NOME:\r\n"+value;
     }

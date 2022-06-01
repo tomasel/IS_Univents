@@ -3,6 +3,7 @@ const app = require("../app");
 const fs = require("fs");
 const { throws } = require("assert");
 const { exit } = require("process");
+const { Script } = require("vm");
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
