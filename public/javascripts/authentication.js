@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../models/utente');
-//const jwt = require('jsonwebtoken');
+const Utente = require('../models/utente');
+const jwt = require('jsonwebtoken');
 
 router.post('', async function(req, res) {
     let user = await Utente.findOne({
@@ -15,6 +15,16 @@ router.post('', async function(req, res) {
     if (user.password != req.body.password) {
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
     }
+
+    // crea token
+	var payload = {
+		email: user.email,
+		id: user._id
+	}
+	var options = {
+		expiresIn: 86400 
+	}
+	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
     res.json({
             success: true,
