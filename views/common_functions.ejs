@@ -1,0 +1,51 @@
+<script>
+
+//TODO: 
+function commenti(event){
+    localStorage.setItem("event_id",event.getAttribute("event_id"));
+    location.assign("http://localhost:3000/commenta_evento");
+}
+
+function show_filtro_nome(){
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
+    document.getElementById("filtro_data_row").style.display="none";
+    document.getElementById("filtra_per_data").style.display="none";
+    document.getElementById("filtro_nome_row").style.display="table-row";
+    document.getElementById("filtra_per_nome").style.display="block";
+}
+
+function show_filtro_data(){
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
+    document.getElementById("filtro_nome_row").style.display="none";
+    document.getElementById("filtra_per_nome").style.display="none"
+    document.getElementById("filtro_data_row").style.display="table-row";
+    document.getElementById("filtra_per_data").style.display="block";
+}
+
+//TODO: SET EVENT AS FAVOURITE
+function highlight(value){
+    value.classList.toggle("selected");
+}
+
+function set_info_box(evento){
+    a=document.getElementById("info_nome");
+    b=document.getElementById("info_dove");
+    c=document.getElementById("info_quando");
+    d=document.getElementById("info_info");
+
+    a.textContent="NOME:\n";
+    a.textContent+=evento.getAttribute("name");
+
+    b.textContent="DOVE:\n";
+    b.textContent+=evento.getAttribute("place");
+
+    c.textContent="QUANDO:\n";
+    c.textContent+=evento.getAttribute("date")+" alle "+evento.getAttribute("time");
+
+    d.textContent="INFO:\n";
+    d.textContent+=evento.getAttribute("info");
+}
+//TODO: METTICI ANCHE FUNZIONI DEI FILTRI
+</script>
