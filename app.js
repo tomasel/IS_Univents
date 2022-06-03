@@ -77,7 +77,7 @@ app.get('/', site.index);
 //login
 app.get('/login', login.login);
 app.use('/api/v1/authentication', authentication);
-app.use('/api/v1/check_login', utentiRouter);
+app.use('/api/v1/utente', utentiRouter)
 //app.post('/login', login.check);
 
 //home

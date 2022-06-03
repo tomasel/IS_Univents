@@ -25,19 +25,6 @@ router.post('', async function(req, res) {
         });
 });
 
-/*POST crea utente*/
-router.post('/crea',async (req, res) => {
-    const newUtente = new Utente(req.body);
-  
-    try{
-      await newUtente.save();
-      res.send(newUtente);
-    }catch (err) {
-      return res.status(500).send({
-        error: err || 'Something went wrong.'
-      });
-    } 
-  
-  });
+
 
 module.exports = router;

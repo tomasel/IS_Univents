@@ -41,13 +41,9 @@ app.get('/:id',async (req, res) => {
 /*POST crea evento*/
 app.post('/',async (req, res) => {
   const newEvent = new Event(req.body);
-  //console.log("body");
-  //console.log(req.body);
-  //console.log("newEvent");
-  //console.log(newEvent);
   try{
     await newEvent.save();
-    res.send(newEvent);
+    res.status(200).send("evento creato");
   }catch (err) {
     return res.status(500).send({
       error: err || 'Something went wrong.'
@@ -68,8 +64,7 @@ app.delete('/:id',async (req, res) => {
 
   try{
     let event = await Event.findByIdAndDelete(req.params.id);
-    res.status(200).json(event);
-    console.log("deleted");
+    res.status(200).json("evento cancellato");
   }catch (err) {
     return res.status(500).send({
       error: err || 'Something went wrong.'
