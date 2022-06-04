@@ -16,7 +16,7 @@ const utentiRouter = require('./routes/utenti');
 
 //Connection DB
 const fs = require('fs');
-var password = fs.readFileSync('/password.txt','utf8');
+var password = fs.readFileSync('./password.txt','utf8');
 mongoose.connect('mongodb+srv://univents_database:'+password+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
 .then ( () => {
   console.log("Connected to Database")
@@ -29,9 +29,9 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const  NODE_ENV = process.env.NODE_ENV || 'development';
-app.set('port', process.env.PORT);
+app.set('port', PORT);
 app.set('env', NODE_ENV);
 
 app.use(cors());
@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //for check on console
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   console.log(
       `Express Server started on Port ${app.get(
           'port'
