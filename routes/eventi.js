@@ -78,7 +78,7 @@ app.delete('/:id',async (req, res) => {
 
 });
 
-/*PUT  event list with filter title*/
+/*PUT  event list with filter title*/  //  /api/v1/eventi/grigliata
 app.put('/:filter_title', async (req, res) => {
   
   try{

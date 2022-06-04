@@ -88,6 +88,10 @@
   <button class="button" id="filtra_per_nome" onclick="filtra_nome()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
   <button class="button" id="filtra_per_data" onclick="filtra_data()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
 
+  <font id="no_events" face="Helvetica" size="4"
+    color="black" style="position:fixed; right:25%; top:50%;display:none;">
+    Nessun Evento
+    </font>
 
 </div>
 
@@ -115,7 +119,9 @@
 
           body.setAttribute('style', 'white-space: break-spaces;');
           body.textContent=data[i].title+"\n";
-          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
+          // body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
+          body.textContent+=data[i].date_event.slice(8,10)+"/"+data[i].date_event.slice(5,7)+"/"+data[i].date_event.slice(0,4)+
+          " alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
 
           body.setAttribute("name",data[i].title);
           body.setAttribute("place",data[i].place);
@@ -136,54 +142,7 @@
   }
 
   //TODO: CONTROLLO CHE FUNZIONI
-  function filtra_nome(){
-    fetch('http://localhost:3000/api/v1/eventi',{
-      method:"PUT",
-      cache:'no-cache',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:{
-        "filtro":document.getElementById("filtro_nome").textContent
-      }
-    })
-      .then((res) =>{
-        return res.json()
-      } )
-      .then((data) => {
-        var e=document.getElementById("puppet");
-        var child = e.lastElementChild; 
-        while (child) {
-            e.removeChild(child);
-            child = e.lastElementChild;
-        }
-
-        for(i=0;i<data.length;i++){
-          item = document.getElementsByTagName("template")[0].content;
-          clone = document.importNode(item,true);
-          var body=clone.querySelector("div");
-
-          body.setAttribute('style', 'white-space: break-spaces;');
-          body.textContent=data[i].title+"\n";
-          body.textContent+=data[i].date_event.slice(0,10)+" alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
-
-          body.setAttribute("name",data[i].title);
-          body.setAttribute("place",data[i].place);
-          body.setAttribute("date",data[i].date_event.slice(0,10));
-          body.setAttribute("time",data[i].date_event.slice(11,16));
-          body.setAttribute("info",data[i].info);
-          body.setAttribute("id",data[i]._id);
-
-          
-          document.getElementById("puppet").appendChild(clone);
-        }
-    })
-  }
   
-  function filtra_data(){
-    
-  }
 
 </script>
 <%- include('../footer') -%> -->
