@@ -1,0 +1,79 @@
+<%- include('../header') -%>
+<%- include('../background') -%>
+<%- include('../common_functions.ejs') -%>
+
+
+<div class="puppet" id="puppet"></div>
+
+
+<div id="comunita_studenti">
+
+  <table id="evento" border="0" align="left"
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc"  class="infobox">
+  <tr>
+      <td>
+        <table border="0" cellpadding="15"  
+        <tr>
+            <td width="60%">
+
+              <font id="info_nome" face="Helvetica" size="4"
+              color="black">
+              NOME:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_dove" face="Helvetica" size="4"
+              color="black">
+              DOVE:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_quando" face="Helvetica" size="4"
+              color="black">
+              QUANDO:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_info" face="Helvetica" size="4"
+              color="black">
+              INFO:
+              </font>
+
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+
+</div>
+
+<script>
+  document.getElementById("page_name").textContent="Sezione Commenti";
+  const id = localStorage.getItem('event_id');
+  //TODO: USARE API PER OTTENERE INFORMAZIONI SULL'EVENTO
+
+    //sarà da cambiare per otteneere i commenti
+  document.addEventListener('DOMContentLoaded', function() {
+    var i,item,clone;
+    for(i=0;i<10;i++){
+      item = document.getElementsByTagName("template")[1].content;
+        clone = document.importNode(item,true);
+        var body=clone.querySelector("div");
+
+        body.setAttribute('style', 'white-space: break-spaces;');
+        body.textContent="creatore"+i+"\n";
+        body.textContent+="hey ciao cono il commento ndddddddd dddddddd ddddddddd ddd ddddd ddddddd dd ddd ddumero "+i;
+        
+        document.getElementById("puppet").appendChild(clone);
+    }
+
+    }, false);
+
+
+</script>
+<%- include('../footer') -%>

@@ -73,6 +73,7 @@ app.delete('/:id',async (req, res) => {
 
 });
 
+/*PUT  event list with filter title*/  //  /api/v1/eventi/titolo/grigliata
 /*PUT  event list with filter title*/
 app.put('/titolo/:filter_title', async (req, res) => {
   

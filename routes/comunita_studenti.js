@@ -3,6 +3,7 @@ const app = require("../app");
 const fs = require("fs");
 const { throws } = require("assert");
 const { exit } = require("process");
+const { Script } = require("vm");
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -28,6 +29,12 @@ exports.create_event = function(req, res){
   });
 };
 
+//commenti
+exports.commenta = function(req, res){
+  res.status(200).render('comunita_studenti/commenti', {
+    title: 'Commenti'
+  });
+};
 
 //funzione di controllo dei campi
 check=function(req){
@@ -120,3 +127,5 @@ exports.crea = function(req, res){
   }
 
 };
+
+

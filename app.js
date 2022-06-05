@@ -92,6 +92,7 @@ app.get('/comunita_studenti/evento', comunita_studenti.get_event);
 app.use('/api/v1/eventi', eventiRouter);
 app.use('/api/v1/uni', uniRouter);
 
+app.get("/commenta_evento",comunita_studenti.commenta);
 
 //Università
 app.get('/universita', universita.list_building);
