@@ -49,10 +49,10 @@
 
 <template>
     <ul>
-      <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
+      <li id="" class="empty-star" onclick="toggle_favourite(this)" style="position:relative;left:30px;">★</li>
       <li class='far fa-comment' onclick="commenti(this);" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
     </ul>
-    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id=""></div>    
+    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id="" building=""></div>    
 </template>
 
 <template>

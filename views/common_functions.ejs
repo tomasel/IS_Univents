@@ -1,33 +1,69 @@
 <script>
 
-//TODO: 
-function commenti(event){
-    localStorage.setItem("event_id",event.getAttribute("event_id"));
-    location.assign("http://localhost:3000/commenta_evento");
+function load(data){
+  // var user_id="6289f47e6fdc1cd83ca2b39a"; al momento c'è un solo utente, non ancora implementato
+  var url="http://localhost:3000/api/v1/utente/"/*+user_id*/;
+  // alert(url);
+  fetch(url,{
+    method:"GET",
+    cache:'no-cache',
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((res) =>{
+      return res.json()
+    } )
+    .then((utente) => {
+      var star_event_set = new Set();
+      for(var i=0; i<utente.star_event_list.length;i++) star_event_set.add(utente.star_event_list[i]._id);
+
+      var e=document.getElementById("puppet");
+      var child = e.lastElementChild; 
+      if(data.length==0){
+        alert("Nessun evento trovato");
+        return 0;
+      }
+      while (child) {
+          e.removeChild(child);
+          child = e.lastElementChild;
+      }
+      for(i=0;i<data.length;i++){
+        item = document.getElementsByTagName("template")[0].content;
+        clone = document.importNode(item,true);
+        var body=clone.querySelector("div");
+        var fav=clone.querySelector("ul").querySelector("li");
+    
+        body.setAttribute('style', 'white-space: break-spaces;');
+        body.textContent=data[i].title+"\n";
+        
+        body.setAttribute("name",data[i].title);
+        body.setAttribute("date",data[i].date_event.slice(0,10));
+        body.setAttribute("time",data[i].date_event.slice(11,16));
+        body.setAttribute("info",data[i].info);
+        body.setAttribute("id",data[i]._id);
+
+        if(data[i].building==null){
+          body.textContent+=data[i].date_event.slice(8,10)+"/"+data[i].date_event.slice(5,7)+"/"+data[i].date_event.slice(0,4)+
+          " alle "+data[i].date_event.slice(11,16)+"\n"+data[i].place;
+          body.setAttribute("place",data[i].place);
+        }
+        else{
+          body.textContent+=data[i].date_event.slice(8,10)+"/"+data[i].date_event.slice(5,7)+"/"+data[i].date_event.slice(0,4)+
+          " alle "+data[i].date_event.slice(11,16)+"\n"+data[i].building;
+          body.setAttribute("place",data[i].building);
+        }
+    
+        fav.setAttribute("id",data[i]._id);
+
+        if(star_event_set.has(data[i]._id)) fav.classList.toggle("selected");
+    
+        document.getElementById("puppet").appendChild(clone);
+      }
+  }) 
 }
 
-function show_filtro_nome(){
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
-    document.getElementById("filtro_data_row").style.display="none";
-    document.getElementById("filtra_per_data").style.display="none";
-    document.getElementById("filtro_nome_row").style.display="table-row";
-    document.getElementById("filtra_per_nome").style.display="block";
-}
-
-function show_filtro_data(){
-    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
-    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
-    document.getElementById("filtro_nome_row").style.display="none";
-    document.getElementById("filtra_per_nome").style.display="none"
-    document.getElementById("filtro_data_row").style.display="table-row";
-    document.getElementById("filtra_per_data").style.display="block";
-}
-
-//TODO: SET EVENT AS FAVOURITE
-function highlight(value){
-    value.classList.toggle("selected");
-}
 
 function set_info_box(evento){
     a=document.getElementById("info_nome");
@@ -48,6 +84,27 @@ function set_info_box(evento){
     d.textContent+=evento.getAttribute("info");
 }
 
+
+function show_filtro_nome(){
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="#dddddd";
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="white";
+    document.getElementById("filtro_data_row").style.display="none";
+    document.getElementById("filtra_per_data").style.display="none";
+    document.getElementById("filtro_nome_row").style.display="table-row";
+    document.getElementById("filtra_per_nome").style.display="block";
+}
+
+
+function show_filtro_data(){
+    document.getElementById("seleziona_filtro_data").style.backgroundColor="#dddddd";
+    document.getElementById("seleziona_filtro_nome").style.backgroundColor="white";
+    document.getElementById("filtro_nome_row").style.display="none";
+    document.getElementById("filtra_per_nome").style.display="none"
+    document.getElementById("filtro_data_row").style.display="table-row";
+    document.getElementById("filtra_per_data").style.display="block";
+}
+
+
 function filtra_nome(){
     if(document.getElementById("filtro_nome").value=="") {
       var DOMContentLoaded_event = document.createEvent("Event");
@@ -55,7 +112,7 @@ function filtra_nome(){
       window.document.dispatchEvent(DOMContentLoaded_event);
     }
     else{
-      var url="http://localhost:3000/api/v1/eventi/"+document.getElementById("filtro_nome").value;
+      var url="http://localhost:3000/api/v1/eventi/titolo/"+document.getElementById("filtro_nome").value;
       fetch(url,{
         method:"PUT",
         cache:'no-cache',
@@ -82,6 +139,7 @@ function filtra_nome(){
             item = document.getElementsByTagName("template")[0].content;
             clone = document.importNode(item,true);
             var body=clone.querySelector("div");
+            var fav=clone.querySelector("ul").querySelector("li");
   
             body.setAttribute('style', 'white-space: break-spaces;');
             body.textContent=data[i].title+"\n";
@@ -94,14 +152,18 @@ function filtra_nome(){
             body.setAttribute("time",data[i].date_event.slice(11,16));
             body.setAttribute("info",data[i].info);
             body.setAttribute("id",data[i]._id);
+
+            fav.setAttribute("id",data[i]._id);
+
+            if(data[i].meta.favs=="true") fav.classList.toggle("selected");
   
-            
             document.getElementById("puppet").appendChild(clone);
           }
       })
     }
 }
   
+
 function filtra_data(){
     if(document.getElementById("filtro_data").value=="") {
         var DOMContentLoaded_event = document.createEvent("Event");
@@ -136,6 +198,7 @@ function filtra_data(){
                 item = document.getElementsByTagName("template")[0].content;
                 clone = document.importNode(item,true);
                 var body=clone.querySelector("div");
+                var fav=clone.querySelector("ul").querySelector("li");
 
                 body.setAttribute('style', 'white-space: break-spaces;');
                 body.textContent=data[i].title+"\n";
@@ -149,11 +212,166 @@ function filtra_data(){
                 body.setAttribute("info",data[i].info);
                 body.setAttribute("id",data[i]._id);
 
+                fav.setAttribute("id",data[i]._id);
+
+                if(data[i].meta.favs=="true") fav.classList.toggle("selected");
                 
                 document.getElementById("puppet").appendChild(clone);
             }
         })
     }
 }
-//TODO: METTICI ANCHE FUNZIONI DEI FILTRI
+
+
+function filtra_nome_uni(){
+    if(document.getElementById("filtro_nome").value=="") {
+      var DOMContentLoaded_event = document.createEvent("Event");
+      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+      window.document.dispatchEvent(DOMContentLoaded_event);
+    }
+    else{
+      var url="http://localhost:3000/api/v1/uni/titolo/"+document.getElementById("filtro_nome").value;
+      fetch(url,{
+        method:"PUT",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((data) => {
+          var e=document.getElementById("puppet");
+          var child = e.lastElementChild; 
+          if(data.length==0){
+            alert("Nessun evento trovato");
+            return 0;
+          }
+          while (child) {
+              e.removeChild(child);
+              child = e.lastElementChild;
+          }
+          for(i=0;i<data.length;i++){
+            item = document.getElementsByTagName("template")[0].content;
+            clone = document.importNode(item,true);
+            var body=clone.querySelector("div");
+            var fav=clone.querySelector("ul").querySelector("li");
+  
+            body.setAttribute('style', 'white-space: break-spaces;');
+            body.textContent=data[i].title+"\n";
+            body.textContent+=data[i].date_event.slice(8,10)+"/"+data[i].date_event.slice(5,7)+"/"+data[i].date_event.slice(0,4)+
+            " alle "+data[i].date_event.slice(11,16)+"\n"+data[i].building;
+  
+            body.setAttribute("name",data[i].title);
+            body.setAttribute("building",data[i].building);
+            body.setAttribute("date",data[i].date_event.slice(0,10));
+            body.setAttribute("time",data[i].date_event.slice(11,16));
+            body.setAttribute("info",data[i].info);
+            body.setAttribute("id",data[i]._id);
+
+            fav.setAttribute("id",data[i]._id);
+
+            if(data[i].meta.favs=="true") fav.classList.toggle("selected");
+  
+            document.getElementById("puppet").appendChild(clone);
+          }
+      })
+    }
+}
+
+
+function filtra_data_uni(){
+  if(document.getElementById("filtro_data").value=="") {
+        var DOMContentLoaded_event = document.createEvent("Event");
+        DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+        window.document.dispatchEvent(DOMContentLoaded_event);
+    }
+    else{
+        var url="http://localhost:3000/api/v1/uni/data/"+document.getElementById("filtro_data").value;
+        fetch(url,{
+            method:"PUT",
+            cache:'no-cache',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+            })
+            .then((res) =>{
+            return res.json()
+            } )
+            .then((data) => {
+            var e=document.getElementById("puppet");
+            var child = e.lastElementChild; 
+            if(data.length==0){
+                alert("Nessun evento trovato");
+                return 0;
+            }
+            while (child) {
+                e.removeChild(child);
+                child = e.lastElementChild;
+            }
+            for(i=0;i<data.length;i++){
+
+                item = document.getElementsByTagName("template")[0].content;
+                clone = document.importNode(item,true);
+                var body=clone.querySelector("div");
+                var fav=clone.querySelector("ul").querySelector("li");
+
+                body.setAttribute('style', 'white-space: break-spaces;');
+                body.textContent=data[i].title+"\n";
+                body.textContent+=data[i].date_event.slice(8,10)+"/"+data[i].date_event.slice(5,7)+"/"+data[i].date_event.slice(0,4)+
+                " alle "+data[i].date_event.slice(11,16)+"\n"+data[i].building;
+
+                body.setAttribute("name",data[i].title);
+                body.setAttribute("building",data[i].building);
+                body.setAttribute("date",data[i].date_event.slice(0,10));
+                body.setAttribute("time",data[i].date_event.slice(11,16));
+                body.setAttribute("info",data[i].info);
+                body.setAttribute("id",data[i]._id);
+
+                fav.setAttribute("id",data[i]._id);
+
+                if(data[i].meta.favs=="true") fav.classList.toggle("selected");
+                document.getElementById("puppet").appendChild(clone);
+            }
+        })
+    }
+}
+
+//TODO: SET EVENT AS FAVOURITE
+function toggle_favourite(evento){
+    evento.classList.toggle("selected");
+    if(evento.className=="empty-star"){
+      var url="http://localhost:3000/api/v1/utente/"+evento.getAttribute("id");
+      fetch(url,{
+        method:"DELETE",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+    else{
+      var url="http://localhost:3000/api/v1/utente/"+evento.getAttribute("id");
+      fetch(url,{
+        method:"PATCH",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+}
+
+//TODO: 
+function commenti(event){
+    localStorage.setItem("event_id",event.getAttribute("event_id"));
+    location.assign("http://localhost:3000/commenta_evento");
+}
+
+
 </script>
