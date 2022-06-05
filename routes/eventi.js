@@ -74,7 +74,7 @@ app.delete('/:id',async (req, res) => {
 });
 
 /*PUT  event list with filter title*/
-app.put('/:filter_title', async (req, res) => {
+app.put('/titolo/:filter_title', async (req, res) => {
   
   try{
     //let full_filter = "/"+req.params.filter+"/i";

@@ -2,6 +2,7 @@ var express = require('express');
 const { default: mongoose } = require('mongoose');
 const Utente = require('../public/models/utente');
 const Event = require('../public/models/evento');
+const Univ = require('../public/models/university');
 const app = express();
 
 
@@ -42,29 +43,55 @@ app.patch('/:id_evento',async (req, res) => {
     if (err){
       console.log(err)
     }else{
-      if(succ == null){return res.status(404).json("event not exist")}
-      console.log("event exist");
-      try{
-        Utente.findOneAndUpdate(
-          { _id: userId }, 
-          { $push: { star_event_list:  {_id:req.params.id_evento  }  } },
-         function (error, success) {
-               if (error) {
-                   console.log(error);
-               } else {
-                   //console.log(success);
-               }
-           });
-    res.status(200).json("event added");
-  }catch (err) {
-    return res.status(500).send({
-      error: err || 'Something went wrong.'
-    });
-  }
+      if(succ == null){
+        Univ.exists({_id:req.params.id_evento}, function(err, succ2){
+          if (err){
+            console.log(err)
+          }else{
+            if(succ2 == null){return res.status(404).json("event not exist")}
+            console.log("event exist");
+            //add evento
+            try{
+              Utente.findOneAndUpdate(
+                    { _id: userId }, 
+                    { $push: { star_event_list:  {_id:req.params.id_evento  }  } },
+                   function (error, success) {
+                         if (error) {
+                             console.log(error);
+                         } else {
+                             //console.log(success);
+                         }
+                     });
+              res.status(200).json("event added");
+            }catch (err) {
+              return res.status(500).send({
+                error: err || 'Something went wrong.'
+              });
+            }
+          }});
+      } else {
+        try{
+          Utente.findOneAndUpdate(
+                { _id: userId }, 
+                { $push: { star_event_list:  {_id:req.params.id_evento  }  } },
+               function (error, success) {
+                     if (error) {
+                         console.log(error);
+                     } else {
+                         //console.log(success);
+                     }
+                 });
+          res.status(200).json("event added");
+        }catch (err) {
+          return res.status(500).send({
+            error: err || 'Something went wrong.'
+          });
+        }
+      }
     }
-    });
- 
+  });
 });
+ 
 
 /*DELETE  star event in user array*/
 app.delete('/:id_evento',async (req, res) => {
