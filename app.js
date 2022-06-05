@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const authentication = require('./public/javascripts/authentication');
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
+const uniRouter = require('./routes/university');
 
 //Connection DB
 const fs = require('fs');
@@ -77,7 +78,7 @@ app.get('/', site.index);
 //login
 app.get('/login', login.login);
 app.use('/api/v1/authentication', authentication);
-app.use('/api/v1/check_login', utentiRouter);
+app.use('/api/v1/utente', utentiRouter)
 //app.post('/login', login.check);
 
 //home
@@ -89,6 +90,8 @@ app.get('/comunita_studenti', comunita_studenti.list_event);
 app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
 app.get('/comunita_studenti/evento', comunita_studenti.get_event);
 app.use('/api/v1/eventi', eventiRouter);
+app.use('/api/v1/uni', uniRouter);
+
 app.get("/commenta_evento",comunita_studenti.commenta);
 
 //Università
