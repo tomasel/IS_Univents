@@ -16,19 +16,15 @@
     </font>
     <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220"  alt="univents_logo">
     <br><br><br><br><br>
-    <form method="get" action="/login">
-        <p>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username">
-        </p>
-        <p>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
-        </p>
-        <p>
-            <p id="error" for="button"></p>
-            <input class="button" type="button" value="Login" onclick="checkLogin();">
-        </p
+    <form method="get" action="api/v1/login">
+        <span>Enter credentials:</span>
+        <span id="loggedUser"></span>
+<br>
+        <input type="text" name="username" id="username">
+<br>
+        <input type="password" name="password" id="password">
+<br>
+        <input class="button" type="button" value="Login" onclick="checkLogin();">
     </form>
   </div>
   <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%"  alt="univents_logo" 
@@ -36,6 +32,47 @@
 
 </form>
 
-<script src="../../public/javascripts/login.js"></script>
+<script>
+var loggedUser = {};
+
+function login()
+{
+    //get the form object
+    var email = document.getElementById("loginEmail").value;
+    var password = document.getElementById("loginPassword").value;
+
+    console.log("here");
+
+    fetch('../api/v1/authentication', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( { email: email, password: password } ),
+    })
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) { // Here you get the data to modify as you please
+        loggedUser.email = data.email;
+        loggedUser.id = data.id;
+        loggedUser.self = data.self;
+        document.getElementById("loggedUser").textContent = loggedUser.email;
+        home();
+        return;
+    })
+    .catch( error => console.error(error) );
+}
+
+function home() {
+
+    fetch('../api/v1/booklendings?userId=' + loggedUser.id + '&token=' + loggedUser.token)
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) { // Here you get the data to modify as you please
+        
+    console.log(data);
+        
+    })
+    .catch( error => console.error(error) );// If there is any error you will catch them here
+    
+}
+
+</script>
 
 <%- include('../footer') -%>

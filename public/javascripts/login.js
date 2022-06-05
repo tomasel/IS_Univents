@@ -19,7 +19,7 @@ function login()
         loggedUser.id = data.id;
         loggedUser.self = data.self;
         document.getElementById("loggedUser").textContent = loggedUser.email;
-        loadLendings();
+        home();
         return;
     })
     .catch( error => console.error(error) );

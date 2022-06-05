@@ -31,10 +31,9 @@ router.post('', async function(req, res) {
             message: 'Authentication successfull.',
             email: user.email,
             id: user._id,
-            self: "api/v1/authentication/" + user._id
+            token: token,
+            self: "api/v1/" + user._id
         });
 });
-
-
 
 module.exports = router;
