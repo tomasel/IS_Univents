@@ -1,17 +1,12 @@
 var loggedUser = {};
 
-/**
- * This function is called when login button is pressed.
- * Note that this does not perform an actual authentication of the user.
- * A student is loaded given the specified email,
- * if it exists, the studentId is used in future calls.
- */
-
 function login()
 {
     //get the form object
     var email = document.getElementById("loginEmail").value;
     var password = document.getElementById("loginPassword").value;
+
+    console.log("here");
 
     fetch('../api/v1/authentication', {
         method: 'POST',

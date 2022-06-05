@@ -10,7 +10,8 @@ var upload = multer();
 const mongoose = require('mongoose');
 
 
-const authentication = require('./public/javascripts/authentication');
+const authentication = require('./public/javascripts/authentication.js');
+const tokenChecker = require('./public/javascripts/tokenCheck.js');
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
 const uniRouter = require('./routes/university');
@@ -76,12 +77,13 @@ app.listen(PORT, () => {
 app.get('/', site.index);
 
 //login
-app.get('/login', login.login);
 app.use('/api/v1/authentication', authentication);
+app.use('/login', login.login);
 app.use('/api/v1/utente', utentiRouter)
 //app.post('/login', login.check);
 
 //home
+app.use('/home', tokenChecker);
 app.get('/home', home.view);
 
 
