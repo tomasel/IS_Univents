@@ -66,7 +66,7 @@ check=function(req){
 
 //funzione che crea evento
 exports.crea = function(req, res){
-  var creatore = 1;//COME LO TROVO??
+  var creatore = "6289f47e6fdc1cd83ca2b39a";//COME LO TROVO??
 
   //controllo sui campi
   var risultato=check(req);
