@@ -34,8 +34,8 @@
   <script>
     var loggedUser = {};
     function login() {
-      var email = document.getElementById("loginEmail").value;
-      var password = document.getElementById("loginPassword").value;
+      var email = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
       console.log(email);
 
       fetch('api/v1/authentication', {

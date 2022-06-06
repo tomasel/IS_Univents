@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
 const uniRouter = require('./routes/university');
+const authRouter = require('./routes/authentication');
 
 //Connection DB
 const fs = require('fs');
@@ -43,7 +44,6 @@ var comunita_studenti = require('./routes/comunita_studenti');
 var home = require('./routes/home');
 var universita = require('./routes/universita');
 var impostazioni = require('./routes/impostazioni');
-//var authentication = require('./routes/authentication');
 var login = require('./routes/login');
 const tokenChecker = require('./routes/tokenCheck');
 
@@ -73,7 +73,7 @@ app.get('/', site.index);
 
 //login
 app.use('/login', login.login);
-//app.use('/api/v1/login', login.authentication);
+app.use('/api/v1/authentication', authRouter);
 app.use('/api/v1/utente', utentiRouter);
 //app.post('/login', login.check);
 
