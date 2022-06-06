@@ -17,7 +17,7 @@
     </font>
     <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220" alt="univents_logo">
     <br><br><br><br><br>
-    <form method="post" action="/api/v1/authentication">
+    <form method="post" action="/views/login/index">
       <span>Enter credentials:</span>
       <span id="loggedUser"></span>
       <br>
@@ -53,6 +53,7 @@
           return;
         })
         .catch(error => console.error(error)); // If there is any error you will catch them here
+      
     };
   </script>
 

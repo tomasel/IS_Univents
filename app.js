@@ -43,7 +43,7 @@ var comunita_studenti = require('./routes/comunita_studenti');
 var home = require('./routes/home');
 var universita = require('./routes/universita');
 var impostazioni = require('./routes/impostazioni');
-var authentication = require('./routes/authentication');
+//var authentication = require('./routes/authentication');
 var login = require('./routes/login');
 const tokenChecker = require('./routes/tokenCheck');
 
@@ -56,10 +56,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(upload.array()); 
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-
 
 //for check on console
 app.listen(PORT, () => {
@@ -76,13 +72,15 @@ app.listen(PORT, () => {
 app.get('/', site.index);
 
 //login
-app.use('/api/v1/authentication', authentication);
 app.use('/login', login.login);
-app.use('/api/v1/utente', utentiRouter)
+//app.use('/api/v1/login', login.authentication);
+app.use('/api/v1/utente', utentiRouter);
 //app.post('/login', login.check);
 
 //home
-app.use('/home', tokenChecker);
+//app.use('/home', tokenChecker);
+//app.use('/comunita_studenti', tokenChecker);
+//app.get('/comunita_studenti/crea_evento', tokenChecker);
 app.get('/home', home.view);
 
 
