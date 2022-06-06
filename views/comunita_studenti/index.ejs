@@ -99,7 +99,7 @@
   document.getElementById("page_name").textContent="Comunità Studenti";
 
   document.addEventListener('DOMContentLoaded', function() {
-    fetch('https://univents-trento.herokuapp.com/api/v1/eventi',{
+    fetch('http://localhost:3000/api/v1/eventi',{
       method:"GET",
       cache:'no-cache',
       headers:{

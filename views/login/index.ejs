@@ -50,7 +50,7 @@
           loggedUser.id = data.id;
           loggedUser.self = data.self;
           if(data.id==undefined) alert("Username o password errati");
-          else location.assign("https://univents-trento.herokuapp.com/home");
+          else location.assign("http://localhost:3000/home");
         })
         .catch(error => console.error(error)); // If there is any error you will catch them here
 

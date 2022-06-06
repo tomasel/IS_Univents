@@ -28,7 +28,7 @@ app.post ('', async function(req, res) {
 		expiresIn: 86400 
 	}
     // SUPER_SECRET
-	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+	var token = jwt.sign(payload, "ciao", options);
 
     res.json({
             success: true,

@@ -21,11 +21,14 @@ app.post('/',async (req, res) => {
 
 });
 
+//GET informazioni utente
 app.get('/',async (req, res) => {
-  const userId = "6289f47e6fdc1cd83ca2b39a";
-  //console.log(userId);
-try{
-  let utente = await Utente.findById(userId);
+  var uid=req.headers.user_id;
+  // var userId = new mongoose.Types.ObjectId();
+  // userId=JSON.stringify(uid);
+  try{
+  // console.log(userId);
+  let utente = await Utente.findById(uid);
   console.log(utente);
   res.status(200).json(utente);
 }catch (err) {
