@@ -1,6 +1,7 @@
 var express = require('express');
 const Event = require('../public/models/evento');
 const app = express();
+const { default: mongoose } = require('mongoose');
 
 
 /* GET eventi listing. */
@@ -38,6 +39,8 @@ app.get('/:id',async (req, res) => {
   } 
 });
 
+
+
 /*POST crea evento*/
 app.post('/',async (req, res) => {
   const newEvent = new Event(req.body);
@@ -71,6 +74,20 @@ app.delete('/:id',async (req, res) => {
     });
   }
 
+});
+
+/*PUT evento by Id_creatore*/
+app.put('/my/:id_creatore',async (req, res) => {
+  //const userId = mongoose.Types.ObjectId(req.params.id_creatore);
+  try{
+    let event = await Event.find({ "id_creator" : req.params.id_creatore});
+    console.log(event);
+    res.status(200).json(event);
+  }catch (err) {
+    return res.status(500).send({
+      error: err || 'Something went wrong.'
+    });
+  } 
 });
 
 /*PUT  event list with filter title*/  //  /api/v1/eventi/titolo/grigliata
