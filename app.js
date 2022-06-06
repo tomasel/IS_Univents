@@ -9,11 +9,10 @@ var multer = require('multer');
 var upload = multer();
 const mongoose = require('mongoose');
 
-
-const authentication = require('./public/javascripts/authentication');
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
 const uniRouter = require('./routes/university');
+const authRouter = require('./routes/authentication');
 
 //Connection DB
 const fs = require('fs');
@@ -46,6 +45,7 @@ var home = require('./routes/home');
 var universita = require('./routes/universita');
 var impostazioni = require('./routes/impostazioni');
 var login = require('./routes/login');
+const tokenChecker = require('./routes/tokenCheck');
 
 //setup
 app.use(logger('dev'));
@@ -56,10 +56,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(upload.array()); 
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-
 
 //for check on console
 app.listen(PORT, () => {
@@ -76,12 +72,15 @@ app.listen(PORT, () => {
 app.get('/', site.index);
 
 //login
-app.get('/login', login.login);
-app.use('/api/v1/authentication', authentication);
-app.use('/api/v1/utente', utentiRouter)
+app.use('/login', login.login);
+app.use('/api/v1/authentication', authRouter);
+app.use('/api/v1/utente', utentiRouter);
 //app.post('/login', login.check);
 
 //home
+//app.use('/home', tokenChecker);
+//app.use('/comunita_studenti', tokenChecker);
+//app.get('/comunita_studenti/crea_evento', tokenChecker);
 app.get('/home', home.view);
 
 

@@ -1,0 +1,22 @@
+<%- include('../header') -%>
+<%- include('../background') -%>
+<%- include('../common_functions.ejs') -%>
+
+<template>
+  <ul>
+    <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
+    <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
+  </ul>
+  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id=""></div>    
+</template>
+ 
+
+<div class="puppet" id="puppet"></div>
+
+
+<div id="Home">
+
+    You are not logged in!
+
+</div>
+<%- include('../footer') -%>
