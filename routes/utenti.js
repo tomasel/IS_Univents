@@ -21,16 +21,12 @@ app.post('/',async (req, res) => {
 
 });
 
-//GET informazioni utente
+
 app.get('/',async (req, res) => {
-  var uid=req.headers.user_id;
-  // var userId = new mongoose.Types.ObjectId();
-  // userId=JSON.stringify(uid);
   try{
-    // console.log(userId);
-    console.log("uid: "+uid);
+    var uid= new mongoose.Types.ObjectId(req.headers.user_id);
     let utente = await Utente.findById(uid);
-    console.log(utente);
+    console.log("uid2: "+uid);
     res.status(200).json(utente);
   }catch (err) {
     return res.status(500).send({

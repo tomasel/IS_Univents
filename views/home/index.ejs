@@ -130,14 +130,14 @@
   function onloading(){
     localStorage.setItem("fav",1);
     alert(localStorage.getItem("user_id"));
-    var url="http://localhost:3000/api/v1/utente/";
+    var url="http://localhost:3000/api/v1/utente/"/*+localStorage.getItem("user_id")*/;
     fetch(url,{
       method:"GET",
       cache:'no-cache',
       headers:{
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'user_id':JSON.stringify(localStorage.getItem("user_id"))
+        'user_id': localStorage.getItem("user_id")
       }
     })
     .then((res) =>{
