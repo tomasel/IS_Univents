@@ -120,4 +120,4 @@ app.use((err, req, res, next) => {
   res.status(status).send({ status, error: msg });
 });
 
-
+module.exports = app;
