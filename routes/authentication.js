@@ -36,7 +36,7 @@ app.post ('', async function(req, res) {
             email: user.email,
             id: user._id,
             token: token,
-            self: '/home' + user.id
+            self: '/home' + user._id
         });
         
         console.log("end of auth");
