@@ -47,12 +47,25 @@
 
 </div>
 
-<template>
+<template id="not_mine">
     <ul>
       <li id="" class="empty-star" onclick="toggle_favourite(this)" style="position:relative;left:30px;">★</li>
-      <!-- <li class='far fa-comment' onclick="commenti(this);" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li> -->
-      <img src="/images/icona_commenti/icona_commenti.png" onclick="commenti(this)" width="20" height="20"  alt="icona_commenti"
+      <img id="comment_icon" src="/images/icona_commenti/icona_commenti.png" onclick="commenti(this)" width="20" height="20"  alt="icona_commenti"
       style='float:right;position:relative; top:12px; left:30px;'>
+    </ul>
+    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id="" building=""></div>    
+</template>
+
+<template id="mine">
+    <ul>
+      <li id="" class="empty-star" onclick="toggle_favourite(this)" style="position:relative;left:30px;">★</li>
+
+      <img id="comment_icon" event_id="" src="/images/icona_commenti/icona_commenti.png" onclick="commenti(this)" width="20" height="20"  alt="icona_commenti"
+      style='float:right;position:relative; top:12px; left:30px;'>
+      
+      <img id="trash_icon" event_id="" src="/images/icona_cestino.png" onclick="elimina_evento(this)" width="30" height="30"  alt="icona_commenti"
+      style='float:right;position:relative; top:40px; left:70px;'>
+    
     </ul>
     <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id="" building=""></div>    
 </template>

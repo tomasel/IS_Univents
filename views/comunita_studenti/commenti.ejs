@@ -1,5 +1,5 @@
 <%- include('../header') -%>
-<%- include('../background') -%>
+<%- include('../background.ejs') -%>
 <%- include('../common_functions.ejs') -%>
 
 
@@ -61,7 +61,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     var i,item,clone;
     for(i=0;i<10;i++){
-      item = document.getElementsByTagName("template")[1].content;
+      item = document.getElementsByTagName("template")[2].content;
         clone = document.importNode(item,true);
         var body=clone.querySelector("div");
 

@@ -1,6 +1,6 @@
 <script>
 
-function load(data){
+function load(data,mine){
   // var user_id="6289f47e6fdc1cd83ca2b39a"; al momento c'è un solo utente, non ancora implementato
   var url="http://localhost:3000/api/v1/utente/"/*+user_id*/;
   // alert(url);
@@ -21,16 +21,23 @@ function load(data){
 
       var e=document.getElementById("puppet");
       var child = e.lastElementChild; 
+
       if(data.length==0){
         alert("Nessun evento trovato");
         return 0;
       }
+
       while (child) {
           e.removeChild(child);
           child = e.lastElementChild;
       }
+
+      if(mine==false) item = document.getElementsByTagName("template")[0].content;
+      else{
+        item = document.getElementsByTagName("template")[1].content;
+      } 
+
       for(i=0;i<data.length;i++){
-        item = document.getElementsByTagName("template")[0].content;
         clone = document.importNode(item,true);
         var body=clone.querySelector("div");
         var fav=clone.querySelector("ul").querySelector("li");
@@ -55,7 +62,9 @@ function load(data){
           body.setAttribute("place",data[i].building);
         }
     
-        fav.setAttribute("id",data[i]._id);
+        // fav.setAttribute("event_id",data[i]._id);
+        clone.getElementById("comment_icon").setAttribute("event_id",data[i]._id);
+        if(mine==true)  clone.getElementById("trash_icon").setAttribute("event_id",data[i]._id);
 
         if(star_event_set.has(data[i]._id)) fav.classList.toggle("selected");
     
@@ -369,9 +378,15 @@ function toggle_favourite(evento){
 
 //TODO: 
 function commenti(event){
+  alert(event.getAttribute("event_id"));
     localStorage.setItem("event_id",event.getAttribute("event_id"));
     location.assign("http://localhost:3000/commenta_evento");
 }
+
+
+
+
+
 
 
 </script>

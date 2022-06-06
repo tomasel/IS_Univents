@@ -77,128 +77,160 @@
   document.getElementById("page_name").textContent="Home";
 
   function mostra_preferiti(){
-    //trigger the DOMContentLoaded event to reload the favourite events
     if(localStorage.getItem("fav")==0){
-      var DOMContentLoaded_event = document.createEvent("Event");
-      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
-      window.document.dispatchEvent(DOMContentLoaded_event);
+      // alert("sono in mostra_preferiti");
+      var e=document.getElementById("puppet");
+      var child = e.lastElementChild; 
+      while (child) {
+          e.removeChild(child);
+          child = e.lastElementChild;
+      }
+      // alert("calling oloading");
+      onloading();
     }
+  }
+
+  function elimina_evento(event){
+    var url="http://localhost:3000/api/v1/eventi/"+event.getAttribute("event_id");
+    // alert(url);
+    fetch(url,{method:"DELETE"})
+    alert("evento eliminato con successo");
+    localStorage.setItem("fav",1);
+    mostra_miei_eventi();
   }
 
 
   function mostra_miei_eventi(){
-    localStorage.setItem("fav",0);
-    var e=document.getElementById("puppet");
-    var child = e.lastElementChild; 
-    while (child) {
-        e.removeChild(child);
-        child = e.lastElementChild;
+    // alert(localStorage.getItem("fav"));
+    if(localStorage.getItem("fav")==1){
+      localStorage.setItem("fav",0);
+      var e=document.getElementById("puppet");
+      var child = e.lastElementChild; 
+      while (child) {
+          e.removeChild(child);
+          child = e.lastElementChild;
+      }
+      var url="http://localhost:3000/api/v1/eventi/my/1";//AL MOMENTO ID_CREATORE=1; DA CAMBIARE COL VERO ID CREATORE
+      fetch(url,{
+        method:"PUT",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((data) => {
+          load(data,true);
+      })
     }
-    //TODO:RETRIVE LIST OF MY EVENTS AND LOAD IT
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function onloading(){
     localStorage.setItem("fav",1);
     var url="http://localhost:3000/api/v1/utente/"/*+user_id*/;
-  // alert(url);
-  fetch(url,{
-    method:"GET",
-    cache:'no-cache',
-    headers:{
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-  .then((res) =>{
-    return res.json()
-  })
-  .then((utente) => {
-    var star_event_set = new Set();
-    for(var i=0; i<utente.star_event_list.length;i++) star_event_set.add(utente.star_event_list[i]._id);
-    star_event_set.forEach(event_id=>{
-      var url2="http://localhost:3000/api/v1/eventi/"+event_id;
-      fetch(url2,{
-        method:"GET",
-        cache:'no-cache',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((res) =>{
-        return res.json()
-      } )
-      .then((evento) => {
-        // alert(evento);
-        item = document.getElementsByTagName("template")[0].content;
-        clone = document.importNode(item,true);
-        var body=clone.querySelector("div");
-        var fav=clone.querySelector("ul").querySelector("li");
-
-        
-        body.setAttribute('style', 'white-space: break-spaces;');
-        body.textContent=evento.title+"\n";
-        body.textContent+=evento.date_event.slice(8,10)+"/"+evento.date_event.slice(5,7)+"/"+evento.date_event.slice(0,4)+
-        " alle "+evento.date_event.slice(11,16)+"\n"+evento.place;
-        
-        body.setAttribute("name",evento.title);
-        body.setAttribute("place",evento.place);
-        body.setAttribute("date",evento.date_event.slice(0,10));
-        body.setAttribute("time",evento.date_event.slice(11,16));
-        body.setAttribute("info",evento.info);
-        body.setAttribute("id",evento._id);
-    
-        fav.setAttribute("id",evento._id);
-
-        if(star_event_set.has(evento._id)) fav.classList.toggle("selected");
-    
-        document.getElementById("puppet").appendChild(clone);
-      })
-
-      //FUNZIONA MA E' ORRIBILE
-
-      url2="http://localhost:3000/api/v1/uni/"+event_id;
-      fetch(url2,{
-        method:"GET",
-        cache:'no-cache',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((res) =>{
-        return res.json()
-      } )
-      .then((evento) => {
-        // alert(evento);
-        item = document.getElementsByTagName("template")[0].content;
-        clone = document.importNode(item,true);
-        var body=clone.querySelector("div");
-        var fav=clone.querySelector("ul").querySelector("li");
-    
-        body.setAttribute('style', 'white-space: break-spaces;');
-        body.textContent=evento.title+"\n";
-        body.textContent+=evento.date_event.slice(8,10)+"/"+evento.date_event.slice(5,7)+"/"+evento.date_event.slice(0,4)+
-        " alle "+evento.date_event.slice(11,16)+"\n"+evento.building;
-        
-    
-        body.setAttribute("name",evento.title);
-        body.setAttribute("building",evento.building);
-        body.setAttribute("date",evento.date_event.slice(0,10));
-        body.setAttribute("time",evento.date_event.slice(11,16));
-        body.setAttribute("info",evento.info);
-        body.setAttribute("id",evento._id);
-
-        fav.setAttribute("id",evento._id);
-
-        if(star_event_set.has(evento._id)) fav.classList.toggle("selected");
-    
-        document.getElementById("puppet").appendChild(clone);
-      })
-
+    fetch(url,{
+      method:"GET",
+      cache:'no-cache',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     })
-  })
-}, false);
+    .then((res) =>{
+      return res.json()
+    })
+    .then((utente) => {
+      var star_event_set = new Set();
+      for(var i=0; i<utente.star_event_list.length;i++) star_event_set.add(utente.star_event_list[i]._id);
+      star_event_set.forEach(event_id=>{
+        var url2="http://localhost:3000/api/v1/eventi/"+event_id;
+        fetch(url2,{
+          method:"GET",
+          cache:'no-cache',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((evento) => {
+          // alert(evento);
+          item = document.getElementsByTagName("template")[0].content;
+          clone = document.importNode(item,true);
+          var body=clone.querySelector("div");
+          var fav=clone.querySelector("ul").querySelector("li");
+  
+          
+          body.setAttribute('style', 'white-space: break-spaces;');
+          body.textContent=evento.title+"\n";
+          body.textContent+=evento.date_event.slice(8,10)+"/"+evento.date_event.slice(5,7)+"/"+evento.date_event.slice(0,4)+
+          " alle "+evento.date_event.slice(11,16)+"\n"+evento.place;
+          
+          body.setAttribute("name",evento.title);
+          body.setAttribute("place",evento.place);
+          body.setAttribute("date",evento.date_event.slice(0,10));
+          body.setAttribute("time",evento.date_event.slice(11,16));
+          body.setAttribute("info",evento.info);
+          body.setAttribute("id",evento._id);
+      
+          fav.setAttribute("id",evento._id);
+  
+          if(star_event_set.has(evento._id)) fav.classList.toggle("selected");
+      
+          document.getElementById("puppet").appendChild(clone);
+        })
+  
+        //FUNZIONA MA E' ORRIBILE
+  
+        url2="http://localhost:3000/api/v1/uni/"+event_id;
+        fetch(url2,{
+          method:"GET",
+          cache:'no-cache',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((evento) => {
+          // alert(evento);
+          item = document.getElementsByTagName("template")[0].content;
+          clone = document.importNode(item,true);
+          var body=clone.querySelector("div");
+          var fav=clone.querySelector("ul").querySelector("li");
+      
+          body.setAttribute('style', 'white-space: break-spaces;');
+          body.textContent=evento.title+"\n";
+          body.textContent+=evento.date_event.slice(8,10)+"/"+evento.date_event.slice(5,7)+"/"+evento.date_event.slice(0,4)+
+          " alle "+evento.date_event.slice(11,16)+"\n"+evento.building;
+          
+      
+          body.setAttribute("name",evento.title);
+          body.setAttribute("building",evento.building);
+          body.setAttribute("date",evento.date_event.slice(0,10));
+          body.setAttribute("time",evento.date_event.slice(11,16));
+          body.setAttribute("info",evento.info);
+          body.setAttribute("id",evento._id);
+  
+          fav.setAttribute("id",evento._id);
+  
+          if(star_event_set.has(evento._id)) fav.classList.toggle("selected");
+      
+          document.getElementById("puppet").appendChild(clone);
+        })
+  
+      })
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', onloading(), false);
   
 
 </script>
