@@ -59,7 +59,7 @@ app.post('/',async (req, res) => {
 app.delete('/:id',async (req, res) => {
 
   // const userId = req.query.userId; DA RIMODIFICARE QUANDO AVREMO I VERI USER ID
-  const userId=1;
+  const userId="6289f47e6fdc1cd83ca2b39a";
   let test = await Event.findById(req.params.id);
   if(!userId == test.id_creator ){
     return res.status(400).send("wrong user");

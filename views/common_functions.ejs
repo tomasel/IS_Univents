@@ -41,6 +41,7 @@ function load(data,mine){
         clone = document.importNode(item,true);
         var body=clone.querySelector("div");
         var fav=clone.querySelector("ul").querySelector("li");
+        fav.setAttribute("id",data[i]._id);
     
         body.setAttribute('style', 'white-space: break-spaces;');
         body.textContent=data[i].title+"\n";
