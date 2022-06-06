@@ -1,11 +1,12 @@
 <%- include('../header') -%>
 
-<style>
-    body{
-        background-color: #dddddd;
+  <style>
+    body {
+      background-color: #dddddd;
     }
   </style>
-  <div style="height: 90%; width:20%;background-color: white; border-radius: 20px; position:absolute; top:-20px; left:15%; text-align: center;">
+  <div
+    style="height: 90%; width:20%;background-color: white; border-radius: 20px; position:absolute; top:-20px; left:15%; text-align: center;">
     <font face="Helvetica Neue" color="#B10B25" style="font-size:60px;">
       <br>
       <b>Univents</b>
@@ -14,65 +15,45 @@
       <br>
       <b>The community <br>for students</b>
     </font>
-    <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220"  alt="univents_logo">
+    <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220" alt="univents_logo">
     <br><br><br><br><br>
-    <form method="get" action="api/v1/login">
-        <span>Enter credentials:</span>
-        <span id="loggedUser"></span>
-<br>
-        <input type="text" name="username" id="username">
-<br>
-        <input type="password" name="password" id="password">
-<br>
-        <input class="button" type="button" value="Login" onclick="checkLogin();">
+    <form method="post" action="/api/v1/authentication">
+      <span>Enter credentials:</span>
+      <span id="loggedUser"></span>
+      <br>
+      <input type="text" name="username" id="username">
+      <br>
+      <input type="password" name="password" id="password">
+      <br>
+      <input class="button" type="button" value="Login" onclick="login()">
     </form>
   </div>
-  <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%"  alt="univents_logo" 
-      style="position:fixed; top:0px; right:0px;">
+  <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%" alt="univents_logo"
+    style="position:fixed; top:0px; right:0px;">
 
-</form>
+  <script>
+    var loggedUser = {};
+    function login() {
+      var email = document.getElementById("loginEmail").value;
+      var password = document.getElementById("loginPassword").value;
+      console.log(email);
 
-<script>
-var loggedUser = {};
-
-function login()
-{
-    //get the form object
-    var email = document.getElementById("loginEmail").value;
-    var password = document.getElementById("loginPassword").value;
-
-    console.log("here");
-
-    fetch('../api/v1/authentication', {
+      fetch('api/v1/authentication', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( { email: email, password: password } ),
-    })
-    .then((resp) => resp.json()) // Transform the data into json
-    .then(function(data) { // Here you get the data to modify as you please
-        loggedUser.email = data.email;
-        loggedUser.id = data.id;
-        loggedUser.self = data.self;
-        document.getElementById("loggedUser").textContent = loggedUser.email;
-        home();
-        return;
-    })
-    .catch( error => console.error(error) );
-}
+        body: JSON.stringify({ email: email, password: password }),
+      })
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function (data) { // Here you get the data to modify as you please
+          console.log(data);
+          loggedUser.token = data.token;
+          loggedUser.email = data.email;
+          loggedUser.id = data.id;
+          loggedUser.self = data.self;
+          return;
+        })
+        .catch(error => console.error(error)); // If there is any error you will catch them here
+    };
+  </script>
 
-function home() {
-
-    fetch('../api/v1/booklendings?userId=' + loggedUser.id + '&token=' + loggedUser.token)
-    .then((resp) => resp.json()) // Transform the data into json
-    .then(function(data) { // Here you get the data to modify as you please
-        
-    console.log(data);
-        
-    })
-    .catch( error => console.error(error) );// If there is any error you will catch them here
-    
-}
-
-</script>
-
-<%- include('../footer') -%>
+  <%- include('../footer') -%>

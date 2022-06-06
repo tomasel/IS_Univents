@@ -1,19 +1,19 @@
 const express = require('express');
-const router = express.Router();
-const Utente = require('../models/utente');
+const Utente = require('../public/models/utente');
 const jwt = require('jsonwebtoken');
+const app = express();
 
-router.post('', async function(req, res) {
+app.post ('', async function(req, res) {
     let user = await Utente.findOne({
         email: req.body.email
     }).exec();
 
     if (!user) {
-        res.json({ success: false, message: 'Authentication failed. User not found.' });
+        res.status(500).json({ success: false, message: 'Authentication failed. User not found.' });
     }
 
     if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        res.status(500).json({ success: false, message: 'Authentication failed. Wrong password.' });
     }
 
     // crea token
@@ -32,8 +32,8 @@ router.post('', async function(req, res) {
             email: user.email,
             id: user._id,
             token: token,
-            self: "api/v1/" + user._id
+            self: "api/v1/home/" + user._id
         });
 });
 
-module.exports = router;
+module.exports = app;

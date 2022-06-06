@@ -9,9 +9,6 @@ var multer = require('multer');
 var upload = multer();
 const mongoose = require('mongoose');
 
-
-const authentication = require('./public/javascripts/authentication.js');
-const tokenChecker = require('./public/javascripts/tokenCheck.js');
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
 const uniRouter = require('./routes/university');
@@ -46,7 +43,9 @@ var comunita_studenti = require('./routes/comunita_studenti');
 var home = require('./routes/home');
 var universita = require('./routes/universita');
 var impostazioni = require('./routes/impostazioni');
+var authentication = require('./routes/authentication');
 var login = require('./routes/login');
+const tokenChecker = require('./routes/tokenCheck');
 
 //setup
 app.use(logger('dev'));
