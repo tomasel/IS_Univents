@@ -1,14 +1,32 @@
 <%- include('header') -%>
 
 <h1><%= title %></h1>
+<style>
+  body{
+      background-color: #dddddd;
+  }
+</style>
+<div style="height: 90%; width:20%;background-color: white; border-radius: 20px; position:absolute; top:-20px; left:15%; text-align: center;">
+  <font face="Helvetica Neue" color="#B10B25" style="font-size:60px;">
+    <br>
+    <b>Univents</b>
+  </font>
+  <font face="Helvetica Neue" color="black" style="font-size:30px;">
+    <br>
+    <b>The community <br>for students</b>
+  </font>
+  <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220"  alt="univents_logo">
+  <br><br><br><br><br><br><br>
+  <form method="get" action="/login">
+    <p>
+      <input class="button" type="submit" value="Login">
+    </p>
+  </form>
+</div>
+<img src="/images/sigillo_universita/ti_1000x1000.png" height="100%"  alt="univents_logo" 
+    style="position:fixed; top:0px; right:0px;">
 
-<img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220"  alt="univents_logo">
-<img src="/images/sigillo_universita/Sigillo_Universita_di_Trento.svg" width="205" height="220"  alt="Sigillo_Università_di_Trento" float="right">
+<!-- <img src="/images/sigillo_universita/Sigillo_Universita_di_Trento.svg" style="height:100%; width:100%;" alt="Sigillo_Università_di_Trento" float="right"> -->
 
-<form method="get" action="/login">
-  <p>
-    <input type="submit" value="Login">
-  </p>
-</form>
 
 <%- include('footer') -%>

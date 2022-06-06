@@ -1,55 +1,60 @@
 <%- include('../header') -%>
 
-<h1>Login</h1>
-
-<form method="get" action="/home">
-<p>
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username">
-</p>
-<p>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
-</p>
-<p>
-    <p id="error" for="button"></p>
-    <input type="button" value="Login" onclick="checkLogin(this);">
-</p>
-
-<script>
-
-console.log("here!");
-</script>
-
-<script>
-// controlla se i campi sono vuoti
-// controlla se l'utente esiste sul database, se esiste controlla se la password è corretta
-function checkLogin (button) {
-    var user = document.getElementById("username").value;
-    var pass = document.getElementById("password").value;
-    if (user === "" || pass === "") {
-        alert("Fill both username and password!");
-    } else {
-        // controllo utente
-        // TODO alla fine redirect utente a window.location = "../home";
-        fetch("http://localhost:3000/api/v1/check_login",{
-              method: "POST",
-              headers:{          
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body:JSON.stringify({
-                userId: user,
-                userPsw: pass
-              })
-            })
-        .then(res=>res.json())
-        .then(json => {
-            console.log('parsed json', json) // access json.body here
-        })
-        .catch(err=>console.log(err));
+  <style>
+    body {
+      background-color: #dddddd;
     }
-}
-</form>
+  </style>
+  <div
+    style="height: 90%; width:20%;background-color: white; border-radius: 20px; position:absolute; top:-20px; left:15%; text-align: center;">
+    <font face="Helvetica Neue" color="#B10B25" style="font-size:60px;">
+      <br>
+      <b>Univents</b>
+    </font>
+    <font face="Helvetica Neue" color="black" style="font-size:30px;">
+      <br>
+      <b>The community <br>for students</b>
+    </font>
+    <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220" alt="univents_logo">
+    <br><br><br><br><br>
+    <form method="post" action="/views/login/index">
+      <span>Enter credentials:</span>
+      <span id="loggedUser"></span>
+      <br>
+      <input type="text" name="username" id="username">
+      <br>
+      <input type="password" name="password" id="password">
+      <br>
+      <input class="button" type="button" value="Login" onclick="login()">
+    </form>
+  </div>
+  <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%" alt="univents_logo"
+    style="position:fixed; top:0px; right:0px;">
 
-<%- include('../footer') -%>
+  <script>
+    var loggedUser = {};
+    function login() {
+      var email = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      fetch('api/v1/authentication', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password }),
+      })
+        .then((resp) => resp.json()) // Transform the data into json
+        .then((data)=> { // Here you get the data to modify as you please
+          localStorage.setItem("user_id",data.id);
+          loggedUser.token = data.token;
+          loggedUser.email = data.email;
+          loggedUser.id = data.id;
+          loggedUser.self = data.self;
+          if(data.id==undefined) alert("Username o password errati");
+          else location.assign("https://univents-trento.herokuapp.com/home");
+        })
+        .catch(error => console.error(error)); // If there is any error you will catch them here
+
+    };
+  </script>
+
+  <%- include('../footer') -%>

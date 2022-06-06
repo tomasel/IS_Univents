@@ -1,64 +1,237 @@
 <%- include('../header') -%>
-
-
-<table id="header" border="0" width="100%"
-		cellpadding="0" cellspacing="0" bgcolor="#b10b25">
-		<tr>
-			<td>
-				<table border="0" cellpadding="15" cellspacing="0" width="100%" align="left">
-					<tr>	
-						<td>
-              <img src="/images/sigillo_universita/ti_200x200.png" width="100" height="100"  alt="univents_logo">
-							<font face="Helvetica Neue" size="6" position="center" color="white">
-                	<b>Univents</b>
-							</font>
-						</td>	
-            <td>
-							<a href="/impostazioni" style="text-decoration:none" position="right">
-								<font face="Helvetica neue" size="5" color=white >
-									Impostazioni
-								</font>
-							</a>
-						</td>					
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-
-
-  <td>
-    <a href="/home" style="text-decoration: none;">
-      <font face="Helvetica" size="5" color=black>
-        <%= title %><br>
-      </font>
-    </a>
-  </td>
-
-  <td>
-    _<br>
-  </td>
-
-  <td>
-    <a href="/comunita_studenti" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Comunità Studenti<br>
-      </font>
-    </a>
-  </td>
-
-  <td>
-    _<br>
-  </td>
-
-  <td>
-    <a href="/universita" style="text-decoration:none">
-      <font face="Helvetica" size="5" color=black>
-        Università
-      </font>
-    </a>
-  </td>
+<%- include('../background.ejs') -%>
+<%- include('../common_functions.ejs') -%>
 
 
 
+<template>
+  <ul>
+    <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
+    <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
+  </ul>
+  <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id=""></div>    
+</template>
+ 
+
+<div class="puppet" id="puppet"></div>
+
+
+<div id="Home">
+
+
+  <table id="evento" border="0" align="left"
+  cellpadding="0" cellspacing="0" bgcolor="#cccccc"  class="infobox">
+  <tr>
+      <td>
+        <table border="0" cellpadding="15"  
+        <tr>
+            <td width="60%">
+
+              <font id="info_nome" face="Helvetica" size="4"
+              color="black">
+              NOME:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_dove" face="Helvetica" size="4"
+              color="black">
+              DOVE:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_quando" face="Helvetica" size="4"
+              color="black">
+              QUANDO:
+              </font>
+
+              <hr color="#b10b25" style="margin-top: 2em; margin-bottom: 2em;">
+
+              <font id="info_info" face="Helvetica" size="4"
+              color="black">
+              INFO:
+              </font>
+
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+
+  <button class="button" id="filtra_per_nome" onclick="filtra_nome()"
+  style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
+  <button class="button" id="filtra_per_data" onclick="filtra_data()"
+  style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
+
+
+</div>
+
+<button class="button" style="position:fixed; right:10%; top:40%;" onclick="mostra_preferiti()">Preferiti</button>
+<button class="button" style="position:fixed; right:10%; top:60%;" onclick="mostra_miei_eventi()">I miei eventi</button>
+
+
+<script>
+  document.getElementById("page_name").textContent="Home";
+
+  function mostra_preferiti(){
+    if(localStorage.getItem("fav")==0){
+      // alert("sono in mostra_preferiti");
+      var e=document.getElementById("puppet");
+      var child = e.lastElementChild; 
+      while (child) {
+          e.removeChild(child);
+          child = e.lastElementChild;
+      }
+      // alert("calling oloading");
+      onloading();
+    }
+  }
+
+  function elimina_evento(event){
+    var url="https://univents-trento.herokuapp.com/api/v1/eventi/"+event.getAttribute("event_id");
+    // alert(url);
+    fetch(url,{method:"DELETE"})
+    alert("evento eliminato con successo");
+    localStorage.setItem("fav",1);
+    mostra_miei_eventi();
+  }
+
+
+  function mostra_miei_eventi(){
+    // alert(localStorage.getItem("fav"));
+    if(localStorage.getItem("fav")==1){
+      localStorage.setItem("fav",0);
+      var e=document.getElementById("puppet");
+      var child = e.lastElementChild; 
+      while (child) {
+          e.removeChild(child);
+          child = e.lastElementChild;
+      }
+      var url="https://univents-trento.herokuapp.com/api/v1/eventi/my/6289f47e6fdc1cd83ca2b39a";//AL MOMENTO ID_CREATORE=1; DA CAMBIARE COL VERO ID CREATORE
+      fetch(url,{
+        method:"PUT",
+        cache:'no-cache',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((data) => {
+          load(data,true);
+      })
+    }
+  }
+
+  function onloading(){
+    localStorage.setItem("fav",1);
+    var url="https://univents-trento.herokuapp.com/api/v1/utente/"/*+user_id*/;
+    fetch(url,{
+      method:"GET",
+      cache:'no-cache',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) =>{
+      return res.json()
+    })
+    .then((utente) => {
+      var star_event_set = new Set();
+      for(var i=0; i<utente.star_event_list.length;i++) star_event_set.add(utente.star_event_list[i]._id);
+      star_event_set.forEach(event_id=>{
+        var url2="https://univents-trento.herokuapp.com/api/v1/eventi/"+event_id;
+        fetch(url2,{
+          method:"GET",
+          cache:'no-cache',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((evento) => {
+          // alert(evento);
+          item = document.getElementsByTagName("template")[0].content;
+          clone = document.importNode(item,true);
+          var body=clone.querySelector("div");
+          var fav=clone.querySelector("ul").querySelector("li");
+  
+          
+          body.setAttribute('style', 'white-space: break-spaces;');
+          body.textContent=evento.title+"\n";
+          body.textContent+=evento.date_event.slice(8,10)+"/"+evento.date_event.slice(5,7)+"/"+evento.date_event.slice(0,4)+
+          " alle "+evento.date_event.slice(11,16)+"\n"+evento.place;
+          
+          body.setAttribute("name",evento.title);
+          body.setAttribute("place",evento.place);
+          body.setAttribute("date",evento.date_event.slice(0,10));
+          body.setAttribute("time",evento.date_event.slice(11,16));
+          body.setAttribute("info",evento.info);
+          body.setAttribute("id",evento._id);
+      
+          fav.setAttribute("id",evento._id);
+  
+          if(star_event_set.has(evento._id)) fav.classList.toggle("selected");
+      
+          document.getElementById("puppet").appendChild(clone);
+        })
+  
+        //FUNZIONA MA E' ORRIBILE
+  
+        url2="https://univents-trento.herokuapp.com/api/v1/uni/"+event_id;
+        fetch(url2,{
+          method:"GET",
+          cache:'no-cache',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((res) =>{
+          return res.json()
+        } )
+        .then((evento) => {
+          // alert(evento);
+          item = document.getElementsByTagName("template")[0].content;
+          clone = document.importNode(item,true);
+          var body=clone.querySelector("div");
+          var fav=clone.querySelector("ul").querySelector("li");
+      
+          body.setAttribute('style', 'white-space: break-spaces;');
+          body.textContent=evento.title+"\n";
+          body.textContent+=evento.date_event.slice(8,10)+"/"+evento.date_event.slice(5,7)+"/"+evento.date_event.slice(0,4)+
+          " alle "+evento.date_event.slice(11,16)+"\n"+evento.building;
+          
+      
+          body.setAttribute("name",evento.title);
+          body.setAttribute("building",evento.building);
+          body.setAttribute("date",evento.date_event.slice(0,10));
+          body.setAttribute("time",evento.date_event.slice(11,16));
+          body.setAttribute("info",evento.info);
+          body.setAttribute("id",evento._id);
+  
+          fav.setAttribute("id",evento._id);
+  
+          if(star_event_set.has(evento._id)) fav.classList.toggle("selected");
+      
+          document.getElementById("puppet").appendChild(clone);
+        })
+  
+      })
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', onloading(), false);
+  
+
+</script>
 <%- include('../footer') -%>

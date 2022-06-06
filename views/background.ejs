@@ -1,0 +1,75 @@
+<div style="position:fixed; background-color: #B10B25; width:100%; height: 160px; top:0px; left:0px; z-index: 1;">
+    <img src="/images/univents_logo/univents_vents_logo.png" width="150" height="150"  alt="univents_logo"
+    style="position:absolute; left:2.5%">
+    <div style="width:100%; height:200px; text-align: center; display:table;">
+        <font id="page_name" face="Helvetica Neue" color="white" style="display:table-cell; font-size:60px;  vertical-align: middle;">
+        
+        </font>
+    </div>
+
+    <a href="/impostazioni" style="text-decoration:none; position:fixed; right:2%; top:100px;">
+        <font face="Helvetica neue" size="5" color=white >
+        Impostazioni
+        </font>
+    </a>
+</div>
+  
+  
+<div class="left_menu">
+<br><br><br><br><br><br><br><br><br>
+<td>
+    <a href="/home" style="text-decoration: none;">
+    <font face="Helvetica" size="5" color=black>
+        Home<br>
+    </font>
+    </a>
+</td>
+
+<hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
+
+<td>
+    <a href="/comunita_studenti" style="text-decoration:none">
+    <font face="Helvetica" size="5" color=black>
+        Comunità Studenti<br>
+    </font>
+    </a>
+</td>
+
+<hr color="white" style="margin-top: 3em; margin-bottom: 3em; margin-left: 20px; margin-right: 20px;">
+
+<td>
+    <a href="/universita" style="text-decoration:none">
+        <font face="Helvetica" size="5" color=black>
+            Università
+        </font>
+    </a>
+</td>
+
+</div>
+
+<template id="not_mine">
+    <ul>
+      <li id="" class="empty-star" onclick="toggle_favourite(this)" style="position:relative;left:30px;">★</li>
+      <img id="comment_icon" src="/images/icona_commenti/icona_commenti.png" onclick="commenti(this)" width="20" height="20"  alt="icona_commenti"
+      style='float:right;position:relative; top:12px; left:30px;'>
+    </ul>
+    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id="" building=""></div>    
+</template>
+
+<template id="mine">
+    <ul>
+      <li id="" class="empty-star" onclick="toggle_favourite(this)" style="position:relative;left:30px;">★</li>
+
+      <img id="comment_icon" event_id="" src="/images/icona_commenti/icona_commenti.png" onclick="commenti(this)" width="20" height="20"  alt="icona_commenti"
+      style='float:right;position:relative; top:12px; left:30px;'>
+      
+      <img id="trash_icon" event_id="" src="/images/icona_cestino.png" onclick="elimina_evento(this)" width="30" height="30"  alt="icona_commenti"
+      style='float:right;position:relative; top:40px; left:70px;'>
+    
+    </ul>
+    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info="" id="" building=""></div>    
+</template>
+
+<template>
+    <div class="commentbox"></div>
+</template>

@@ -3,6 +3,7 @@ const app = require("../app");
 const fs = require("fs");
 const { throws } = require("assert");
 const { exit } = require("process");
+const { Script } = require("vm");
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -28,6 +29,12 @@ exports.create_event = function(req, res){
   });
 };
 
+//commenti
+exports.commenta = function(req, res){
+  res.status(200).render('comunita_studenti/commenti', {
+    title: 'Commenti'
+  });
+};
 
 //funzione di controllo dei campi
 check=function(req){
@@ -51,7 +58,7 @@ check=function(req){
         ) pulito=false; //OTTIMIZZAZIONE: SI FERMA APPENA TROVA LA PRIMA PAROLA
       }
     })
-    console.log(pulito);
+    // console.log(pulito);
     if (!pulito) return 2; //2:rifiutata per parole illegali
     return 3; //3: accettata
 }
@@ -59,7 +66,7 @@ check=function(req){
 
 //funzione che crea evento
 exports.crea = function(req, res){
-  var creatore = 1;//COME LO TROVO??
+  var creatore = "6289f47e6fdc1cd83ca2b39a";//COME LO TROVO??
 
   //controllo sui campi
   var risultato=check(req);
@@ -83,15 +90,15 @@ exports.crea = function(req, res){
   else
   {
     var dt = new Date(req.body.data_ora).toJSON();
-    console.log(req.body.nome_evento);
-    console.log(req.body.luogo_evento);
-    console.log(dt.slice(0,10));
-    console.log(dt.slice(11,16));
-    console.log(req.body.descrizione_evento);
+    // console.log(req.body.nome_evento);
+    // console.log(req.body.luogo_evento);
+    // console.log(dt.slice(0,10));
+    // console.log(dt.slice(11,16));
+    // console.log(req.body.descrizione_evento);
   
     
     //send to API
-    fetch("http://localhost:3000/api/v1/eventi",{
+    fetch("https://univents-trento.herokuapp.com/api/v1/eventi",{
       method: "POST",
       headers:{          
         'Accept': 'application/json',
@@ -102,7 +109,7 @@ exports.crea = function(req, res){
         place: req.body.luogo_evento,
         date_event: dt.slice(0,16),
         info: req.body.descrizione_evento,
-        id_creator: creatore,
+        id_creator: creatore, ///QUI DA CAMBIARE CREATORE
         hidden: 0,
         reported: 0,
         meta:{favs : '0'}
@@ -120,3 +127,5 @@ exports.crea = function(req, res){
   }
 
 };
+
+
