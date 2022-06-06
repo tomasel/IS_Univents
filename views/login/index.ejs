@@ -47,7 +47,7 @@
           console.log(data);
           loggedUser.token = data.token;
           loggedUser.email = data.email;
-          loggedUser.id = data._id;
+          loggedUser.id = data.id;
           loggedUser.self = data.self;
           console.log("here!!");
           location.assign(resp.self);
