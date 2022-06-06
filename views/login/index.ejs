@@ -49,6 +49,9 @@
           loggedUser.email = data.email;
           loggedUser.id = data._id;
           loggedUser.self = data.self;
+          console.log("here!!");
+          location.assign(resp.self);
+          console.log("passed!!");
           return;
         })
         .catch(error => console.error(error)); // If there is any error you will catch them here
