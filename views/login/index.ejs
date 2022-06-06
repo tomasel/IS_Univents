@@ -36,7 +36,6 @@
     function login() {
       var email = document.getElementById("username").value;
       var password = document.getElementById("password").value;
-      console.log(email);
 
       fetch('api/v1/authentication', {
         method: 'POST',
@@ -48,12 +47,11 @@
           console.log(data);
           loggedUser.token = data.token;
           loggedUser.email = data.email;
-          loggedUser.id = data.id;
+          loggedUser.id = data._id;
           loggedUser.self = data.self;
           return;
         })
         .catch(error => console.error(error)); // If there is any error you will catch them here
-      
     };
   </script>
 
