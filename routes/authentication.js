@@ -6,7 +6,7 @@ const app = express();
 app.post ('', async function(req, res) {
     let user = await Utente.findOne({
         email: req.body.email
-    }).exec();
+    });
 
     if (!user) {
         res.status(500).json({ success: false, message: 'Authentication failed. User not found.' });
