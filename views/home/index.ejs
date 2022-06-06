@@ -69,10 +69,36 @@
 
 </div>
 
+<button class="button" style="position:fixed; right:10%; top:40%;" onclick="mostra_preferiti()">Preferiti</button>
+<button class="button" style="position:fixed; right:10%; top:60%;" onclick="mostra_miei_eventi()">I miei eventi</button>
+
+
 <script>
   document.getElementById("page_name").textContent="Home";
 
+  function mostra_preferiti(){
+    //trigger the DOMContentLoaded event to reload the favourite events
+    if(localStorage.getItem("fav")==0){
+      var DOMContentLoaded_event = document.createEvent("Event");
+      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+      window.document.dispatchEvent(DOMContentLoaded_event);
+    }
+  }
+
+
+  function mostra_miei_eventi(){
+    localStorage.setItem("fav",0);
+    var e=document.getElementById("puppet");
+    var child = e.lastElementChild; 
+    while (child) {
+        e.removeChild(child);
+        child = e.lastElementChild;
+    }
+    //TODO:RETRIVE LIST OF MY EVENTS AND LOAD IT
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
+    localStorage.setItem("fav",1);
     var url="http://localhost:3000/api/v1/utente/"/*+user_id*/;
   // alert(url);
   fetch(url,{
