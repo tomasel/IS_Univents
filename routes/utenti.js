@@ -27,15 +27,16 @@ app.get('/',async (req, res) => {
   // var userId = new mongoose.Types.ObjectId();
   // userId=JSON.stringify(uid);
   try{
-  // console.log(userId);
-  let utente = await Utente.findById(uid);
-  console.log(utente);
-  res.status(200).json(utente);
-}catch (err) {
-  return res.status(500).send({
-    error: err || 'Something went wrong.'
-  });
-} 
+    // console.log(userId);
+    console.log("uid: "+uid);
+    let utente = await Utente.findById(uid);
+    console.log(utente);
+    res.status(200).json(utente);
+  }catch (err) {
+    return res.status(500).send({
+      error: err || 'Something went wrong.'
+    });
+  } 
 
 });
 
