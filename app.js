@@ -73,8 +73,8 @@ app.get('/', site.index);
 
 //login
 app.use('/login', login.login);
-app.use('/api/v1/authentication', authRouter);
-app.use('/api/v1/utente', utentiRouter);
+app.use('/api/v2/authentication', authRouter);
+app.use('/api/v2/utente', utentiRouter);
 //app.post('/login', login.check);
 
 //tokenCheck
@@ -100,8 +100,8 @@ app.get("/home",home.view);
 app.get('/comunita_studenti', comunita_studenti.list_event);
 app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
 app.get('/comunita_studenti/evento', comunita_studenti.get_event);
-app.use('/api/v1/eventi', eventiRouter);
-app.use('/api/v1/uni', uniRouter);
+app.use('/api/v2/eventi', eventiRouter);
+app.use('/api/v2/uni', uniRouter);
 
 app.get("/commenta_evento",comunita_studenti.commenta);
 
@@ -111,7 +111,7 @@ app.get('/universita', universita.list_building);
 
 //Impostazioni
 app.get('/impostazioni', impostazioni.view);
-//app.use('/api/v1/utente', utente);
+//app.use('/api/v2/utente', utente);
 
 //crea evento
 app.post('/comunita_studenti/crea_evento', comunita_studenti.crea);

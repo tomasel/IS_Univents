@@ -5,7 +5,7 @@
  const app     = require('../app');
  
  //GET
- describe('GET /api/v1/utente', () => {
+ describe('GET /api/v2/utente', () => {
  
    // Moking utente.find method
    let utenteSpy;
@@ -28,9 +28,9 @@
      utenteSpyFindById.mockRestore();
    });
    
-   test('GET /api/v1/utente should respond with data of utente', async () => {
+   test('GET /api/v2/utente should respond with data of utente', async () => {
      return request(app)
-       .get('/api/v1/utente')
+       .get('/api/v2/utente')
        .expect('Content-Type', /json/)
        .expect(200)
    });   
@@ -39,7 +39,7 @@
 
 
  //PATCH
- describe('PATCH /api/v1/utente', () => {
+ describe('PATCH /api/v2/utente', () => {
  
   // Moking utente.find method
   let utenteSpy;
@@ -60,9 +60,9 @@
     utenteSpy.mockRestore();
   });
 
-  test('PATCH /api/v1/utente/ should respond 200 and event added', async () => {
+  test('PATCH /api/v2/utente/ should respond 200 and event added', async () => {
     return request(app)
-      .patch('/api/v1/utente/629deddb8e09118647119161')
+      .patch('/api/v2/utente/629deddb8e09118647119161')
       .expect('event added')
       .expect(200)
   });
@@ -70,7 +70,7 @@
 });
 
 //DELETE
-describe('DELETE /api/v1/utente', () => {
+describe('DELETE /api/v2/utente', () => {
  
     // Moking utente.find method
     let utenteSpy;
@@ -90,9 +90,9 @@ describe('DELETE /api/v1/utente', () => {
     });
   
   
-    test('DELETE /api/v1/utente should respond 200 and event deleted', async () => {
+    test('DELETE /api/v2/utente should respond 200 and event deleted', async () => {
       return request(app)
-        .delete('/api/v1/utente/629deddb8e09118647119161')
+        .delete('/api/v2/utente/629deddb8e09118647119161')
         .expect('event deleted')
         .expect(200)
     });

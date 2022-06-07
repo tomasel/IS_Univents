@@ -40,7 +40,7 @@
       var password = document.getElementById("password").value;
       localStorage.setItem("password",password);
 
-      fetch('api/v1/authentication', {
+      fetch('api/v2/authentication', {
         method: "POST",
         cache: 'no-cache',
         headers: {

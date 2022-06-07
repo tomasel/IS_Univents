@@ -5,7 +5,7 @@
  const app     = require('../app');
  
  //GET
- describe('GET /api/v1/eventi', () => {
+ describe('GET /api/v2/eventi', () => {
  
    // Moking evento.find method
    let eventiSpy;
@@ -50,17 +50,17 @@
      eventiSpyFindById.mockRestore();
    });
    
-   test('GET /api/v1/eventi should respond with an array of eventi', async () => {
+   test('GET /api/v2/eventi should respond with an array of eventi', async () => {
      return request(app)
-       .get('/api/v1/eventi')
+       .get('/api/v2/eventi')
        .expect('Content-Type', /json/)
        .expect(200)
    });
  
    //TEST GET 1
-   test('GET /api/v1/eventi/:id should respond with json, event data', async () => {
+   test('GET /api/v2/eventi/:id should respond with json, event data', async () => {
      return request(app)
-       .get('/api/v1/eventi/628a0605e1e87845ae4f3c7d')
+       .get('/api/v2/eventi/628a0605e1e87845ae4f3c7d')
        .expect('Content-Type', /json/)
        .expect(200,{
           title: 'evento3',
@@ -71,9 +71,9 @@
    });
 
    //TEST GET 2
-   test('GET /api/v1/eventi/:id should respond with json, event data', async () => {
+   test('GET /api/v2/eventi/:id should respond with json, event data', async () => {
     return request(app)
-      .get('/api/v1/eventi/628a0605e1e87845ae4f4d8e')
+      .get('/api/v2/eventi/628a0605e1e87845ae4f4d8e')
       .expect('Content-Type', /json/)
       .expect(200,{
          title: 'evento1',
@@ -88,11 +88,11 @@
 
 
  //POST
- describe('POST /api/v1/eventi', () => {
+ describe('POST /api/v2/eventi', () => {
 
-  test('POST /api/v1/eventi should respond 200 and evento creato', async () => {
+  test('POST /api/v2/eventi should respond 200 and evento creato', async () => {
     return request(app)
-      .post('/api/v1/eventi')
+      .post('/api/v2/eventi')
       .send({
         title: 'evento_test',
         info: 'info evento test',
@@ -108,7 +108,7 @@
 });
 
  //DELETE
- describe('DELETE /api/v1/eventi', () => {
+ describe('DELETE /api/v2/eventi', () => {
  
   // Moking evento.find method
   let eventiSpy;
@@ -132,9 +132,9 @@
   });
 
 
-  test('DELETE /api/v1/eventi should respond 200 and evento cancellato', async () => {
+  test('DELETE /api/v2/eventi should respond 200 and evento cancellato', async () => {
     return request(app)
-      .delete('/api/v1/eventi/629e00da33ae678d12d5f3b4')
+      .delete('/api/v2/eventi/629e00da33ae678d12d5f3b4')
       .expect('Content-Type', /json/)
       .expect(200)
       });
@@ -142,7 +142,7 @@
 });
 
  //PUT
- describe('PUT /api/v1/eventi', () => {
+ describe('PUT /api/v2/eventi', () => {
  
   // Moking evento.find method
   let eventiSpy;
@@ -163,16 +163,16 @@
   });
 
 
-  test('PUT /api/v1/eventi/titolo should respond 200 and array of filtered title event', async () => {
+  test('PUT /api/v2/eventi/titolo should respond 200 and array of filtered title event', async () => {
     return request(app)
-      .put('/api/v1/eventi/titolo/festona')
+      .put('/api/v2/eventi/titolo/festona')
       .expect('Content-Type', /json/)
       .expect(200)
   });
 
-  test('PUT /api/v1/eventi/data should respond 200 and array of filtered event date', async () => {
+  test('PUT /api/v2/eventi/data should respond 200 and array of filtered event date', async () => {
     return request(app)
-      .put('/api/v1/eventi/data/2022-06-25')
+      .put('/api/v2/eventi/data/2022-06-25')
       .expect('Content-Type', /json/)
       .expect(200)
   });
