@@ -19,13 +19,37 @@
          title: 'Software Engineering 2'
        }];
      });
+
      eventiSpyFindById = jest.spyOn(evento, 'findById').mockImplementation((id) => {
-       if (id==1010)
-         return {
-           title: 'Software Engineering 2'
-         };
-       else
-         return {};
+       switch(id){
+         case "628a0605e1e87845ae4f3c7d":{
+          return {
+            title: 'evento3',
+            date_event: "2022-07-22T09:22:27.740Z",
+            place:"via evento3",
+            info:"info3"
+           };
+         }
+         case "628a0605e1e87845ae4f4d8e":{
+          return {
+            title: 'evento1',
+            date_event: "2022-08-22T09:22:27.740Z",
+            place:"via evento1",
+            info:"info1"
+           };
+         }
+         default:{
+           return {};
+         }
+       }
+      //  if (id=="628a0605e1e87845ae4f3c7d")
+      //    return {
+      //     title: 'evento3',
+      //     date_event: "2022-07-22T09:22:27.740Z",
+      //     place:"via evento3",
+      //     info:"info3"
+      //    };
+      //    else return {};
      });
    });
  
@@ -41,20 +65,32 @@
        .expect(200)
    });
  
-   
+   //TEST GET 1
    test('GET /api/v1/eventi/:id should respond with json, event data', async () => {
      return request(app)
        .get('/api/v1/eventi/628a0605e1e87845ae4f3c7d')
        .expect('Content-Type', /json/)
-       .expect(200)
-       .then( (res) => {
-          expect(res.body.title == "evento" &&
-                 res.body.date_event == "2022-07-22T09:22:27.740Z" &&
-                 res.body.place == "via evento3" &&
-                 res.body.info == "info3")
-      });
-
+       .expect(200,{
+          title: 'evento3',
+          date_event: "2022-07-22T09:22:27.740Z",
+          place:"via evento3",
+          info:"info3"
+       })
    });
+
+   //TEST GET 2
+   test('GET /api/v1/eventi/:id should respond with json, event data', async () => {
+    return request(app)
+      .get('/api/v1/eventi/628a0605e1e87845ae4f4d8e')
+      .expect('Content-Type', /json/)
+      .expect(200,{
+         title: 'evento1',
+         date_event: "2022-08-22T09:22:27.740Z",
+         place:"via evento1",
+         info:"info1"
+      })
+  });
+
 
    
  
