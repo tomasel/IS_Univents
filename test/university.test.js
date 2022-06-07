@@ -61,46 +61,6 @@
  });
 
 
- //POST
- describe('POST /api/v1/uni', () => {
- 
-  // Moking university.find method
-  let uniSpy;
-  // Moking university.findById method
-  let uniSpyFindById;
-
-  beforeAll( () => {
-    const university = require('../public/models/university');
-    uniSpy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
-      return [{
-        title: 'Software Engineering 2'
-      }];
-    });
-    uniSpyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
-      if (id==1010)
-        return {
-          title: 'Software Engineering 2'
-        };
-      else
-        return {};
-    });
-  });
-
-  afterAll(async () => {
-    uniSpy.mockRestore();
-    uniSpyFindById.mockRestore();
-  });
-
-
-  test('POST /api/v1/uni should respond 200 and university creato', async () => {
-    return request(app)
-      .post('/api/v1/uni')
-      .expect('Content-Type', /json/)
-      .expect(200)
-  });
-
-});
-
  //PUT
  describe('PUT /api/v1/uni', () => {
  
