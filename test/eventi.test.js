@@ -49,7 +49,7 @@
    });
  
    
-   test('GET /api/v1/eventi/:id should respond with json', async () => {
+   test('GET /api/v1/eventi/:id should respond with json, event data', async () => {
      return request(app)
        .get('/api/v1/eventi/1010')
        .expect('Content-Type', /json/)
@@ -141,7 +141,7 @@
   });
 
 
-  test('DELETE /api/v1/eventi should respond 200 and evento creato', async () => {
+  test('DELETE /api/v1/eventi should respond 200 and evento cancellato', async () => {
     return request(app)
       .post('/api/v1/eventi')
       .expect('Content-Type', /json/)
@@ -188,7 +188,7 @@
   });
 
 
-  test('PUT /api/v1/eventi should respond 200 and evento creato', async () => {
+  test('PUT /api/v1/eventi/titolo should respond 200 and array of filtered title event', async () => {
     return request(app)
       .post('/api/v1/eventi')
       .expect('Content-Type', /json/)
@@ -202,21 +202,7 @@
       });
   });
 
-  test('PUT /api/v1/eventi should respond 200 and evento creato', async () => {
-    return request(app)
-      .post('/api/v1/eventi')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .then( (res) => {
-        if(req.body && req.body[0]) {
-          expect(req.body[0]).toEqual({
-            title: 'Software Engineering 2'
-          });
-        }
-      });
-  });
-
-  test('PUT /api/v1/eventi should respond 200 and evento creato', async () => {
+  test('PUT /api/v1/eventi/data should respond 200 and array of filtered event date', async () => {
     return request(app)
       .post('/api/v1/eventi')
       .expect('Content-Type', /json/)
