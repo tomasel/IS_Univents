@@ -42,14 +42,6 @@
            return {};
          }
        }
-      //  if (id=="628a0605e1e87845ae4f3c7d")
-      //    return {
-      //     title: 'evento3',
-      //     date_event: "2022-07-22T09:22:27.740Z",
-      //     place:"via evento3",
-      //     info:"info3"
-      //    };
-      //    else return {};
      });
    });
  
@@ -92,14 +84,11 @@
   });
 
 
-   
- 
  });
 
 
  //POST
  describe('POST /api/v1/eventi', () => {
-
 
   test('POST /api/v1/eventi should respond 200 and evento creato', async () => {
     return request(app)
