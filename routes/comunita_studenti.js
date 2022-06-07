@@ -98,7 +98,7 @@ exports.crea = function(req, res){
   
     
     //send to API
-    fetch("https://univents-trento.herokuapp.com/api/v1/eventi",{
+    fetch("http://localhost:3000/api/v1/eventi",{
       method: "POST",
       headers:{          
         'Accept': 'application/json',

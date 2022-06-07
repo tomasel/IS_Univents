@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "Blob": "^0.10.0",
     "body-parser": "^1.20.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
@@ -20,6 +21,7 @@
     "mongoose": "^6.3.3",
     "morgan": "~1.9.1",
     "multer": "^1.4.4",
-    "node-fetch": "^3.2.4"
+    "node-fetch": "^3.2.4",
+    "read-blob": "^1.1.2"
   }
 }

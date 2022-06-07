@@ -78,7 +78,6 @@
 
   function mostra_preferiti(){
     if(localStorage.getItem("fav")==0){
-      // alert("sono in mostra_preferiti");
       var e=document.getElementById("puppet");
       var child = e.lastElementChild; 
       while (child) {
@@ -91,7 +90,7 @@
   }
 
   function elimina_evento(event){
-    var url="https://univents-trento.herokuapp.com/api/v1/eventi/"+event.getAttribute("event_id");
+    var url="http://localhost:3000/api/v1/eventi/"+event.getAttribute("event_id");
     // alert(url);
     fetch(url,{method:"DELETE"})
     alert("evento eliminato con successo");
@@ -110,7 +109,7 @@
           e.removeChild(child);
           child = e.lastElementChild;
       }
-      var url="https://univents-trento.herokuapp.com/api/v1/eventi/my/6289f47e6fdc1cd83ca2b39a";//AL MOMENTO ID_CREATORE=1; DA CAMBIARE COL VERO ID CREATORE
+      var url="http://localhost:3000/api/v1/eventi/my/"+localStorage.getItem("user_id");//AL MOMENTO ID_CREATORE=1; DA CAMBIARE COL VERO ID CREATORE
       fetch(url,{
         method:"PUT",
         cache:'no-cache',
@@ -130,23 +129,26 @@
 
   function onloading(){
     localStorage.setItem("fav",1);
-    var url="https://univents-trento.herokuapp.com/api/v1/utente/"/*+user_id*/;
+    // alert(localStorage.getItem("user_id"));
+    var url="http://localhost:3000/api/v1/utente/"/*+localStorage.getItem("user_id")*/;
     fetch(url,{
       method:"GET",
       cache:'no-cache',
       headers:{
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'user_id': localStorage.getItem("user_id")
       }
     })
     .then((res) =>{
       return res.json()
     })
     .then((utente) => {
+      // alert("sono nel then");
       var star_event_set = new Set();
       for(var i=0; i<utente.star_event_list.length;i++) star_event_set.add(utente.star_event_list[i]._id);
       star_event_set.forEach(event_id=>{
-        var url2="https://univents-trento.herokuapp.com/api/v1/eventi/"+event_id;
+        var url2="http://localhost:3000/api/v1/eventi/"+event_id;
         fetch(url2,{
           method:"GET",
           cache:'no-cache',
@@ -187,7 +189,7 @@
   
         //FUNZIONA MA E' ORRIBILE
   
-        url2="https://univents-trento.herokuapp.com/api/v1/uni/"+event_id;
+        url2="http://localhost:3000/api/v1/uni/"+event_id;
         fetch(url2,{
           method:"GET",
           cache:'no-cache',

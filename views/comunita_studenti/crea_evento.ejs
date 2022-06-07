@@ -18,13 +18,16 @@
   <form method="post" action="/comunita_studenti/crea_evento">
 
     <label for="nome_evento">Nome dell'evento:<br></label>
-    <input name="nome_evento" type="text" value="" oninput="update_nome(this.value)"><br><br>
+    <textarea rows="2" cols="30" name="nome_evento" type="textarea"
+    oninput="update_nome(this.value)" style="resize: none;"></textarea><br><br>
 
     <label for="luogo_evento">Luogo dell'evento:<br></label>
-    <input name="luogo_evento" type="text" oninput="update_dove(this.value)"><br><br>
+    <textarea rows="2" cols="30" name="luogo_evento" type="textarea"
+    oninput="update_dove(this.value)" style="resize: none;"></textarea><br><br>
 
     <label for="data_ora">Data e ora dell'evento:<br></label>
     <input type="datetime-local" name="data_ora" id="data_ora_evento" max="2030-12-31T23:59" oninput="update_quando(this.value)"><br><br>
+    
     <!-- set minimum date to today's -->
     <script>
       var today=new Date();
@@ -33,7 +36,7 @@
 
 
     <label for="descrizione_evento">descrizione dell'evento:<br></label>
-    <textarea rows="10" cols="50" id="ta" name="descrizione_evento" type="textarea" size="80" rows="10"
+    <textarea rows="10" cols="50" id="ta" name="descrizione_evento" type="textarea"
     oninput="update_info(this.value)" style="resize: none;"></textarea>
     <br><br>
 
@@ -105,15 +108,15 @@
       document.getElementById("info_info").textContent="INFO:\r\n"+value;
     }
     function goto_home(){
-      location.assign('https://univents-trento.herokuapp.com/home');
+      location.assign('http://localhost:3000/home');
     }
 
     function goto_universita(){
-      location.assign('https://univents-trento.herokuapp.com/universita');
+      location.assign('http://localhost:3000/universita');
     }
 
     function goto_comunita_studenti(){
-      location.assign('https://univents-trento.herokuapp.com/comunita_studenti');
+      location.assign('http://localhost:3000/comunita_studenti');
     }
   </script>
 

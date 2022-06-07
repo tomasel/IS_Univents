@@ -21,24 +21,24 @@ app.post('/',async (req, res) => {
 
 });
 
+
 app.get('/',async (req, res) => {
-  const userId = "6289f47e6fdc1cd83ca2b39a";
-  //console.log(userId);
-try{
-  let utente = await Utente.findById(userId);
-  console.log(utente);
-  res.status(200).json(utente);
-}catch (err) {
-  return res.status(500).send({
-    error: err || 'Something went wrong.'
-  });
-} 
+  try{
+    var uid= new mongoose.Types.ObjectId(req.headers.user_id);
+    let utente = await Utente.findById(uid);
+    console.log("uid2: "+uid);
+    res.status(200).json(utente);
+  }catch (err) {
+    return res.status(500).send({
+      error: err || 'Something went wrong.'
+    });
+  } 
 
 });
 
 /*PATCH add star event to user array*/
 app.patch('/:id_evento',async (req, res) => {
-  const userId = mongoose.Types.ObjectId("6289f47e6fdc1cd83ca2b39a");
+  const userId = mongoose.Types.ObjectId(req.headers.user_id);
   Event.exists({_id:req.params.id_evento}, function(err, succ){
     if (err){
       console.log(err)
@@ -95,7 +95,7 @@ app.patch('/:id_evento',async (req, res) => {
 
 /*DELETE  star event in user array*/
 app.delete('/:id_evento',async (req, res) => {
-  const userId = mongoose.Types.ObjectId("6289f47e6fdc1cd83ca2b39a");
+  const userId = mongoose.Types.ObjectId(req.headers.user_id);
   
 try{
       Utente.findOneAndUpdate(
