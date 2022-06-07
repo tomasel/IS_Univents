@@ -1,11 +1,12 @@
 <%- include('../header') -%>
 
-<style>
-    body{
-        background-color: #dddddd;
+  <style>
+    body {
+      background-color: #dddddd;
     }
   </style>
-  <div style="height: 90%; width:20%;background-color: white; border-radius: 20px; position:absolute; top:-20px; left:15%; text-align: center;">
+  <div
+    style="height: 90%; width:20%;background-color: white; border-radius: 20px; position:absolute; top:-20px; left:15%; text-align: center;">
     <font face="Helvetica Neue" color="#B10B25" style="font-size:60px;">
       <br>
       <b>Univents</b>
@@ -14,65 +15,55 @@
       <br>
       <b>The community <br>for students</b>
     </font>
-    <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220"  alt="univents_logo">
-    <br><br><br><br><br>
-    <form method="get" action="/home">
-        <p>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username">
-        </p>
-        <p>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
-        </p>
-        <p>
-            <p id="error" for="button"></p>
-            <input class="button" type="button" value="Login" onclick="checkLogin(this);">
-        </p
-    </form>
+    <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220" alt="univents_logo">
+    <br><br><br><br>
+
+    <p>Enter credentials</p>
+    <label for="username">Username: </label>
+    <input type="text" name="username" id="username">
+    <label for="password">Password: </label>
+    <input type="password" name="password" id="password"><br><br>
+    <button class="button" onclick="login()">Login</button>
   </div>
-  <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%"  alt="univents_logo" 
-      style="position:fixed; top:0px; right:0px;">
+  <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%" alt="univents_logo"
+    style="position:fixed; top:0px; right:0px;">
 
-    
+  <script>
+    const fs = require("fs");
 
+    //CHIEDIGLI POI DA DOVE VIENE
+    // var loggedUser = [{key:"token", value:""},
+    //                   {key:"email", value:""},
+    //                   {key:"id", value:""}];
+    function login() {
+      var email = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      localStorage.setItem("password",password);
 
-
-<script>
-
-console.log("here!");
-</script>
-
-<script>
-// controlla se i campi sono vuoti
-// controlla se l'utente esiste sul database, se esiste controlla se la password è corretta
-function checkLogin (button) {
-    var user = document.getElementById("username").value;
-    var pass = document.getElementById("password").value;
-    if (user === "" || pass === "") {
-        alert("Fill both username and password!");
-    } else {
-        // controllo utente
-        // TODO alla fine redirect utente a window.location = "../home";
-        fetch("http://localhost:3000/api/v1/check_login",{
-              method: "POST",
-              headers:{          
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body:JSON.stringify({
-                userId: user,
-                userPsw: pass
-              })
-            })
-        .then(res=>res.json())
-        .then(json => {
-            console.log('parsed json', json) // access json.body here
+      fetch('api/v1/authentication', {
+        method: "POST",
+        cache: 'no-cache',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          // 'user_id': localStorage.getItem("user_id")
+        },
+        body: JSON.stringify({ email: email, password: password }),
+      })
+        .then((res) => res.json()) // Transform the data into json
+        .then((data) => { // Here you get the data to modify as you please
+          localStorage.setItem("user_id", data.id);
+          localStorage.setItem("token",data.token);
+          localStorage.setItem("email",data.email);
+          
+          if (data.id == undefined) alert("Username o password errati");
+          else{
+            location.assign("http://localhost:3000/home");
+          }
         })
-        .catch(err=>console.log(err));
-    }
-}
-</script>
-</form>
+        .catch(error => console.error(error)); // If there is any error you will catch them here
 
-<%- include('../footer') -%>
+    };
+  </script>
+
+  <%- include('../footer') -%>

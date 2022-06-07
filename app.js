@@ -8,15 +8,14 @@ var cors = require('cors');
 var multer = require('multer');
 var upload = multer();
 const mongoose = require('mongoose');
+const fs = require("fs");
 
-
-const authentication = require('./public/javascripts/authentication');
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
 const uniRouter = require('./routes/university');
+const authRouter = require('./routes/authentication');
+fs.writeFileSync("token.txt","","utf8");
 
-//Connection DB
-const fs = require('fs');
 var password = fs.readFileSync('./password.txt','utf8');
 mongoose.connect('mongodb+srv://univents_database:'+password+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
 .then ( () => {
@@ -46,6 +45,7 @@ var home = require('./routes/home');
 var universita = require('./routes/universita');
 var impostazioni = require('./routes/impostazioni');
 var login = require('./routes/login');
+const tokenChecker = require('./routes/tokenCheck');
 
 //setup
 app.use(logger('dev'));
@@ -56,10 +56,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(upload.array()); 
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-
 
 //for check on console
 app.listen(PORT, () => {
@@ -76,13 +72,28 @@ app.listen(PORT, () => {
 app.get('/', site.index);
 
 //login
-app.get('/login', login.login);
-app.use('/api/v1/authentication', authentication);
-app.use('/api/v1/utente', utentiRouter)
+app.use('/login', login.login);
+app.use('/api/v1/authentication', authRouter);
+app.use('/api/v1/utente', utentiRouter);
 //app.post('/login', login.check);
 
+//tokenCheck
+app.all('/home', tokenChecker);
+app.all('/comunita_studenti', tokenChecker);
+app.all('/comunita_studenti/crea_evento', tokenChecker);
+app.all('/universita', tokenChecker);
+app.all('/universita/edificio', tokenChecker);
+app.all('/impostazioni', tokenChecker);
+
 //home
-app.get('/home', home.view);
+
+app.all('/home', tokenChecker);
+app.all('/comunita_studenti', tokenChecker);
+app.get('/comunita_studenti/crea_evento', tokenChecker);
+app.get('/impostazioni', tokenChecker);
+app.get('/universita', tokenChecker);
+app.get('/universita/edificio', tokenChecker);
+app.get("/home",home.view);
 
 
 //Comunità Studenti
@@ -122,4 +133,6 @@ app.use((err, req, res, next) => {
 });
 
 
+
 module.exports = app;
+

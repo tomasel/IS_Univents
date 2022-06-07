@@ -1,29 +1,19 @@
 <%- include('../header') -%>
-<%- include('../background') -%>
+<%- include('../background.ejs') -%>
 <%- include('../common_functions.ejs') -%>
-
-
-  <template>
-    <ul>
-      <li id="fav" class="empty-star" onclick="highlight(this)" style="position:relative;left:30px;">★</li>
-      <li class='far fa-comment' onclick="commenti(this)" style='font-size:25px; float:right;position:relative; top:9px; left:30px;'></li>
-    </ul>
-    <div class="eventbox" onclick="set_info_box(this);" name="" place="" date="" time="" info=""></div>    
-  </template>
-
 
 <div class="puppet" id="puppet"></div>
 
 <div class="dropdown">
   <button class="dropbtn">Seleziona edificio</button>
   <div class="dropdown-content">
-    <a href="javascript:ottieni('economia')">Economia</a>
-    <a href="javascript:ottieni('giurisprudenza')">Giurisprudenza</a>
-    <a href="javascript:ottieni('lettere')">Lettere</a>
-    <a href="javascript:ottieni('medicina')">Medicina</a>
-    <a href="javascript:ottieni('mesiano')">Mesiano</a>
-    <a href="javascript:ottieni('povo')">Povo</a>
-    <a href="javascript:ottieni('sociologia')">Sociologia</a>
+    <a href="javascript:ottieni('Economia')">Economia</a>
+    <a href="javascript:ottieni('Giurisprudenza')">Giurisprudenza</a>
+    <a href="javascript:ottieni('Lettere')">Lettere</a>
+    <a href="javascript:ottieni('Medicina')">Medicina</a>
+    <a href="javascript:ottieni('Mesiano')">Mesiano</a>
+    <a href="javascript:ottieni('Povo')">Povo</a>
+    <a href="javascript:ottieni('Sociologia')">Sociologia</a>
   </div>
 </div>
 
@@ -66,56 +56,59 @@
           </table>
         </td>
       </tr>
-    </table>
+</table>
 
-    <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
-    top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
-      <tr>
-        <th colspan="5">Filtra eventi per:</th>
-      </tr>
-      <tr>
-        <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
-        <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
-      </tr>
-      <tr id="filtro_nome_row" style="width:100%; display:none;">
-        <td colspan="2">
-            <p style="text-align:center;">Inserisci il nome dell'evento</p>
-            <input type="text" id="input_nome" name="input_nome" style="width:100%;">
-        </td>
-      </tr>
-      <tr id="filtro_data_row" style="width:100%; display:none;text-align:left;">
-        <td colspan="2">
-          <p>Inserisci la data dell'evento</p>
-          <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
-        </td>
-      </tr>
-    </table>
-    <!-- <button class="button" id="filtra_per_nome" onclick="filtra_nome()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
-    <button class="button" id="filtra_per_data" onclick="filtra_data()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>     -->
 
+  <table id="filtro" table border=1 frame=hsides rules=rows style="position:fixed;
+  top:38%; right:2%; border: 1px solid #dddddd; width:18% ">
+    <tr>
+      <th colspan="5">Filtra eventi per:</th>
+    </tr>
+    <tr>
+      <td id="seleziona_filtro_nome" class="filtro_selezione" style="width:50%;" onclick="show_filtro_nome()">Nome</td>
+      <td id="seleziona_filtro_data" class="filtro_selezione" style="width:50%;" onclick="show_filtro_data()">Data</td>
+    </tr>
+    <tr id="filtro_nome_row" style="width:100%; display:none;">
+      <td colspan="2">
+          <p style="text-align:center;">Inserisci il nome dell'evento</p>
+          <input type="text" id="filtro_nome" name="input_nome" style="width:100%;">
+      </td>
+    </tr>
+    <tr id="filtro_data_row" style="width:100%; display:none;text-align:left;">
+      <td colspan="2">
+        <p>Inserisci la data dell'evento</p>
+        <input type="date" id="filtro_data" max="2030-12-31" style="align-self: center;">
+      </td>
+    </tr>
+  </table>
+
+
+  <button class="button" id="filtra_per_nome" onclick="filtra_nome_uni()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per nome</button>
+  <button class="button" id="filtra_per_data" onclick="filtra_data_uni()" style="display:none; position:fixed; bottom:35%; right:6%; width:10%;">filtra per data</button>
 
 
 <script>
+
   document.getElementById("page_name").textContent="Università";
 
-
   function ottieni(edificio){
-    var i,item,clone;
-    //elimina eventi gia sul diplay
-    var e=document.getElementById("puppet");
-    var child = e.lastElementChild; 
-    while (child) {
-        e.removeChild(child);
-        child = e.lastElementChild;
-    }
-    for(i=0;i<10;i++){
-      console.log(i);
-      item = document.getElementsByTagName("template")[0].content;
-      clone = document.importNode(item,true);
-      var body=clone.querySelector("div");
-      body.textContent+="Evento "+edificio+" "+i; //TODO: CONNECT TO DB API AND RETRIEVE EVENTS
-      document.getElementById("puppet").appendChild(clone);
-    }
+    var url='http://localhost:3000/api/v1/uni/'+edificio;
+    // alert(url);
+    fetch(url,{
+      method:"PUT",
+      cache:'no-cache',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) =>{
+        return res.json()
+      } )
+      .then((data) => {
+       load(data,false);
+    })
+
   }
 
 </script>
