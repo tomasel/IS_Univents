@@ -93,6 +93,7 @@ app.get('/comunita_studenti/crea_evento', tokenChecker);
 app.get('/impostazioni', tokenChecker);
 app.get('/universita', tokenChecker);
 app.get('/universita/edificio', tokenChecker);
+app.get("/home",home.view);
 
 
 //Comunità Studenti
