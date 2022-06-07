@@ -63,33 +63,6 @@
 
  //POST
  describe('POST /api/v1/eventi', () => {
- 
-  // Moking evento.find method
-  let eventiSpy;
-  // Moking evento.findById method
-  let eventiSpyFindById;
-
-  beforeAll( () => {
-    const evento = require('../public/models/evento');
-    eventiSpy = jest.spyOn(evento, 'find').mockImplementation((criterias) => {
-      return [{
-        title: 'Software Engineering 2'
-      }];
-    });
-    eventiSpyFindById = jest.spyOn(evento, 'findById').mockImplementation((id) => {
-      if (id==1010)
-        return {
-          title: 'Software Engineering 2'
-        };
-      else
-        return {};
-    });
-  });
-
-  afterAll(async () => {
-    eventiSpy.mockRestore();
-    eventiSpyFindById.mockRestore();
-  });
 
 
   test('POST /api/v1/eventi should respond 200 and evento creato', async () => {
@@ -119,11 +92,6 @@
 
   beforeAll( () => {
     const evento = require('../public/models/evento');
-    eventiSpy = jest.spyOn(evento, 'find').mockImplementation((criterias) => {
-      return [{
-        title: 'Software Engineering 2'
-      }];
-    });
     eventiSpyFindById = jest.spyOn(evento, 'findById').mockImplementation((id) => {
       if (id==1010)
         return {
@@ -135,7 +103,6 @@
   });
 
   afterAll(async () => {
-    eventiSpy.mockRestore();
     eventiSpyFindById.mockRestore();
   });
 
@@ -164,19 +131,10 @@
         title: 'Software Engineering 2'
       }];
     });
-    eventiSpyFindById = jest.spyOn(evento, 'findById').mockImplementation((id) => {
-      if (id==1010)
-        return {
-          title: 'Software Engineering 2'
-        };
-      else
-        return {};
-    });
   });
 
   afterAll(async () => {
     eventiSpy.mockRestore();
-    eventiSpyFindById.mockRestore();
   });
 
 
