@@ -16,20 +16,13 @@
       <b>The community <br>for students</b>
     </font>
     <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220" alt="univents_logo">
-    <br><br><br><br><br>
-    <!-- <form onsubmit="login()" action="/home">
-      <span>Enter credentials:</span>
-      <span id="loggedUser"></span>
-      <br>
-      <input type="text" name="username" id="username">
-      <br>
-      <input type="password" name="password" id="password">
-      <br>
-      <input class="button" type="submit" value="Login">
-    </form> -->
+    <br><br><br><br>
+
     <p>Enter credentials</p>
+    <label for="username">Username: </label>
     <input type="text" name="username" id="username">
-    <input type="password" name="password" id="password">
+    <label for="password">Password: </label>
+    <input type="password" name="password" id="password"><br><br>
     <button class="button" onclick="login()">Login</button>
   </div>
   <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%" alt="univents_logo"
@@ -45,6 +38,7 @@
     function login() {
       var email = document.getElementById("username").value;
       var password = document.getElementById("password").value;
+      localStorage.setItem("password",password);
 
       fetch('api/v1/authentication', {
         method: "POST",
@@ -60,9 +54,7 @@
         .then((data) => { // Here you get the data to modify as you please
           localStorage.setItem("user_id", data.id);
           localStorage.setItem("token",data.token);
-          localStorage.setItem("token",data.token);
           localStorage.setItem("email",data.email);
-          localStorage.setItem("user_id",data.id);
           
           if (data.id == undefined) alert("Username o password errati");
           else{

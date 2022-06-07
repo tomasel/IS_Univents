@@ -79,7 +79,7 @@ app.use('/api/v1/utente', utentiRouter);
 
 //home
 app.all('/home', tokenChecker);
-app.use('/comunita_studenti', tokenChecker);
+app.all('/comunita_studenti', tokenChecker);
 app.get('/comunita_studenti/crea_evento', tokenChecker);
 app.get('/impostazioni', tokenChecker);
 app.get('/universita', tokenChecker);
