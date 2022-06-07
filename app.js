@@ -19,7 +19,7 @@ fs.writeFileSync("token.txt","","utf8");
 var password = fs.readFileSync('./password.txt','utf8');
 mongoose.connect('mongodb+srv://univents_database:'+password+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
 .then ( () => {
-  console.log("Connected to Database")
+  //console.log("Connected to Database")
 }); 
 
 //instance
@@ -132,4 +132,7 @@ app.use((err, req, res, next) => {
   res.status(status).send({ status, error: msg });
 });
 
+
+
 module.exports = app;
+
