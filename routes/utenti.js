@@ -48,7 +48,7 @@ app.patch('/:id_evento',async (req, res) => {
           if (err){
             console.log(err)
           }else{
-            if(succ2 == null){return res.status(404).json("event not exist")}
+            if(succ2 == null){return res.status(404).send("event not exist")}
             console.log("event exist");
             //add evento
             try{
@@ -62,7 +62,7 @@ app.patch('/:id_evento',async (req, res) => {
                              //console.log(success);
                          }
                      });
-              res.status(200).json("event added");
+              res.status(200).send("event added");
             }catch (err) {
               return res.status(500).send({
                 error: err || 'Something went wrong.'
@@ -81,7 +81,7 @@ app.patch('/:id_evento',async (req, res) => {
                          //console.log(success);
                      }
                  });
-          res.status(200).json("event added");
+          res.status(200).send("event added");
         }catch (err) {
           return res.status(500).send({
             error: err || 'Something went wrong.'
@@ -109,7 +109,7 @@ try{
           }
       });
       
-  res.status(200).json("event deleted");
+  res.status(200).send("event deleted");
 }catch (err) {
   return res.status(500).send({
     error: err || 'Something went wrong.'
