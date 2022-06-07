@@ -59,8 +59,8 @@
   document.addEventListener('DOMContentLoaded', function() {
 
     const id = localStorage.getItem('event_id');
-    var url="http://localhost:3000/api/v2/eventi/"+id;
-    var url2="http://localhost:3000/api/v2/uni/"+id;
+    var url="https://univents-trento.herokuapp.com/api/v2/eventi/"+id;
+    var url2="https://univents-trento.herokuapp.com/api/v2/uni/"+id;
     var pr1=fetch(url);
     var pr2=fetch(url2);
     pr1.then(res=>res.json())

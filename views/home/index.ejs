@@ -90,7 +90,7 @@
   }
 
   function elimina_evento(event){
-    var url="http://localhost:3000/api/v2/eventi/"+event.getAttribute("event_id");
+    var url="https://univents-trento.herokuapp.com/api/v2/eventi/"+event.getAttribute("event_id");
     // alert(url);
     fetch(url,{method:"DELETE"})
     alert("evento eliminato con successo");
@@ -109,7 +109,7 @@
           e.removeChild(child);
           child = e.lastElementChild;
       }
-      var url="http://localhost:3000/api/v2/eventi/my/"+localStorage.getItem("user_id");//AL MOMENTO ID_CREATORE=1; DA CAMBIARE COL VERO ID CREATORE
+      var url="https://univents-trento.herokuapp.com/api/v2/eventi/my/"+localStorage.getItem("user_id");//AL MOMENTO ID_CREATORE=1; DA CAMBIARE COL VERO ID CREATORE
       fetch(url,{
         method:"PUT",
         cache:'no-cache',
@@ -130,7 +130,7 @@
   function onloading(){
     localStorage.setItem("fav",1);
     // alert(localStorage.getItem("user_id"));
-    var url="http://localhost:3000/api/v2/utente/"/*+localStorage.getItem("user_id")*/;
+    var url="https://univents-trento.herokuapp.com/api/v2/utente/"/*+localStorage.getItem("user_id")*/;
     fetch(url,{
       method:"GET",
       cache:'no-cache',
@@ -148,7 +148,7 @@
       var star_event_set = new Set();
       for(var i=0; i<utente.star_event_list.length;i++) star_event_set.add(utente.star_event_list[i]._id);
       star_event_set.forEach(event_id=>{
-        var url2="http://localhost:3000/api/v2/eventi/"+event_id;
+        var url2="https://univents-trento.herokuapp.com/api/v2/eventi/"+event_id;
         fetch(url2,{
           method:"GET",
           cache:'no-cache',
@@ -189,7 +189,7 @@
   
         //FUNZIONA MA E' ORRIBILE
   
-        url2="http://localhost:3000/api/v2/uni/"+event_id;
+        url2="https://univents-trento.herokuapp.com/api/v2/uni/"+event_id;
         fetch(url2,{
           method:"GET",
           cache:'no-cache',
