@@ -77,14 +77,22 @@ app.use('/api/v1/authentication', authRouter);
 app.use('/api/v1/utente', utentiRouter);
 //app.post('/login', login.check);
 
+//tokenCheck
+app.all('/home', tokenChecker);
+app.all('/comunita_studenti', tokenChecker);
+app.all('/comunita_studenti/crea_evento', tokenChecker);
+app.all('/universita', tokenChecker);
+app.all('/universita/edificio', tokenChecker);
+app.all('/impostazioni', tokenChecker);
+
 //home
+
 app.all('/home', tokenChecker);
 app.all('/comunita_studenti', tokenChecker);
 app.get('/comunita_studenti/crea_evento', tokenChecker);
 app.get('/impostazioni', tokenChecker);
 app.get('/universita', tokenChecker);
 app.get('/universita/edificio', tokenChecker);
-app.get('/home', home.view);
 
 
 //Comunità Studenti

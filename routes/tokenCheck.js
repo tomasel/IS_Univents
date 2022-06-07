@@ -6,6 +6,7 @@ const tokenChecker = function(req, res, next) {
 	// check header or url parameters or post parameters for token
 	var token = fs.readFileSync("token.txt","utf8");
 
+
 	console.log("token: "+token);
 
 	if (token == undefined) {
