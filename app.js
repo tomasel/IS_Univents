@@ -87,7 +87,7 @@ app.all('/impostazioni', tokenChecker);
 
 //home
 
-app.all('/home', tokenChecker);
+app.get('/home', home.view);
 app.all('/comunita_studenti', tokenChecker);
 app.get('/comunita_studenti/crea_evento', tokenChecker);
 app.get('/impostazioni', tokenChecker);
