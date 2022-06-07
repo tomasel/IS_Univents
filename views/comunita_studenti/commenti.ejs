@@ -54,11 +54,61 @@
 
 <script>
   document.getElementById("page_name").textContent="Sezione Commenti";
-  const id = localStorage.getItem('event_id');
-  //TODO: USARE API PER OTTENERE INFORMAZIONI SULL'EVENTO
-
-    //sarà da cambiare per otteneere i commenti
+  
+  //TODO: Ottenere i commenti veri
   document.addEventListener('DOMContentLoaded', function() {
+
+    const id = localStorage.getItem('event_id');
+    var url="http://localhost:3000/api/v1/eventi/"+id;
+    var url2="http://localhost:3000/api/v1/uni/"+id;
+    var pr1=fetch(url);
+    var pr2=fetch(url2);
+    pr1.then(res=>res.json())
+    .then(data=>{
+      // alert("data:" +data);
+      if(data==null){
+        pr2.then(res=>res.json())
+        .then(data=>{
+          a=document.getElementById("info_nome");
+          b=document.getElementById("info_dove");
+          c=document.getElementById("info_quando");
+          d=document.getElementById("info_info");
+    
+          a.textContent="NOME:\n";
+          a.textContent+=data.title;
+    
+          b.textContent="DOVE:\n";
+          b.textContent+=data.building;
+    
+          c.textContent="QUANDO:\n";
+          c.textContent+=data.date_event.slice(0,10)+" alle "+data.date_event.slice(11,16);
+    
+          d.textContent="INFO:\n";
+          d.textContent+=data.info;
+        
+        })
+
+      }
+      else{
+        a=document.getElementById("info_nome");
+        b=document.getElementById("info_dove");
+        c=document.getElementById("info_quando");
+        d=document.getElementById("info_info");
+
+        a.textContent="NOME:\n";
+        a.textContent+=data.title;
+
+        b.textContent="DOVE:\n";
+        b.textContent+=data.place;
+
+        c.textContent="QUANDO:\n";
+        c.textContent+=data.date_event.slice(0,10)+" alle "+data.date_event.slice(11,16);
+
+        d.textContent="INFO:\n";
+        d.textContent+=data.info;
+      }
+    })
+
     var i,item,clone;
     for(i=0;i<10;i++){
       item = document.getElementsByTagName("template")[2].content;

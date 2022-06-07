@@ -1,7 +1,7 @@
 <script>
 
 function load(data,mine){
-  // var user_id="6289f47e6fdc1cd83ca2b39a"; al momento c'è un solo utente, non ancora implementato
+  // var user_id=""; al momento c'è un solo utente, non ancora implementato
   var url="http://localhost:3000/api/v1/utente/"/*+user_id*/;
   // alert(url);
   fetch(url,{
@@ -9,7 +9,8 @@ function load(data,mine){
     cache:'no-cache',
     headers:{
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'user_id': localStorage.getItem("user_id")
     }
   })
   .then((res) =>{
@@ -353,6 +354,7 @@ function filtra_data_uni(){
 //TODO: SET EVENT AS FAVOURITE
 function toggle_favourite(evento){
     evento.classList.toggle("selected");
+    // alert(evento.className);
     if(evento.className=="empty-star"){
       var url="http://localhost:3000/api/v1/utente/"+evento.getAttribute("id");
       fetch(url,{
@@ -360,26 +362,30 @@ function toggle_favourite(evento){
         cache:'no-cache',
         headers:{
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'user_id':localStorage.getItem("user_id")
         }
       })
     }
     else{
+      // alert("sono nel patch");
       var url="http://localhost:3000/api/v1/utente/"+evento.getAttribute("id");
       fetch(url,{
         method:"PATCH",
         cache:'no-cache',
         headers:{
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'user_id':localStorage.getItem("user_id")
         }
       })
+      // alert("patch fatta");
     }
 }
 
 //TODO: 
 function commenti(event){
-  alert(event.getAttribute("event_id"));
+  // alert(event.getAttribute("event_id"));
     localStorage.setItem("event_id",event.getAttribute("event_id"));
     location.assign("http://localhost:3000/commenta_evento");
 }

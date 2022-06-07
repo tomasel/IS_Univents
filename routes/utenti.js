@@ -38,7 +38,7 @@ app.get('/',async (req, res) => {
 
 /*PATCH add star event to user array*/
 app.patch('/:id_evento',async (req, res) => {
-  const userId = mongoose.Types.ObjectId("6289f47e6fdc1cd83ca2b39a");
+  const userId = mongoose.Types.ObjectId(req.headers.user_id);
   Event.exists({_id:req.params.id_evento}, function(err, succ){
     if (err){
       console.log(err)
@@ -95,7 +95,7 @@ app.patch('/:id_evento',async (req, res) => {
 
 /*DELETE  star event in user array*/
 app.delete('/:id_evento',async (req, res) => {
-  const userId = mongoose.Types.ObjectId("6289f47e6fdc1cd83ca2b39a");
+  const userId = mongoose.Types.ObjectId(req.headers.user_id);
   
 try{
       Utente.findOneAndUpdate(
