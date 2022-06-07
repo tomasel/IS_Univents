@@ -44,9 +44,15 @@
    
    test('GET /api/v1/eventi/:id should respond with json, event data', async () => {
      return request(app)
-       .get('/api/v1/eventi/629e00da33ae678d12d5f3b4')
+       .get('/api/v1/eventi/628a0605e1e87845ae4f3c7d')
        .expect('Content-Type', /json/)
-       .expect(200);
+       .expect(200)
+       .then( (res) => {
+          expect(res.body.title == "evento" &&
+                 res.body.date_event == "2022-07-22T09:22:27.740Z" &&
+                 res.body.place == "via evento3" &&
+                 res.body.info == "info3")
+      });
 
    });
 
