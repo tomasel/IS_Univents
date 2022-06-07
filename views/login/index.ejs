@@ -43,20 +43,30 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'user_id': localStorage.getItem("user_id")
+          // 'user_id': localStorage.getItem("user_id")
         },
         body: JSON.stringify({ email: email, password: password }),
       })
         .then((resp) => resp.json()) // Transform the data into json
         .then((data) => { // Here you get the data to modify as you please
           localStorage.setItem("user_id", data.id);
+          localStorage.setItem("token",data.token);
           loggedUser.token = data.token;
           loggedUser.email = data.email;
           loggedUser.id = data.id;
           loggedUser.self = data.self;
           if (data.id == undefined) alert("Username o password errati");
           else {
-            location.assign("http://localhost:3000/home");
+            // location.assign("http://localhost:3000/home");
+            fetch("http://localhost:3000/home",{
+              method:"GET",
+              cache:'no-cache',
+              headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem("token")
+              }
+  })
           }
         })
         .catch(error => console.error(error)); // If there is any error you will catch them here

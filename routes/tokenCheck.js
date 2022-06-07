@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 const tokenChecker = function(req, res, next) {
 	
 	// check header or url parameters or post parameters for token
-	var token = req.headers['x-access-token'];
+	var token = req.headers.token;
 
-	console.log(token);
+	console.log("token: "+token);
 
 	if (token == undefined) {
 		return res.status(401).render('login/noauth', {
