@@ -30,7 +30,7 @@ app.post ('', async function(req, res) {
 		expiresIn: 86400 
 	}
     // SUPER_SECRET
-	var token = jwt.sign(payload, "ciao", options);
+	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
     fs.writeFileSync("token.txt",token,"utf8");
 

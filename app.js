@@ -16,8 +16,8 @@ const uniRouter = require('./routes/university');
 const authRouter = require('./routes/authentication');
 fs.writeFileSync("token.txt","","utf8");
 
-var password = fs.readFileSync('./password.txt','utf8');
-mongoose.connect('mongodb+srv://univents_database:'+password+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
+//var password = fs.readFileSync('./password.txt','utf8');
+mongoose.connect('mongodb+srv://univents_database:'+process.env.PASSWORD_DB+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
 .then ( () => {
   //console.log("Connected to Database")
 }); 
