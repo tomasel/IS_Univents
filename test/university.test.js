@@ -8,18 +8,18 @@
  describe('GET /api/v1/uni', () => {
  
    // Moking university.find method
-   let unipy;
+   let uniSpy;
    // Moking university.findById method
-   let unipyFindById;
+   let uniSpyFindById;
  
    beforeAll( () => {
-     const university = require('../public/models/univerity');
-     unipy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
+     const university = require('../public/models/university');
+     uniSpy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
        return [{
          title: 'Software Engineering 2'
        }];
      });
-     unipyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
+     uniSpyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
        if (id==1010)
          return {
            title: 'Software Engineering 2'
@@ -30,8 +30,8 @@
    });
  
    afterAll(async () => {
-     unipy.mockRestore();
-     unipyFindById.mockRestore();
+     uniSpy.mockRestore();
+     uniSpyFindById.mockRestore();
    });
    
    test('GET /api/v1/uni should respond with an array of uni', async () => {
@@ -51,11 +51,9 @@
    
    test('GET /api/v1/uni/:id should respond with json, event data', async () => {
      return request(app)
-       .get('/api/v1/uni/1010')
+       .get('/api/v1/uni/629c70ac790828b8c3d5a9af')
        .expect('Content-Type', /json/)
-       .expect(200, {
-           title: 'Software Engineering 2'
-         });
+       .expect(200)
    });
 
    
@@ -67,18 +65,18 @@
  describe('POST /api/v1/uni', () => {
  
   // Moking university.find method
-  let unipy;
+  let uniSpy;
   // Moking university.findById method
-  let unipyFindById;
+  let uniSpyFindById;
 
   beforeAll( () => {
     const university = require('../public/models/university');
-    unipy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
+    uniSpy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
       return [{
         title: 'Software Engineering 2'
       }];
     });
-    unipyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
+    uniSpyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
       if (id==1010)
         return {
           title: 'Software Engineering 2'
@@ -89,8 +87,8 @@
   });
 
   afterAll(async () => {
-    unipy.mockRestore();
-    unipyFindById.mockRestore();
+    uniSpy.mockRestore();
+    uniSpyFindById.mockRestore();
   });
 
 
@@ -99,13 +97,6 @@
       .post('/api/v1/uni')
       .expect('Content-Type', /json/)
       .expect(200)
-      .then( (res) => {
-        if(req.body && req.body[0]) {
-          expect(req.body[0]).toEqual({
-            title: 'Software Engineering 2'
-          });
-        }
-      });
   });
 
 });
@@ -114,18 +105,18 @@
  describe('PUT /api/v1/uni', () => {
  
   // Moking university.find method
-  let unipy;
+  let uniSpy;
   // Moking university.findById method
-  let unipyFindById;
+  let uniSpyFindById;
 
   beforeAll( () => {
     const university = require('../public/models/university');
-    unipy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
+    uniSpy = jest.spyOn(university, 'find').mockImplementation((criterias) => {
       return [{
         title: 'Software Engineering 2'
       }];
     });
-    unipyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
+    uniSpyFindById = jest.spyOn(university, 'findById').mockImplementation((id) => {
       if (id==1010)
         return {
           title: 'Software Engineering 2'
@@ -136,50 +127,29 @@
   });
 
   afterAll(async () => {
-    unipy.mockRestore();
-    unipyFindById.mockRestore();
+    uniSpy.mockRestore();
+    uniSpyFindById.mockRestore();
   });
 
   test('PUT /api/v1/uni/ should respond 200 and array of filtered edificio event', async () => {
     return request(app)
-      .post('/api/v1/uni')
+      .put('/api/v1/uni/Povo')
       .expect('Content-Type', /json/)
       .expect(200)
-      .then( (res) => {
-        if(req.body && req.body[0]) {
-          expect(req.body[0]).toEqual({
-            title: 'Software Engineering 2'
-          });
-        }
-      });
   });
 
   test('PUT /api/v1/uni/titolo should respond 200 and array of filtered title event', async () => {
     return request(app)
-      .post('/api/v1/uni')
+      .put('/api/v1/uni/titolo/evento_uni1')
       .expect('Content-Type', /json/)
       .expect(200)
-      .then( (res) => {
-        if(req.body && req.body[0]) {
-          expect(req.body[0]).toEqual({
-            title: 'Software Engineering 2'
-          });
-        }
-      });
   });
 
   test('PUT /api/v1/uni/data should respond 200 and array of filtered event date', async () => {
     return request(app)
-      .post('/api/v1/uni')
+      .put('/api/v1/uni/data/2022-07-02')
       .expect('Content-Type', /json/)
       .expect(200)
-      .then( (res) => {
-        if(req.body && req.body[0]) {
-          expect(req.body[0]).toEqual({
-            title: 'Software Engineering 2'
-          });
-        }
-      });
   });
 
 });

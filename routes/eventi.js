@@ -99,7 +99,7 @@ app.put('/data/:filter_date', async (req, res) => {
     let endDate = startingDate;
     endDate = endDate + 'T23:59:59';
     let event = await Event.find({ date_event : {$gte: startingDate, $lte: endDate} });
-    console.log(event);
+    //console.log(event);
     res.status(200).json(event);
   }catch (err) {
     return res.status(500).send({
