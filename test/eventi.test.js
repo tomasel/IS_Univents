@@ -47,6 +47,7 @@
        .get('/api/v1/eventi/629e00da33ae678d12d5f3b4')
        .expect('Content-Type', /json/)
        .expect(200);
+
    });
 
    
@@ -88,8 +89,15 @@
   test('POST /api/v1/eventi should respond 200 and evento creato', async () => {
     return request(app)
       .post('/api/v1/eventi')
-      .expect('Content-Type', /json/)
+      .send({
+        title: 'evento_test',
+        info: 'info evento test',
+        date_event: '2022-007-29',
+        place: 'brova'
+      })
+      .expect('evento creato')
       .expect(200)
+      
       
   });
 
