@@ -30,6 +30,8 @@ app.post ('', async function(req, res) {
     // SUPER_SECRET
 	var token = jwt.sign(payload, "ciao", options);
 
+    console.log("authentication produced token "+token);
+
     res.json({
             success: true,
             message: 'Authentication successfull.',
