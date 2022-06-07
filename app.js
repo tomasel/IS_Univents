@@ -8,18 +8,18 @@ var cors = require('cors');
 var multer = require('multer');
 var upload = multer();
 const mongoose = require('mongoose');
+const fs = require("fs");
 
 const eventiRouter = require('./routes/eventi');
 const utentiRouter = require('./routes/utenti');
 const uniRouter = require('./routes/university');
 const authRouter = require('./routes/authentication');
+fs.writeFileSync("token.txt","","utf8");
 
-//Connection DB
-//const fs = require('fs');
-//var password = fs.readFileSync('./password.txt','utf8');
-mongoose.connect('mongodb+srv://univents_database:'+process.env.PASSWORD_DB+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
+var password = fs.readFileSync('./password.txt','utf8');
+mongoose.connect('mongodb+srv://univents_database:'+password+'@univents.y54y3.mongodb.net/univents_database?retryWrites=true&w=majority')
 .then ( () => {
-  console.log("Connected to Database")
+  //console.log("Connected to Database")
 }); 
 
 //instance
@@ -73,23 +73,35 @@ app.get('/', site.index);
 
 //login
 app.use('/login', login.login);
-app.use('/api/v1/authentication', authRouter);
-app.use('/api/v1/utente', utentiRouter);
+app.use('/api/v2/authentication', authRouter);
+app.use('/api/v2/utente', utentiRouter);
 //app.post('/login', login.check);
 
+//tokenCheck
+app.all('/home', tokenChecker);
+app.all('/comunita_studenti', tokenChecker);
+app.all('/comunita_studenti/crea_evento', tokenChecker);
+app.all('/universita', tokenChecker);
+app.all('/universita/edificio', tokenChecker);
+app.all('/impostazioni', tokenChecker);
+
 //home
-app.use('/home', tokenChecker);
-app.use('/comunita_studenti', tokenChecker);
-app.get('/comunita_studenti/crea_evento', tokenChecker);
+
 app.get('/home', home.view);
+app.all('/comunita_studenti', tokenChecker);
+app.get('/comunita_studenti/crea_evento', tokenChecker);
+app.get('/impostazioni', tokenChecker);
+app.get('/universita', tokenChecker);
+app.get('/universita/edificio', tokenChecker);
+app.get("/home",home.view);
 
 
 //Comunità Studenti
 app.get('/comunita_studenti', comunita_studenti.list_event);
 app.get('/comunita_studenti/crea_evento', comunita_studenti.create_event);
 app.get('/comunita_studenti/evento', comunita_studenti.get_event);
-app.use('/api/v1/eventi', eventiRouter);
-app.use('/api/v1/uni', uniRouter);
+app.use('/api/v2/eventi', eventiRouter);
+app.use('/api/v2/uni', uniRouter);
 
 app.get("/commenta_evento",comunita_studenti.commenta);
 
@@ -99,7 +111,7 @@ app.get('/universita', universita.list_building);
 
 //Impostazioni
 app.get('/impostazioni', impostazioni.view);
-//app.use('/api/v1/utente', utente);
+//app.use('/api/v2/utente', utente);
 
 //crea evento
 app.post('/comunita_studenti/crea_evento', comunita_studenti.crea);
@@ -120,4 +132,7 @@ app.use((err, req, res, next) => {
   res.status(status).send({ status, error: msg });
 });
 
+
+
 module.exports = app;
+

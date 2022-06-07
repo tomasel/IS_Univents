@@ -1,15 +1,16 @@
 <script>
 
 function load(data,mine){
-  // var user_id="6289f47e6fdc1cd83ca2b39a"; al momento c'è un solo utente, non ancora implementato
-  var url="https://univents-trento.herokuapp.com/api/v1/utente/"/*+user_id*/;
+  // var user_id=""; al momento c'è un solo utente, non ancora implementato
+  var url="https://univents-trento.herokuapp.com/api/v2/utente/"/*+user_id*/;
   // alert(url);
   fetch(url,{
     method:"GET",
     cache:'no-cache',
     headers:{
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'user_id': localStorage.getItem("user_id")
     }
   })
   .then((res) =>{
@@ -122,7 +123,7 @@ function filtra_nome(){
       window.document.dispatchEvent(DOMContentLoaded_event);
     }
     else{
-      var url="https://univents-trento.herokuapp.com/api/v1/eventi/titolo/"+document.getElementById("filtro_nome").value;
+      var url="https://univents-trento.herokuapp.com/api/v2/eventi/titolo/"+document.getElementById("filtro_nome").value;
       fetch(url,{
         method:"PUT",
         cache:'no-cache',
@@ -181,7 +182,7 @@ function filtra_data(){
         window.document.dispatchEvent(DOMContentLoaded_event);
     }
     else{
-        var url="https://univents-trento.herokuapp.com/api/v1/eventi/data/"+document.getElementById("filtro_data").value;
+        var url="https://univents-trento.herokuapp.com/api/v2/eventi/data/"+document.getElementById("filtro_data").value;
         fetch(url,{
             method:"PUT",
             cache:'no-cache',
@@ -240,7 +241,7 @@ function filtra_nome_uni(){
       window.document.dispatchEvent(DOMContentLoaded_event);
     }
     else{
-      var url="https://univents-trento.herokuapp.com/api/v1/uni/titolo/"+document.getElementById("filtro_nome").value;
+      var url="https://univents-trento.herokuapp.com/api/v2/uni/titolo/"+document.getElementById("filtro_nome").value;
       fetch(url,{
         method:"PUT",
         cache:'no-cache',
@@ -299,7 +300,7 @@ function filtra_data_uni(){
         window.document.dispatchEvent(DOMContentLoaded_event);
     }
     else{
-        var url="https://univents-trento.herokuapp.com/api/v1/uni/data/"+document.getElementById("filtro_data").value;
+        var url="https://univents-trento.herokuapp.com/api/v2/uni/data/"+document.getElementById("filtro_data").value;
         fetch(url,{
             method:"PUT",
             cache:'no-cache',
@@ -353,33 +354,38 @@ function filtra_data_uni(){
 //TODO: SET EVENT AS FAVOURITE
 function toggle_favourite(evento){
     evento.classList.toggle("selected");
+    // alert(evento.className);
     if(evento.className=="empty-star"){
-      var url="https://univents-trento.herokuapp.com/api/v1/utente/"+evento.getAttribute("id");
+      var url="https://univents-trento.herokuapp.com/api/v2/utente/"+evento.getAttribute("id");
       fetch(url,{
         method:"DELETE",
         cache:'no-cache',
         headers:{
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'user_id':localStorage.getItem("user_id")
         }
       })
     }
     else{
-      var url="https://univents-trento.herokuapp.com/api/v1/utente/"+evento.getAttribute("id");
+      // alert("sono nel patch");
+      var url="https://univents-trento.herokuapp.com/api/v2/utente/"+evento.getAttribute("id");
       fetch(url,{
         method:"PATCH",
         cache:'no-cache',
         headers:{
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'user_id':localStorage.getItem("user_id")
         }
       })
+      // alert("patch fatta");
     }
 }
 
 //TODO: 
 function commenti(event){
-  alert(event.getAttribute("event_id"));
+  // alert(event.getAttribute("event_id"));
     localStorage.setItem("event_id",event.getAttribute("event_id"));
     location.assign("https://univents-trento.herokuapp.com/commenta_evento");
 }

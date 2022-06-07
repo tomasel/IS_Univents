@@ -58,8 +58,7 @@ app.post('/',async (req, res) => {
 /*DELETE un evento by id*/
 app.delete('/:id',async (req, res) => {
 
-  // const userId = req.query.userId; DA RIMODIFICARE QUANDO AVREMO I VERI USER ID
-  const userId="6289f47e6fdc1cd83ca2b39a";
+  const userId=req.headers.user_id;
   let test = await Event.findById(req.params.id);
   if(!userId == test.id_creator ){
     return res.status(400).send("wrong user");
@@ -90,7 +89,7 @@ app.put('/my/:id_creatore',async (req, res) => {
   } 
 });
 
-/*PUT  event list with filter title*/  //  /api/v1/eventi/titolo/grigliata
+/*PUT  event list with filter title*/  //  /api/v2/eventi/titolo/grigliata
 /*PUT  event list with filter title*/
 app.put('/titolo/:filter_title', async (req, res) => {
   
@@ -116,7 +115,7 @@ app.put('/data/:filter_date', async (req, res) => {
     let endDate = startingDate;
     endDate = endDate + 'T23:59:59';
     let event = await Event.find({ date_event : {$gte: startingDate, $lte: endDate} });
-    console.log(event);
+    //console.log(event);
     res.status(200).json(event);
   }catch (err) {
     return res.status(500).send({

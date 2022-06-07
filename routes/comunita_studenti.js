@@ -98,7 +98,7 @@ exports.crea = function(req, res){
   
     
     //send to API
-    fetch("https://univents-trento.herokuapp.com/api/v1/eventi",{
+    fetch("https://univents-trento.herokuapp.com/api/v2/eventi",{
       method: "POST",
       headers:{          
         'Accept': 'application/json',

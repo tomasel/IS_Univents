@@ -1,23 +1,46 @@
 <%- include('../header') -%>
+<%- include('../background.ejs') -%>
 
 <h1>Impostazioni</h1>
 
 <div id="impostazioni">
 <!-- logout non funzionante -->
-    <form method="get" action="/logout">
+    <form method="get" action="/login" onsubmit="logout()">
         <p>
             <input type="submit" value="Logout">
         </p>
     </form>
-  <li>
-    <a href="/home">Home</a>
-  </li>
-  <li>
-    <a href="/comunita_studenti">Comunità Studenti</a>
-  </li>
-  <li>
-    <a href="/universita">Università</a>
-  </li>
 </div>
+
+<div style="position:absolute; top:30%; left:20%;">
+  <font face="Helvetica" size="6"color="black">Informazioni personali </font><br><br><br>
+  <font id="username" face="Helvetica" size="4"color="black"></font><br><br>
+  <font id="password" face="Helvetica" size="4"color="black">Password: ********</font><br><br>
+  <button onmousedown="mostra_password()" onmouseup="nascondi_password()"> mostra password</button>
+  <br><br><br>
+  <form action="/login">
+    <button class="button" type="submit" onclick="logout()">Logout</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById("page_name").textContent="Impostazioni";
+  document.getElementById("username").textContent="Username: "+localStorage.getItem("email");
+
+  const fs = require("fs");
+
+  function logout(){
+    alert("dopo: "+fs.readFileSync("token.txt","utf8"));
+  }
+
+  function mostra_password(){
+    // alert(localStorage.getItem("password"));
+    document.getElementById("password").textContent="Password: "+localStorage.getItem("password");
+  }
+
+  function nascondi_password(){
+    document.getElementById("password").textContent="Password: ********";
+  }
+</script>
 
 <%- include('../footer') -%>
