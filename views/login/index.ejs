@@ -17,7 +17,7 @@
     </font>
     <img src="/images/univents_logo/univents_vents_logo.png" width="205" height="220" alt="univents_logo">
     <br><br><br><br><br>
-    <form method="post" action="/views/login/index">
+    <!-- <form onsubmit="login()" action="/home">
       <span>Enter credentials:</span>
       <span id="loggedUser"></span>
       <br>
@@ -25,14 +25,23 @@
       <br>
       <input type="password" name="password" id="password">
       <br>
-      <input class="button" type="button" value="Login" onclick="login()">
-    </form>
+      <input class="button" type="submit" value="Login">
+    </form> -->
+    <p>Enter credentials</p>
+    <input type="text" name="username" id="username">
+    <input type="password" name="password" id="password">
+    <button class="button" onclick="login()">Login</button>
   </div>
   <img src="/images/sigillo_universita/ti_1000x1000.png" height="100%" alt="univents_logo"
     style="position:fixed; top:0px; right:0px;">
 
   <script>
-    var loggedUser = {};
+    const fs = require("fs");
+
+    //CHIEDIGLI POI DA DOVE VIENE
+    // var loggedUser = [{key:"token", value:""},
+    //                   {key:"email", value:""},
+    //                   {key:"id", value:""}];
     function login() {
       var email = document.getElementById("username").value;
       var password = document.getElementById("password").value;
@@ -47,26 +56,17 @@
         },
         body: JSON.stringify({ email: email, password: password }),
       })
-        .then((resp) => resp.json()) // Transform the data into json
+        .then((res) => res.json()) // Transform the data into json
         .then((data) => { // Here you get the data to modify as you please
           localStorage.setItem("user_id", data.id);
           localStorage.setItem("token",data.token);
-          loggedUser.token = data.token;
-          loggedUser.email = data.email;
-          loggedUser.id = data.id;
-          loggedUser.self = data.self;
+          localStorage.setItem("token",data.token);
+          localStorage.setItem("email",data.email);
+          localStorage.setItem("user_id",data.id);
+          
           if (data.id == undefined) alert("Username o password errati");
-          else {
-            // location.assign("http://localhost:3000/home");
-            fetch("http://localhost:3000/home",{
-              method:"GET",
-              cache:'no-cache',
-              headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'token': localStorage.getItem("token")
-              }
-  })
+          else{
+            location.assign("http://localhost:3000/home");
           }
         })
         .catch(error => console.error(error)); // If there is any error you will catch them here

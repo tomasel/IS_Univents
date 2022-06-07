@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
+const fs = require("fs");
 
 const tokenChecker = function(req, res, next) {
 	
 	// check header or url parameters or post parameters for token
-	var token = req.headers.token;
+	var token = fs.readFileSync("token.txt","utf8");
 
 	console.log("token: "+token);
 
@@ -14,7 +15,8 @@ const tokenChecker = function(req, res, next) {
 	}
 
 	// decode token, verifies secret and checks exp
-	jwt.verify(token, process.env.SUPER_SECRET, function(err, decoded) {			
+	console.log("Super secret: "+process.env.SUPER_SECRET);
+	jwt.verify(token, /*process.env.SUPER_SECRET*/"ciao", function(err, decoded) {			
 		if (err) {
 			return res.status(403).send({
 				success: false,
@@ -23,6 +25,7 @@ const tokenChecker = function(req, res, next) {
 		} else {
 			// if everything is good, save to request for use in other routes
 			req.loggedUser = decoded;
+			console.log("all good");
 			next();
 		}
 	});

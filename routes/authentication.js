@@ -2,6 +2,8 @@ const express = require('express');
 const Utente = require('../public/models/utente');
 const jwt = require('jsonwebtoken');
 const app = express();
+// const readblob=require("read-blob");
+const fs = require("fs");
 
 app.post ('', async function(req, res) {
     console.log("looking for user");
@@ -30,18 +32,22 @@ app.post ('', async function(req, res) {
     // SUPER_SECRET
 	var token = jwt.sign(payload, "ciao", options);
 
-    console.log("authentication produced token "+token);
+    fs.writeFileSync("token.txt",token,"utf8");
 
+    console.log("authentication produced token: "+token);
+
+    
     res.json({
             success: true,
             message: 'Authentication successfull.',
             email: user.email,
             id: user._id,
             token: token,
-            self: '/home' + user._id
+            self: '/home/' + user._id
         });
         
-        console.log("end of auth");
+    console.log("end of auth");
+    // return res;
 });
 
 module.exports = app;
