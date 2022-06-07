@@ -14,11 +14,6 @@
  
    beforeAll( () => {
      const utente = require('../public/models/utente');
-     utenteSpy = jest.spyOn(utente, 'find').mockImplementation((criterias) => {
-       return [{
-         title: 'Software Engineering 2'
-       }];
-     });
      utenteSpyFindById = jest.spyOn(utente, 'findById').mockImplementation((id) => {
        if (id==1010)
          return {
@@ -30,7 +25,6 @@
    });
  
    afterAll(async () => {
-     utenteSpy.mockRestore();
      utenteSpyFindById.mockRestore();
    });
    
@@ -54,24 +48,16 @@
 
   beforeAll( () => {
     const utente = require('../public/models/utente');
-    utenteSpy = jest.spyOn(utente, 'find').mockImplementation((criterias) => {
+    utenteSpy = jest.spyOn(utente, 'findOneAndUpdate').mockImplementation((criterias) => {
       return [{
         title: 'Software Engineering 2'
       }];
     });
-    utenteSpyFindById = jest.spyOn(utente, 'findById').mockImplementation((id) => {
-      if (id==1010)
-        return {
-          title: 'Software Engineering 2'
-        };
-      else
-        return {};
-    });
+
   });
 
   afterAll(async () => {
     utenteSpy.mockRestore();
-    utenteSpyFindById.mockRestore();
   });
 
   test('PATCH /api/v1/utente/ should respond 200 and event added', async () => {
@@ -93,24 +79,14 @@ describe('DELETE /api/v1/utente', () => {
   
     beforeAll( () => {
       const utente = require('../public/models/utente');
-      utenteSpy = jest.spyOn(utente, 'find').mockImplementation((criterias) => {
+      utenteSpy = jest.spyOn(utente, 'findOneAndUpdate').mockImplementation((criterias) => {
         return [{
           title: 'Software Engineering 2'
         }];
       });
-      utenteSpyFindById = jest.spyOn(utente, 'findById').mockImplementation((id) => {
-        if (id==1010)
-          return {
-            title: 'Software Engineering 2'
-          };
-        else
-          return {};
-      });
     });
-  
     afterAll(async () => {
       utenteSpy.mockRestore();
-      utenteSpyFindById.mockRestore();
     });
   
   
