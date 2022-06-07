@@ -6,7 +6,7 @@ const tokenChecker = function(req, res, next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
 	if (token == undefined) {
-		res.status(401).render('login/noauth', {
+		return res.status(401).render('login/noauth', {
 			title: 'Not logged in!'
 		});
 	}
